@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <shape>
+            <solid
+                android:color="?attr/m2"/>
+            <corners
+                android:radius="@dimen/buttonCornerRadius"/>
+            <padding
+                android:bottom="@dimen/buttonPadding"
+                android:left="@dimen/buttonPadding"
+                android:right="@dimen/buttonPadding"
+                android:top="@dimen/buttonPadding"/>
+        </shape>
+    </item>
+    <!-- PRESSED STATE -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid
+                android:color="?attr/m2"/>
+            <corners
+                android:radius="@dimen/buttonCornerRadius"/>
+            <padding
+                android:bottom="@dimen/buttonPadding"
+                android:left="@dimen/buttonPadding"
+                android:right="@dimen/buttonPadding"
+                android:top="@dimen/buttonPadding"/>
+        </shape>
+    </item>
+    <!-- NORMAL STATE -->
+    <item>
+        <shape>
+            <solid
+                android:color="?attr/m1"/>
+            <corners
+                android:radius="@dimen/buttonCornerRadius"/>
+            <padding
+                android:bottom="@dimen/buttonPadding"
+                android:left="@dimen/buttonPadding"
+                android:right="@dimen/buttonPadding"
+                android:top="@dimen/buttonPadding"/>
+        </shape>
+    </item>
+</selector>

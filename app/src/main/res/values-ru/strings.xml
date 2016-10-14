@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel">Отмена</string>
+    <string name="change_language_descr">Вы можете сменить язык здесь</string>
+    <string name="choose_language_title">Выберите ваш язык</string>
+    <string name="finish">Готово</string>
+    <string name="language">Язык</string>
+    <string name="later">Позже</string>
+    <string name="ok">Хорошо</string>
+    <string name="sign_in_google">Войти с Google</string>
+    <string name="sign_in_google_descr">Войдите с Google для безопасного хранения и восстановления данных</string>
+    <string name="understand">Понятно</string>
+    <string name="welcome_app_descr">Это приложение поможет вам не забыть о важных для вас событий</string>
+    <string name="welcome_title">Добро пожаловать!</string>
+    <string name="defaultLabel">По умолчанию</string>
+    <string name="changeLanguageNeedRestart_descript">Для смены языка требуется перезагрузка приложения</string>
+    <string name="changeLanguageNeedRestart_title">Требуется перезагрузка приложения</string>
+    <string name="restart">Перезагрузка</string>
+    <string name="sign_out">Выйти из Google</string>
+    <string name="youAreSignedInAs">Вы вошли в Google как:</string>
+    <string name="canDoneLaterOnMenu">Это можно сделать позднее в меню настроек</string>
+    <string name="currentLanguage">Русский</string>
+    <string name="notification">Уведомления</string>
+    <string name="notification_caption">Показывать Push-уведомления</string>
+    <string name="spaceholder_accountName">Вход не выполнен</string>
+    <string name="title_account">Аккаунт</string>
+    <string name="title_categories">Категории</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_share">Поделиться</string>
+    <string name="change_language">Сменить язык</string>
+</resources>

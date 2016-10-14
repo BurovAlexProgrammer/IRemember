@@ -1,0 +1,161 @@
+<resources>
+    <declare-styleable name="myStyle">
+        <attr name="m1" format="color|reference">@color/colorAccent</attr>
+        <attr name="m2" format="color|reference">@color/colorPrimary</attr>
+
+        <attr name="colorButton" format="color" />
+        <attr name="colorButtonPositive" format="color" />
+        <attr name="colorButtonNegative" format="color" />
+        <attr name="textcolorButton" format="color" />
+        <attr name="textcolorButtonPositive" format="color" />
+        <attr name="textcolorButtonNegative" format="color" />
+        <attr name="colorCardview" format="color" />
+        <attr name="colorCardviewSelected" format="color" />
+    </declare-styleable>
+    <!-- DEFAULT THEME -->
+    <style name="DefaultTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:windowBackground">@color/colorBackground_default</item>
+
+        <item name="colorPrimary">@color/colorPrimary_default</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_default</item>
+        <item name="colorAccent">@color/colorAccent_default</item>
+        <item name="colorCardview">@color/colorCardview_default</item>
+        <item name="colorCardviewSelected">@color/colorAccent_default</item>
+
+        <item name="colorButtonNormal">@color/colorButton_default</item>
+        <item name="android:textAppearanceButton">@style/ButtonNeutralTextAppearance</item>
+        <item name="colorButton">@color/colorButton_default</item>
+        <item name="colorButtonPositive">@color/colorButtonPositive_default</item>
+        <item name="colorButtonNegative">@color/colorButtonNegative_default</item>
+        <item name="textcolorButton">@color/textcolorButton_default</item>
+        <item name="textcolorButtonPositive">@color/textcolorButtonPositive_default</item>
+        <item name="textcolorButtonNegative">@color/textcolorButtonNegative_default</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary_default</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary_default</item>
+        <item name="android:textColorTertiary">@color/textColorTertiary_default</item>
+        <item name="android:textColorHint">@color/textColorHint_default</item>
+        <item name="android:textColorPrimaryDisableOnly">
+            @color/textColorPrimaryDisableOnly_default
+        </item>
+
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse_default</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse_default
+        </item>
+        <item name="android:textColorTertiaryInverse">@color/textColorTertiaryInverse_default</item>
+        <item name="android:textColorHintInverse">@color/textColorHintInverse_default</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">
+            @color/textColorPrimaryInverseDisableOnly_default
+        </item>
+
+    </style>
+
+    <!-- GRAY THEME -->
+    <style name="GrayTheme" parent="Theme.AppCompat.Light">
+
+        <item name="android:windowBackground">@color/colorBackground_gray</item>
+
+        <item name="colorPrimary">@color/colorPrimary_gray</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_gray</item>
+        <item name="colorAccent">@color/colorAccent_gray</item>
+        <item name="colorCardview">@color/colorCardview_gray</item>
+        <item name="colorCardviewSelected">?attr/colorAccent</item>
+
+        <item name="colorButtonPositive">@color/colorButtonPositive_gray</item>
+        <item name="colorButtonNegative">@color/colorButtonNegative_gray</item>
+        <item name="textcolorButtonPositive">@color/textcolorButtonPositive_gray</item>
+        <item name="textcolorButtonNegative">@color/textcolorButtonNegative_gray</item>
+
+        <item name="colorButtonNormal">@color/colorButton_default</item>
+        <item name="android:textAppearanceButton">@style/ButtonNeutralTextAppearance</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary_gray</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary_gray</item>
+        <item name="android:textColorTertiary">@color/textColorTertiary_gray</item>
+        <item name="android:textColorHint">@color/textColorHint_gray</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/textColorPrimaryDisableOnly_gray
+        </item>
+
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse_gray</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse_gray</item>
+        <item name="android:textColorTertiaryInverse">@color/textColorTertiaryInverse_gray</item>
+        <item name="android:textColorHintInverse">@color/textColorHintInverse_gray</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">
+            @color/textColorPrimaryInverseDisableOnly_gray
+        </item>
+    </style>
+
+    <!-- BLACK THEME -->
+    <style name="BlackTheme" parent="Theme.AppCompat.Light">
+
+        <item name="android:windowBackground">@color/colorBackground_black</item>
+
+        <item name="colorPrimary">@color/colorPrimary_black</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_black</item>
+        <item name="colorAccent">@color/colorAccent_black</item>
+
+        <item name="colorButtonNormal">@color/colorButton_default</item>
+        <item name="android:textAppearanceButton">@style/ButtonNeutralTextAppearance</item>
+        <item name="colorButtonPositive">@color/colorButtonPositive_black</item>
+        <item name="colorButtonNegative">@color/colorButtonNegative_black</item>
+        <item name="textcolorButtonPositive">@color/textcolorButtonPositive_black</item>
+        <item name="textcolorButtonNegative">@color/textcolorButtonNegative_black</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary_black</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary_black</item>
+        <item name="android:textColorTertiary">@color/textColorTertiary_black</item>
+        <item name="android:textColorHint">@color/textColorHint_black</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/textColorPrimaryDisableOnly_black
+        </item>
+
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse_black</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse_black</item>
+        <item name="android:textColorTertiaryInverse">@color/textColorTertiaryInverse_black</item>
+        <item name="android:textColorHintInverse">@color/textColorHintInverse_black</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">
+            @color/textColorPrimaryInverseDisableOnly_black
+        </item>
+    </style>
+
+    <style name="textColor_pink" parent="@android:style/TextAppearance">
+        <item name="android:textColorPrimary">#ba00b7</item>
+        <item name="android:textColorSecondary">#60c60d</item>
+        <item name="android:textColorTertiary">#2392e2</item>
+        <item name="android:textColorHint">#ffec45</item>
+        <item name="android:textColorPrimaryDisableOnly">#fd0800</item>
+        <!-- Inverse-->
+        <item name="android:textColorPrimaryInverse">#ba00b7</item>
+        <item name="android:textColorSecondaryInverse">#60c60d</item>
+        <item name="android:textColorTertiaryInverse">#2392e2</item>
+        <item name="android:textColorHintInverse">#ffec45</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">#fd0800</item>
+    </style>
+
+    <style name="ButtonNeutral">
+        <item name="colorButtonNormal">?attr/colorButton</item>
+        <item name="android:textColor">?attr/textcolorButton</item>
+    </style>
+
+    <style name="ButtonNeutralTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">?attr/textcolorButton</item>
+    </style>
+
+    <style name="ButtonPositive">
+        <item name="colorButtonNormal">?attr/colorButtonPositive</item>
+        <item name="android:textColor">?attr/textcolorButtonPositive</item>
+    </style>
+
+    <style name="ButtonNegative">
+        <item name="colorButtonNormal">?attr/colorButtonNegative</item>
+        <item name="android:textColor">?attr/textcolorButtonNegative</item>
+    </style>
+
+    <style name="Dialog_WindowNoTitle" parent="@style/Theme.AppCompat.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+    <style name="DefaultTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="DefaultTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

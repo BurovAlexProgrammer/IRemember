@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorShadow">#e2111111</color>
+    <color name="colorCardview_onException">#d64b4b</color>
+    
+    <!-- DEFAULT THEME-->
+    <color name="colorPrimary_default">#8637a0</color>
+    <color name="colorPrimaryDark_default">#4d2557</color>
+    <color name="colorAccent_default">#8ac24a</color>
+    <color name="colorBackground_default">#fafafa</color>
+    <color name="colorCardview_default">#fafafa</color>
+
+    <color name="colorButton_default">#9ccc65</color>
+    <color name="colorButtonPositive_default">@color/colorAccent_default</color>
+    <color name="colorButtonNegative_default">@color/colorPrimary_default</color>
+    <color name="textcolorButton_default">@color/textColorSecondary_default</color>
+    <color name="textcolorButtonPositive_default">@color/textColorPrimary_default</color>
+    <color name="textcolorButtonNegative_default">@color/textColorPrimaryInverse_default</color>
+
+    <color name="textColorPrimary_default">#fa000000</color>
+    <color name="textColorSecondary_default">#dc000000</color>
+    <color name="textColorTertiary_default">#b41b1b1b</color>
+    <color name="textColorHint_default">#6e000000</color>
+    <color name="textColorPrimaryDisableOnly_default">#3c000000</color>
+
+    <color name="textColorPrimaryInverse_default">#ffffff</color>
+    <color name="textColorSecondaryInverse_default">#e6ffffff</color>
+    <color name="textColorTertiaryInverse_default">#aaffffff</color>
+    <color name="textColorHintInverse_default">#79ffffff</color>
+    <color name="textColorPrimaryInverseDisableOnly_default">#53ffffff</color>
+    <!-- GRAY THEME -->
+    <color name="colorPrimary_gray">#757575</color>
+    <color name="colorPrimaryDark_gray">#616161</color>
+    <color name="colorAccent_gray">#aed581</color>
+    <color name="colorBackground_gray">#e0e0e0</color>
+    <color name="colorCardview_gray">#e0e0e0</color>
+
+    <color name="colorButton_gray">#c5e1a5</color>
+    <color name="colorButtonPositive_gray">@color/colorAccent_gray</color>
+    <color name="colorButtonNegative_gray">@color/colorPrimary_gray</color>
+    <color name="textcolorButton_gray">@color/textColorSecondary_gray</color>
+    <color name="textcolorButtonPositive_gray">@color/textColorPrimary_gray</color>
+    <color name="textcolorButtonNegative_gray">@color/textColorPrimaryInverse_gray</color>
+
+    <color name="textColorPrimary_gray">#fa000000</color>
+    <color name="textColorSecondary_gray">#dc000000</color>
+    <color name="textColorTertiary_gray">#b41b1b1b</color>
+    <color name="textColorHint_gray">#6e000000</color>
+    <color name="textColorPrimaryDisableOnly_gray">#3c000000</color>
+
+    <color name="textColorPrimaryInverse_gray">#ffffff</color>
+    <color name="textColorSecondaryInverse_gray">#e6ffffff</color>
+    <color name="textColorTertiaryInverse_gray">#aaffffff</color>
+    <color name="textColorHintInverse_gray">#79ffffff</color>
+    <color name="textColorPrimaryInverseDisableOnly_gray">#53ffffff</color>
+    <!-- BLACK THEME -->
+    <color name="colorPrimary_black">#757575</color>
+    <color name="colorPrimaryDark_black">#616161</color>
+    <color name="colorAccent_black">#aed581</color>
+    <color name="colorBackground_black">#212121</color>
+
+    <color name="colorButton_black">#c5e1a5</color>
+    <color name="colorButtonPositive_black">@color/colorAccent_black</color>
+    <color name="colorButtonNegative_black">@color/colorPrimary_black</color>
+    <color name="textcolorButton_black">@color/textColorSecondary_black</color>
+    <color name="textcolorButtonPositive_black">@color/textColorPrimary_black</color>
+    <color name="textcolorButtonNegative_black">@color/textColorPrimaryInverse_black</color>
+
+    <color name="textColorPrimary_black">#fafafafa</color>
+    <color name="textColorSecondary_black">#dcfafafa</color>
+    <color name="textColorTertiary_black">#b4fafafa</color>
+    <color name="textColorHint_black">#6edcdcdc</color>
+    <color name="textColorPrimaryDisableOnly_black">#3cf7f7f7</color>
+
+    <color name="textColorPrimaryInverse_black">#212121</color>
+    <color name="textColorSecondaryInverse_black">#212121</color>
+    <color name="textColorTertiaryInverse_black">#616161</color>
+    <color name="textColorHintInverse_black">#616161</color>
+    <color name="textColorPrimaryInverseDisableOnly_black">#757575</color>
+
+    <!-- RIPPLE -->
+    <color name="rippleColor">#6ad613</color>
+    <color name="backgroundColor">#bdbdbd</color>
+
+    <!-- DEVIDER -->
+    <color name="deviderColor_light">#e0e0e0</color>
+</resources>

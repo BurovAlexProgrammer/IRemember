@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name" translatable="false">IRemember</string>
+    <string name="ok">                  Ok                          </string>
+    <string name="cancel">              Cancel                      </string>
+    <string name="understand">          Understand                  </string>
+    <string name="later">               Later                       </string>
+    <string name="finish">              Finish                      </string>
+    <string name="defaultLabel">        Default                     </string>
+    <string name="restart">             Restart                     </string>
+    <string name="never">               Never                       </string>
+    <string name="lastSync">            Last sync                   </string>
+
+    <string name="welcome_title">Welcome</string>
+    <string name="welcome_app_descr">This app will help you not to forget anything important to you.</string>
+
+    <string name="change_language">Change language</string>
+    <string name="choose_language_title">Choose your language</string>
+    <string name="change_language_descr">You can change language here</string>
+    <string name="language">Language</string>
+    <string name="changeLanguageNeedRestart_title">A reboot is required</string>
+    <string name="changeLanguageNeedRestart_descript">To change the language needs to be rebooted</string>
+    <string name="canDoneLaterOnMenu">This can be done later in the settings menu</string>
+
+    <string name="languageEnLabel" translatable="false">     English                     </string>
+    <string name="languageRuLabel" translatable="false">     Русский                     </string>
+    <string name="currentLanguage">   English   </string>
+
+    <string name="sign_in_google_descr">Sign in Google for safe data storage and recovery</string>
+    <string name="sign_in_google">Sign-In Google</string>
+    <string name="sign_in">Sign-In</string>
+
+    <string name="sign_out">Sign-Out</string>
+    <string name="youAreSignedInAs">You are signed in Google as: </string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="title_categories">Categories</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_account">Account</string>
+    <string name="title_share">Share app</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="spaceholder_accountName">Not logged in</string>
+    <string name="spaceholder_accountEmail" />
+    <string name="spaceholder_lastSync">Last sync</string>
+    <string name="notification">Notification</string>
+    <string name="notification_caption">Show push-notification</string>
+
+</resources>

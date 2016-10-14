@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- NORMAL STATE -->
+    <item>
+        <shape>
+            <solid
+                android:color="@color/deviderColor_light"/>
+            <padding
+                android:left="@dimen/buttonPadding"
+                android:right="@dimen/buttonPadding" />
+            <size
+                android:height="1px" />
+        </shape>
+    </item>
+</selector>
