@@ -11,8 +11,6 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Алекс on 16.02.2016.
  */
 
-//JUST TRY GIT!!!
-    //NEW COMMIT FROM NOTEBOOK
 public class DB {
     public final static String
             DB_NAME = "irememberDB",
@@ -106,12 +104,12 @@ public class DB {
     }
 
     public static void closeDB() {
-        G.Log("close DB");
+        G.Log("close DB. off");
         try
         {
-            db.close();
-            G.Log("Database "+db.getPath().toString()+"  closed.");
-            G.Log("Successfully");
+            //db.close();
+            //G.Log("Database "+db.getPath().toString()+"  closed.");
+            //G.Log("Successfully");
         }
         catch (SQLException e)
         {G.Log("EXCEPTION: "+e.getMessage());}
