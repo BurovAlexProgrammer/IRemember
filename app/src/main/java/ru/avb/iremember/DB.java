@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 //JUST TRY GIT!!!
+    //NEW COMMIT FROM NOTEBOOK
 public class DB {
     public final static String
             DB_NAME = "irememberDB",
