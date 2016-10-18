@@ -148,6 +148,7 @@ public class DB {
             Cursor c = db.query(TABLE_CATEGORIES, null, null, null, null, null, null);
             //ставим позицию курсора на первую строку выборки
             //если в выборке нет строк, вернетс¤ false
+            G.Log("Row count: "+c.getCount());
             int row = 0;
             if (c.moveToFirst())
             {
@@ -176,7 +177,9 @@ public class DB {
         try
         {
             openWritableDB(context);
-            db.insert(TABLE_CATEGORIES, null, values);
+            for (int i=0;i<100;i++) {
+                db.insert(TABLE_CATEGORIES, null, values);
+            }
             G.Log("Successfully");
             closeDB();
             G.Log(G.LOGLINE);

@@ -99,6 +99,7 @@ public class Google {
                         if (metadataBuffer.getCount()!=0) {
                             Drive.currentDriveId = metadataBuffer.get(0).getDriveId().encodeToString();
                             G.Log("current DriveID: "+Drive.currentDriveId);
+                            G.Log("file size: "+metadataBuffer.get(0).getFileSize());
                             DriveId driveId = DriveId.decodeFromString(Drive.currentDriveId);
                             final DriveFile driveFile = driveId.asDriveFile();
                             driveFile.open(Google.apiClient, DriveFile.MODE_READ_ONLY, new DriveFile.DownloadProgressListener() {
@@ -188,10 +189,13 @@ public class Google {
 
                                                 byte[] buffer = new byte[1024];
                                                 int length;
+                                                int size=0;
                                                 while ((length = is.read(buffer)) > 0) {
-                                                    G.LogInteres("Stream lenght: "+length);
+                                                    //G.LogInteres("Stream lenght: "+length);
+                                                    size=size+length;
                                                     os.write(buffer, 0, length);
                                                 }
+                                                G.Log("Input stream size: "+size);
                                                 os.flush();
                                             } catch (Exception e) {
                                                 G.Log("EXCEPTION(Google.Drive.downloadFileFromDrive.saveLocalFile): "+e.getMessage());}

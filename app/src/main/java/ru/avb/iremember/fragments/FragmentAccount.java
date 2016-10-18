@@ -195,6 +195,7 @@ public class FragmentAccount extends Fragment{
 
     private void downloadDbFromDrive() {
         Google.Drive.appFolder = Drive.DriveApi.getAppFolder(Google.apiClient);
+        DB.getWritableDB(getActivity());
         Google.Drive.downloadFileFromDrive(getActivity(), DB.DB_NAME, DB.db.getPath());
     }
 
