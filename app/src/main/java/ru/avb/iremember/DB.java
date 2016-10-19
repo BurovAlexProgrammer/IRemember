@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DB {
     public final static String
-            DB_NAME = "irememberDB",
+            DB_NAME = "iremember.db",
             TABLE_CATEGORIES = "categories";
 
     //Column name payment
@@ -150,12 +150,10 @@ public class DB {
             //если в выборке нет строк, вернетс¤ false
             G.Log("Row count: "+c.getCount());
             int row = 0;
-            if (c.moveToFirst())
-            {
+            if (c.moveToFirst()) {
                 int idColIndex = c.getColumnIndex("id");
                 int nameColIndex = c.getColumnIndex("name");
-                do
-                {
+                do {
                     G.LogInteres("Row "+row+
                             "  id: "+c.getInt(idColIndex)+
                             "  name: "+c.getString(nameColIndex));

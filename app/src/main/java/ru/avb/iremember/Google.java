@@ -71,6 +71,7 @@ public class Google {
                         final String name, final String mime, final byte[] buff) {
             G.Log("Google.Drive.createFile..");
 
+
         }
 
         @Nullable
@@ -100,23 +101,7 @@ public class Google {
                             Drive.currentDriveId = metadataBuffer.get(0).getDriveId().encodeToString();
                             G.Log("current DriveID: "+Drive.currentDriveId);
                             G.Log("file size: "+metadataBuffer.get(0).getFileSize());
-                            DriveId driveId = DriveId.decodeFromString(Drive.currentDriveId);
-                            final DriveFile driveFile = driveId.asDriveFile();
-                            driveFile.open(Google.apiClient, DriveFile.MODE_READ_ONLY, new DriveFile.DownloadProgressListener() {
-                                @Override
-                                public void onProgress(long l, long l1) {G.LogInteres("Progress done");}
-                            })
-                                    .setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
-                                        @Override
-                                        public void onResult(@NonNull DriveApi.DriveContentsResult result) {
-                                            if (!result.getStatus().isSuccess()) {
-                                                G.Log("EXCEPTION(open drive file): "+result.getStatus().getStatusMessage());
-                                                return;
-                                            }
-                                            InputStream inputStream = result.getDriveContents().getInputStream();
-                                            G.InputStreamToString(inputStream);
-                                        }
-                                    });
+                            G.Log("last modif: "+metadataBuffer.get(0).getModifiedDate());
                             G.Log(G.LOGLINE);
                         } else {
                             G.Log("FIRST METADATA: NULL!"); Drive.currentDriveId = G.NONE_STRING;
@@ -124,24 +109,31 @@ public class Google {
                     }
                 }
             });
-
-
-//            MetadataBuffer buffer = null;
-//            try {
-//                buffer = appFolder.queryChildren(apiClient, query).await().getMetadataBuffer();
-//
-//                if (buffer != null && buffer.getCount() > 0) {
-//                    G.Log("Found: " + buffer.getCount() + " file(s)");
-//                    return buffer.get(0).getDriveId();
-//                }
-//                return null;
-//            } finally {
-//                if (buffer != null) {
-//                    buffer.close();
-//                }
-//            }
             return null;
         }
+
+        public static void openFile() {
+            DriveId driveId = DriveId.decodeFromString(Drive.currentDriveId);
+            final DriveFile driveFile = driveId.asDriveFile();
+            driveFile.open(Google.apiClient, DriveFile.MODE_READ_ONLY, new DriveFile.DownloadProgressListener() {
+                @Override
+                public void onProgress(long l, long l1) {
+                    G.LogInteres("Progress done");
+                }
+            })
+                    .setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
+                        @Override
+                        public void onResult(@NonNull DriveApi.DriveContentsResult result) {
+                            if (!result.getStatus().isSuccess()) {
+                                G.Log("EXCEPTION(open drive file): " + result.getStatus().getStatusMessage());
+                                return;
+                            }
+                            InputStream inputStream = result.getDriveContents().getInputStream();
+                            G.InputStreamToString(inputStream);
+                        }
+                    });
+        }
+
 
         @Nullable
         public static String downloadFileFromDrive(final Context context, final String fileName, final String pathToSave) {
@@ -199,14 +191,6 @@ public class Google {
                                                 os.flush();
                                             } catch (Exception e) {
                                                 G.Log("EXCEPTION(Google.Drive.downloadFileFromDrive.saveLocalFile): "+e.getMessage());}
-//                                            SharedPreferences prefs = PreferenceManager
-//                                                    .getDefaultSharedPreferences(mContext);
-//                                            SharedPreferences.Editor editor = prefs.edit();
-//                                            editor.putInt(SP_KEY_DB_VER, DATABASE_VERSION);
-//                                            editor.commit();
-
-//                                            InputStream inputStream = result.getDriveContents().getInputStream();
-//                                            G.InputStreamToString(inputStream);
                                         }
                                     });
                             G.Log(G.LOGLINE);
@@ -235,10 +219,14 @@ public class Google {
             return null;
         }
 
-        public static void deleteFile() {
+        public static void deleteFile(String driveId) {
             G.Log("Google.Drive.deleteFile..");
+            appFolder = com.google.android.gms.drive.Drive.DriveApi.getAppFolder(Google.apiClient);
+            G.Log("1");
+            getDriveId(DB.DB_NAME);
+            G.Log("2");
             //DriveFile driveFile = com.google.android.gms.drive.Drive.DriveApi.getFile()
-            DriveFile driveFile = DriveId.decodeFromString(Drive.currentDriveId).asDriveFile();
+            DriveFile driveFile = DriveId.decodeFromString(driveId).asDriveFile();
             driveFile.delete(apiClient).setResultCallback(new ResultCallback<Status>() {
                 @Override
                 public void onResult(@NonNull Status status) {
@@ -252,7 +240,7 @@ public class Google {
             });
         }
 
-        public static void uploadFile2(final File file, final String driveFileName) {
+        public static void uploadFile(final File file, final String driveFileName) {
             G.Log("+++Upload File");
             G.Log("From: "+file.getAbsolutePath()+",  to Drive/appFolder/"+driveFileName);
             final ResultCallback<DriveFolder.DriveFileResult> fileCallback3 = new
@@ -277,7 +265,7 @@ public class Google {
                                 return;
                             }
                             try {
-                                byte[] bytes = G.fileToBytes(file);//"Hellooooo world!! I miss youuu...".getBytes();
+                                byte[] bytes = G.fileToBytes(file);
                                 DriveContents driveContents = result.getDriveContents();
                                 driveContents.getOutputStream().write(bytes);
                                 MetadataChangeSet changeSet = new MetadataChangeSet.Builder()

@@ -45,6 +45,8 @@ public class G {
             REQUEST_SIGN_IN_GOOGLE = 5,
             REQUEST_RESOLVE_DRIVE_CONNECTION = 6,
             REQUEST_RESOLVE_ERROR = 7,
+            REQUEST_FIRST = 8,
+            REQUEST_LAST = 9,
             RESULT_OK = 101,
             RESULT_CANCEL = 102,
             RESULT_LATER = 103;
@@ -86,6 +88,9 @@ public class G {
     }
     public static void Log(String s) {
         Log.i(LOGTAG, s); }
+    public static void LogException(Exception e) {
+        Log.i(LOGTAG, "EXCEPTION: "+e.getMessage());
+    }
     public static void LogInteres(String s) {
         Log.i(LOGINTERES, s);}
 

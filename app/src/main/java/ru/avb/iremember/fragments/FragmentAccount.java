@@ -159,14 +159,15 @@ public class FragmentAccount extends Fragment{
                     else signIn();
                     updateUI();
                 };
-                if (v.getId() == R.id.button)  Google.Drive.uploadFile2(getDbFile(), DB.DB_NAME);
+                //temp
+                if (v.getId() == R.id.button)  Google.Drive.uploadFile(getDbFile(), DB.DB_NAME);
                 if (v.getId() == R.id.button2) readFile();
                 if (v.getId() == R.id.button3) DB.logTable(getActivity());
                 if (v.getId() == R.id.button4) DB.createRow(getActivity());
                 if (v.getId() == R.id.button5) deleteFile();
                 if (v.getId() == R.id.button6) downloadDbFromDrive();
                 //if (v.getId() == R.id.button7)
-                //if (v.getId() == R.id.button4) disconnect();
+                //end temp
 
 
             }
@@ -233,12 +234,7 @@ public class FragmentAccount extends Fragment{
 
     private void deleteFile() {
         G.Log("frAccount. Delete first drive file..");
-        Google.Drive.appFolder = Drive.DriveApi.getAppFolder(Google.apiClient);
-        Google.Drive.getDriveId(DB.DB_NAME);
-        Google.Drive.deleteFile();
-    }
-
-    private void connect() {
+        Google.Drive.deleteFile(Google.Drive.currentDriveId);
     }
 
 
@@ -247,16 +243,6 @@ public class FragmentAccount extends Fragment{
         Google.Drive.appFolder = Drive.DriveApi.getAppFolder(Google.apiClient);
         Google.Drive.getDriveId(DB.DB_NAME);
     }
-
-    public void createFile() {
-        G.Log("Try to create Drive file");
-//        Drive.DriveApi.newDriveContents(Google.apiClient)
-//                .setResultCallback(contentsCallback2);
-        Drive.DriveApi.newDriveContents(Google.apiClient)
-                .setResultCallback(driveContentsCallback);
-    }
-
-
 
     public void updateUI() {
         G.Log("FrAccount.updateUI..");
@@ -302,144 +288,4 @@ public class FragmentAccount extends Fragment{
     void signOut() {
         ((HomeActivity)thisActivity).signOut();
     }
-
-    //CREATE EMPTY FILE
-    final ResultCallback<DriveFolder.DriveFileResult> createFileCallback = new ResultCallback<DriveFolder.DriveFileResult>() {
-        @Override
-        public void onResult(@NonNull DriveFolder.DriveFileResult result) {  //onResult(@NonNull DriveFolder.DriveFileResult result) //must be
-            G.Log("DriveFileResult");
-            if (!result.getStatus().isSuccess()) {
-                G.Log("ERROR!! :Error while trying to create the file");
-                G.Toast(getActivity(),"ERROR!! :Error while trying to create the file");
-                return;
-            }
-            G.LogToast(getActivity(),"+++ Created a file in App Folder: " + result.getDriveFile().getDriveId());
-        }
-    };
-    final ResultCallback<DriveApi.DriveContentsResult> contentsCallback =
-            new ResultCallback<DriveApi.DriveContentsResult>() {
-                @Override
-                public void onResult(DriveApi.DriveContentsResult result) {
-                    G.Log("Drive Contents Callback..");
-                    if (!result.getStatus().isSuccess()) {
-                        G.Toast(getActivity(),"Error while trying to create new file contents");
-                        G.Log("ERROR!! :Error while trying to create new file contents");
-                        return;
-                    }
-
-                    MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
-                            .setTitle("appconfig.txt")
-                            .setMimeType("text/plain")
-                            .build();
-                    Drive.DriveApi.getAppFolder(Google.apiClient)
-                            .createFile(Google.apiClient, metadataChangeSet, result.getDriveContents())
-                            .setResultCallback(createFileCallback);
-                    Drive.DriveApi.getAppFolder(Google.apiClient);
-                    G.LogToast(getActivity(),"Callback: Success creating file in AppFolder.");
-                }
-            };
-    //DELETE FIRST FILE
-    final ResultCallback<DriveApi.DriveContentsResult> deleteFileCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
-        @Override
-        public void onResult(@NonNull DriveApi.DriveContentsResult result) {
-            G.Log("Delete File Callback..");
-            if (!result.getStatus().isSuccess()) {
-                G.Toast(getActivity(),"Error while trying to delete file contents");
-                G.Log("ERROR!! :Error while trying to delete file contents");
-                return;
-            }
-
-            MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
-                    .setTitle("appconfig.txt")
-                    .setMimeType("text/plain")
-                    .build();
-            Drive.DriveApi.getAppFolder(Google.apiClient)
-                    .createFile(Google.apiClient, metadataChangeSet, result.getDriveContents())
-                    .setResultCallback(createFileCallback);
-            Drive.DriveApi.getAppFolder(Google.apiClient);
-            G.LogToast(getActivity(),"Callback: Success creating file in AppFolder.");
-        }
-    };
-    //CREATE FILE 2
-    final private ResultCallback<DriveApi.DriveContentsResult> driveContentsCallback =
-            new ResultCallback<DriveApi.DriveContentsResult>() {
-                @Override
-                public void onResult(DriveApi.DriveContentsResult result) {
-                    if (!result.getStatus().isSuccess()) {
-                        G.Log("ERROR driveContentsCallback: Error while trying to create new file contents");
-                        G.Log("Status message: "+result.getStatus().getStatusMessage());
-                        return;
-                    }
-                    try {
-                        byte[] bytes = "Hellooooo world!! I miss youuu...".getBytes();
-                        DriveContents driveContents = result.getDriveContents();
-                        driveContents.getOutputStream().write(bytes);
-                        MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                                .setTitle("appconfig.txt")
-                                .setMimeType("text/plain")
-                                .build();
-                        Drive.DriveApi.getAppFolder(Google.apiClient)
-                                .createFile(Google.apiClient, changeSet, driveContents)
-                                .setResultCallback(fileCallback);
-                    } catch (IOException ioException) {G.Log("EXCEPTION: "+ioException.getMessage());}
-                }
-            };
-    final private ResultCallback<DriveFolder.DriveFileResult> fileCallback = new
-            ResultCallback<DriveFolder.DriveFileResult>() {
-                @Override
-                public void onResult(DriveFolder.DriveFileResult result) {
-                    if (!result.getStatus().isSuccess()) {
-                        G.Log("ERROR fileCallback: Error while trying to create the file");
-                        return;
-                    }
-                    G.LogToast(getActivity(), "Created a file in App Folder: " + result.getDriveFile().getDriveId());
-                }
-            };
-
-    //UPLOAD TEST
-    void upload() {
-        final ResultCallback<DriveApi.DriveContentsResult> driveContentsCallback3 =
-                new ResultCallback<DriveApi.DriveContentsResult>() {
-                    @Override
-                    public void onResult(DriveApi.DriveContentsResult result) {
-                        if (!result.getStatus().isSuccess()) {
-                            G.Log("ERROR driveContentsCallback: Error while trying to create new file contents");
-                            G.Log("Status message: " + result.getStatus().getStatusMessage());
-                            return;
-                        }
-                        try {
-                            byte[] bytes = "Hellooooo world!! I miss youuu...".getBytes();
-                            DriveContents driveContents = result.getDriveContents();
-                            driveContents.getOutputStream().write(bytes);
-                            MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                                    .setTitle("appconfig.txt")
-                                    .setMimeType("text/plain")
-                                    .build();
-                            Drive.DriveApi.getAppFolder(Google.apiClient)
-                                    .createFile(Google.apiClient, changeSet, driveContents)
-                                    .setResultCallback(fileCallback);
-                        } catch (IOException ioException) {
-                            G.Log("EXCEPTION: " + ioException.getMessage());
-                        }
-                    }
-                };
-        final ResultCallback<DriveFolder.DriveFileResult> fileCallback3 = new
-                ResultCallback<DriveFolder.DriveFileResult>() {
-                    @Override
-                    public void onResult(DriveFolder.DriveFileResult result) {
-                        if (!result.getStatus().isSuccess()) {
-                            G.Log("ERROR fileCallback: Error while trying to create the file");
-                            return;
-                        }
-                        G.LogToast(getActivity(), "Created a file in App Folder: " + result.getDriveFile().getDriveId());
-                    }
-                };
-    }
-
-    private void saveDbToDrive() {
-//        Drive.DriveApi.newDriveContents(Google.apiClient)
-//                .setResultCallback(contentsCallback);
-//        Google.Drive.uploadFile();
-    }
-
 }
