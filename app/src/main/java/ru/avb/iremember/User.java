@@ -3,6 +3,7 @@ package ru.avb.iremember;
 import android.net.Uri;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.drive.DriveFile;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,12 +33,15 @@ public class User {
     }
     public String getEmail() {return this.email;}
     public String getPhotoUrl() {return this.photoUrl;}
-    public Date getLastSync() {return this.lastSync;}
+    public Date getLastSync() {
+        return this.lastSync;
+    }
     public void setId(String id) {this.id = id;}
     public void setId(int id) {this.id = String.valueOf(id);}
     public void setDisplayName(String displayName) {this.displayName = displayName;}
     public void setEmail(String email) {this.email = email;}
-    public void setLastSync(int y, int m, int d) {this.lastSync = new Date(y,m,d);}
+    public void setLastSync(Date date) {
+        this.lastSync = date;}
 
 
     public User() {

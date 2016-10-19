@@ -29,12 +29,17 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import ru.avb.iremember.DB;
 import ru.avb.iremember.G;
 import ru.avb.iremember.Google;
 import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.R;
+
+import static ru.avb.iremember.G.user;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -150,17 +155,20 @@ public class FragmentAccount extends Fragment{
             public void onClick(View v) {
                 if (v.getId() == R.id.imageview_avatar) {
                     G.Log("Clicked on avatar");
-                    if (G.user.isAuthorized) signOut();
+                    if (user.isAuthorized) signOut();
                     else signIn();
                     updateUI();
                 };
                 if (v.getId() == R.id.button_sign) {
-                    if (G.user.isAuthorized) signOut();
+                    if (user.isAuthorized) signOut();
                     else signIn();
                     updateUI();
                 };
                 //temp
-                if (v.getId() == R.id.button)  Google.Drive.uploadFile(getDbFile(), DB.DB_NAME);
+                if (v.getId() == R.id.button) {
+                    Google.Drive.uploadFile(getActivity() ,getDbFile(), DB.DB_NAME);
+
+                }
                 if (v.getId() == R.id.button2) readFile();
                 if (v.getId() == R.id.button3) DB.logTable(getActivity());
                 if (v.getId() == R.id.button4) DB.createRow(getActivity());
@@ -246,28 +254,28 @@ public class FragmentAccount extends Fragment{
 
     public void updateUI() {
         G.Log("FrAccount.updateUI..");
-        if (G.user.isAuthorized) {
+        if (user.isAuthorized) {
             G.Log("User authorized");
             //AVATAR
-            if (G.user.getPhotoUrl() != G.NONE_STRING)
-                UrlImageViewHelper.setUrlDrawable(imageview_avatar, G.user.getPhotoUrl());
+            if (user.getPhotoUrl() != G.NONE_STRING)
+                UrlImageViewHelper.setUrlDrawable(imageview_avatar, user.getPhotoUrl());
             else imageview_avatar.setImageResource(R.mipmap.placeholder_account);
             //NAME
-            if (G.user.getNameDefined()) textview_name.setText(G.user.getDisplayName());
+            if (user.getNameDefined()) textview_name.setText(user.getDisplayName());
             else textview_name.setText("No name");
             //EMAIL
-            if (G.user.getEmailDefined()) textview_email.setText(G.user.getEmail());
+            if (user.getEmailDefined()) textview_email.setText(user.getEmail());
                 //else textview_email.setText(R.string.spaceholder_accountEmail);
             else textview_email.setText("No email");
             //LAST SYNC
-            if (G.user.getLastSyncDefined()) textview_lastSync.setText(getString(R.string.lastSync)+": "+G.user.getLastSync().toString());
+            if (user.getLastSyncDefined()) textview_lastSync.setText(getString(R.string.lastSync)+": "+ user.getLastSync().toString());
             else textview_lastSync.setText(getString(R.string.lastSync)+": "+getString(R.string.never));
             //BUTTON SIGN-OUT
             textView_sign.setText(getString(R.string.sign_out));
         }
         else {
             G.Log("User not authorized");
-            G.user.logData();
+            user.logData();
             //AVATAR
             imageview_avatar.setImageResource(R.mipmap.placeholder_account);
             //NAME

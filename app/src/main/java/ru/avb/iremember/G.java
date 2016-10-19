@@ -1,5 +1,7 @@
 package ru.avb.iremember;
 
+//Нужно локально хранить lastSync
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -277,6 +284,25 @@ public class G {
         }
         catch (IOException e) {G.Log("EXCEPTION: "+e.getMessage());}
         return bytes;
+    }
+
+    public static String timeAgo(Context context, Date dp, Date dnow) {
+        DateTime datePrev = new DateTime(dp);
+        DateTime dateNow  = new DateTime(dnow);
+        Period period = new Period(datePrev,dateNow);
+
+        PeriodFormatter formatter = new PeriodFormatterBuilder()
+                .appendSeconds().appendSuffix(context.getString(R.string.seconds_ago))
+                .appendMinutes().appendSuffix(context.getString(R.string.minutes_ago))
+                .appendHours().appendSuffix(context.getString(R.string.hours_ago))
+                .appendDays().appendSuffix(context.getString(R.string.days_ago))
+                .appendWeeks().appendSuffix(context.getString(R.string.weeks_ago))
+                .appendMonths().appendSuffix(context.getString(R.string.months_ago))
+                .appendYears().appendSuffix(context.getString(R.string.years_ago))
+                .printZeroNever()
+                .toFormatter();
+
+        return formatter.print(period);
     }
 }
 

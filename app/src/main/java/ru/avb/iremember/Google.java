@@ -46,6 +46,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+import static ru.avb.iremember.G.user;
 
 
 /**
@@ -64,8 +69,9 @@ public class Google {
     public static class Drive {
         public static DriveFolder appFolder;
         public static MetadataBuffer metadataBuffer;
-        public static Metadata metadata;
+        public static Metadata currentMetadata;
         public static String currentDriveId;
+        public static DriveFile currentDriveFile;
 
         void createFile(final GoogleApiClient gac, final DriveFolder fldr,
                         final String name, final String mime, final byte[] buff) {
@@ -74,9 +80,14 @@ public class Google {
 
         }
 
+
+        /**
+         * Return to Google.Drive.currentDriveId last-modified-drive-file from AppFolder/'fileName'
+         */
         @Nullable
         public static String getDriveId(String fileName) {
             G.Log("Google.Drive.getDriveId..");
+            //final String result;
             // Find the named file with the specific Mime type.
             Query query = new Query.Builder()
                     .addFilter(Filters.and(
@@ -87,17 +98,19 @@ public class Google {
                             .build())
                     .build();
 
+
             com.google.android.gms.drive.Drive.DriveApi.query(apiClient,query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
                 @Override
-                public void onResult(@NonNull DriveApi.MetadataBufferResult result) {
+                public void onResult(@NonNull DriveApi.MetadataBufferResult callbackResult) {
                     G.Log("Callback Google.Drive.getDriveId.onResult..");
-                    if (result.getStatus().isSuccess()==false) {G.Log("EXEPTION: "+result.getStatus().getStatusMessage());}
+                    if (callbackResult.getStatus().isSuccess()==false) {G.Log("EXEPTION: "+callbackResult.getStatus().getStatusMessage());}
                     else {
-                        metadataBuffer = result.getMetadataBuffer();
+                        metadataBuffer = callbackResult.getMetadataBuffer();
                         G.Log(G.LOGLINE);
                         G.Log("MetadataBuffer count: " + metadataBuffer.getCount());
                         G.Log(G.LOGLINE);
                         if (metadataBuffer.getCount()!=0) {
+                            Drive.currentMetadata = metadataBuffer.get(0);
                             Drive.currentDriveId = metadataBuffer.get(0).getDriveId().encodeToString();
                             G.Log("current DriveID: "+Drive.currentDriveId);
                             G.Log("file size: "+metadataBuffer.get(0).getFileSize());
@@ -109,10 +122,11 @@ public class Google {
                     }
                 }
             });
-            return null;
+            return Drive.currentDriveId;
         }
 
         public static void openFile() {
+            G.Log("Google.Drive.openFile..");
             DriveId driveId = DriveId.decodeFromString(Drive.currentDriveId);
             final DriveFile driveFile = driveId.asDriveFile();
             driveFile.open(Google.apiClient, DriveFile.MODE_READ_ONLY, new DriveFile.DownloadProgressListener() {
@@ -129,7 +143,8 @@ public class Google {
                                 return;
                             }
                             InputStream inputStream = result.getDriveContents().getInputStream();
-                            G.InputStreamToString(inputStream);
+                            G.InputStreamToString(inputStream); //temp
+                            //Must be open file code
                         }
                     });
         }
@@ -240,10 +255,10 @@ public class Google {
             });
         }
 
-        public static void uploadFile(final File file, final String driveFileName) {
+        public static void uploadFile(final Context context, final File file, final String driveFileName) {
             G.Log("+++Upload File");
             G.Log("From: "+file.getAbsolutePath()+",  to Drive/appFolder/"+driveFileName);
-            final ResultCallback<DriveFolder.DriveFileResult> fileCallback3 = new
+            final ResultCallback<DriveFolder.DriveFileResult> uploadFileResult = new
                     ResultCallback<DriveFolder.DriveFileResult>() {
                         @Override
                         public void onResult(DriveFolder.DriveFileResult result) {
@@ -251,7 +266,24 @@ public class Google {
                                 G.Log("ERROR fileCallback: Error while trying to create the file");
                                 return;
                             }
-                            G.Log("Created a file in App Folder: " + result.getDriveFile().getDriveId());
+                            else {
+                                G.Log("Created a file in App Folder: " + result.getDriveFile().getDriveId());
+
+                                Google.Drive.getDriveId(DB.DB_NAME);
+                                user.setLastSync(Google.Drive.currentMetadata.getModifiedDate());
+                                G.Log(G.LOGLINE);
+                                G.Log("Last sync: "+user.getLastSync());
+                                G.Log("Last sync(ms): "+user.getLastSync().getTime());
+                                G.Log("Last sync(s): "+user.getLastSync().getTime()/1000);
+                                G.Log("Last sync(h): "+user.getLastSync().getTime()/60000);
+                                G.Log("Last sync(d): "+user.getLastSync().getTime()/60000/24);
+                                Date now = Calendar.getInstance().getTime();
+                                long l = now.getTime() - user.getLastSync().getTime();
+                                G.Log("Compare: "+l+" millisecs");
+                                G.Log(G.timeAgo(context, user.getLastSync(), now));
+                                G.Log(G.LOGLINE);
+                                //user.setLastSync();
+                            }
                         }
                     };
 
@@ -274,7 +306,7 @@ public class Google {
                                         .build();
                                 com.google.android.gms.drive.Drive.DriveApi.getAppFolder(Google.apiClient)
                                         .createFile(Google.apiClient, changeSet, driveContents)
-                                        .setResultCallback(fileCallback3);
+                                        .setResultCallback(uploadFileResult);
                             } catch (IOException ioException) {
                                 G.Log("EXCEPTION: " + ioException.getMessage());
                             }
@@ -326,8 +358,8 @@ public class Google {
         G.Log("Google.handleSignInResult..");
         if (result.isSuccess()) {
             Google.setSignInResult(result);
-            G.user.getDataFromGoogle();
-            G.user.logData();
+            user.getDataFromGoogle();
+            user.logData();
             G.Log("Successfully");
             return true;
         }
