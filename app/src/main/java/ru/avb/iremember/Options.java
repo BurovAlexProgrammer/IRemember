@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 
+import java.util.Date;
+
 /**
  * Created by Alex on 27.04.2016.
  */
@@ -18,13 +20,15 @@ public class Options extends AppCompatActivity {
                             isNeedWelcome,
                             showNotification;
     public static String    locale;
+    public static Date      lastSync;
 
 
     //OPTIONS PREFERENCES
     public static final String  KEY_NEED_WELCOME = "isNeedWelcome",
                                 KEY_OPTIONS_EXIST = "isOptionsExist",
                                 KEY_LOCALE = "prefLocale",
-                                KEY_SHOW_NOTIFICATION = "prefShowNotif";
+                                KEY_SHOW_NOTIFICATION = "prefShowNotif",
+                                KEY_LAST_SYNC = "prefastPref";
     public static final String VALUE_OPTIONS_EXIST = "OptionsExist";
     public static final String VALUE_OPTIONS_FAIL = "OptionsFail",
                                 VALUE_TRUE = "true",
@@ -104,6 +108,11 @@ public class Options extends AppCompatActivity {
         prefEditor.putInt(key, value);
         prefEditor.commit();
     }
+    public static void writeOption(String key, Date value) {
+        G.Log("Write date option: '"+key.toString()+ "', value = "+value.toString());
+        prefEditor.putString(key, value.toString());
+        prefEditor.commit();
+    }
 
     public static String readOption(String key, String defaultValue) {
         G.Log("Read string option: '"+key.toString()+ "', value = "+sharedPref.getString(key, defaultValue));
@@ -117,6 +126,12 @@ public class Options extends AppCompatActivity {
         G.Log("Read int option: '"+key.toString()+ "', value = "+sharedPref.getInt(key, defaultValue));
         return sharedPref.getInt(key, defaultValue);
     }
+    public static Date readOption(String key, Date defaultValue) {
+        String s = sharedPref.getString(key, defaultValue.toString());
+        Date value = Date.parse(s);
+        G.Log("Read int option: '"+key.toString()+ "', value(s) = "+s);
+        return sharedPref.getInt(key, defaultValue);
+    }
 
     public static void loadDefaultOptions() {
         G.Log("Loading default options..");
@@ -124,6 +139,7 @@ public class Options extends AppCompatActivity {
         isNeedWelcome = true;
         locale = "default";
         showNotification = true;
+        lastSync = G.NONE_DATE;
     }
     public static void saveOptions() {
         G.Log("Saving options..");
@@ -131,6 +147,7 @@ public class Options extends AppCompatActivity {
         writeOption(KEY_NEED_WELCOME, isNeedWelcome);
         writeOption(KEY_LOCALE, locale);
         writeOption(KEY_SHOW_NOTIFICATION, showNotification);
+        writeOption(KEY_LAST_SYNC, lastSync);
     }
 
     public static void initPreferences(Context context) {
