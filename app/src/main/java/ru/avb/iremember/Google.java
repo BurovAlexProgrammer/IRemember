@@ -37,6 +37,9 @@ import com.google.android.gms.drive.query.SortOrder;
 import com.google.android.gms.drive.query.SortableField;
 import com.google.android.gms.location.ActivityRecognition;
 
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -270,18 +273,11 @@ public class Google {
                                 G.Log("Created a file in App Folder: " + result.getDriveFile().getDriveId());
 
                                 Google.Drive.getDriveId(DB.DB_NAME);
-                                user.setLastSync(Google.Drive.currentMetadata.getModifiedDate());
-                                G.Log(G.LOGLINE);
-                                G.Log("Last sync: "+user.getLastSync());
-                                G.Log("Last sync(ms): "+user.getLastSync().getTime());
-                                G.Log("Last sync(s): "+user.getLastSync().getTime()/1000);
-                                G.Log("Last sync(h): "+user.getLastSync().getTime()/60000);
-                                G.Log("Last sync(d): "+user.getLastSync().getTime()/60000/24);
-                                Date now = Calendar.getInstance().getTime();
-                                long l = now.getTime() - user.getLastSync().getTime();
-                                G.Log("Compare: "+l+" millisecs");
-                                G.Log(G.timeAgo(context, user.getLastSync(), now));
-                                G.Log(G.LOGLINE);
+                                DateTime lastModif = new DateTime(Google.Drive.currentMetadata.getModifiedDate());
+                                user.setLastSync(lastModif);
+                                G.Log("Last sync text: "+user.getLastSyncText(context, user.getLastSync()));
+                                user.setLastSyncText(user.getLastSyncText(context, user.getLastSync()));
+                                //HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
                                 //user.setLastSync();
                             }
                         }

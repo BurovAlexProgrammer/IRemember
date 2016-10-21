@@ -315,7 +315,6 @@ public class HomeActivity extends AppCompatActivity
 //        if (toolbar.getTitle().equals(getString(R.string.title_account))) {
 //            G.Log("Update from activity FragmentAccount");
             if (fragmentAccount.isVisible()) {
-                G.Log("++++++++++++++ WORK ++++++++++++++");
                 ((FragmentAccount)getFragmentManager().findFragmentById(R.id.container)).updateUI();
             }
 //        }

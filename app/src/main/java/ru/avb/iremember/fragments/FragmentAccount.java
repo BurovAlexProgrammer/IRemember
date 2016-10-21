@@ -188,7 +188,7 @@ public class FragmentAccount extends Fragment{
         buttonSing = (LinearLayout)parent.findViewById(R.id.button_sign);
         buttonSing.setOnClickListener(onClick);
         //temp
-        ((Button)parent.findViewById(R.id.button)).setOnClickListener(onClick);
+        ((Button)parent.findViewById(R.id.button )).setOnClickListener(onClick);
         ((Button)parent.findViewById(R.id.button2)).setOnClickListener(onClick);
         ((Button)parent.findViewById(R.id.button3)).setOnClickListener(onClick);
         ((Button)parent.findViewById(R.id.button4)).setOnClickListener(onClick);
@@ -268,8 +268,9 @@ public class FragmentAccount extends Fragment{
                 //else textview_email.setText(R.string.spaceholder_accountEmail);
             else textview_email.setText("No email");
             //LAST SYNC
-            if (user.getLastSyncDefined()) textview_lastSync.setText(getString(R.string.lastSync)+": "+ user.getLastSync().toString());
-            else textview_lastSync.setText(getString(R.string.lastSync)+": "+getString(R.string.never));
+            textview_lastSync.setText(user.getLastSyncText());
+            //if (user.getLastSyncDefined()) textview_lastSync.setText(getString(R.string.lastSync)+": "+ user.getLastSync().toString());
+            //else textview_lastSync.setText(getString(R.string.lastSync)+": "+getString(R.string.never));
             //BUTTON SIGN-OUT
             textView_sign.setText(getString(R.string.sign_out));
         }

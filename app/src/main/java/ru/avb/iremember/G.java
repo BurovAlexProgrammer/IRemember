@@ -1,6 +1,7 @@
 package ru.avb.iremember;
 
 //Нужно локально хранить lastSync
+//Нужно обновить FragmentAccount from Google
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,7 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeField;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
@@ -62,7 +67,9 @@ public class G {
             PREF_FILENAME = "prfs",
             PREF_NEED_WELCOME = "nwk",
             PREF_TYPE = "type_",
-            PREF_STYLE = "style_";
+            PREF_STYLE = "style_",
+
+            DATETIME_FORMATTER = "yyyy-MM-dd HH:mm:ss";
 
     public static final String
             EXTRA_MESSAGE = "mess",
@@ -73,6 +80,7 @@ public class G {
             NULL = "$NULL",
             NONE_STRING = "$NONE_STR";
     public static final Date NONE_DATE = new Date(0,0,0);
+    public static final DateTime NONE_DATETIME = new DateTime(0);
     public static final Calendar NONE_CALENDAR = new GregorianCalendar(2000,1,1);
 
     public static final String
@@ -88,6 +96,7 @@ public class G {
 
     //GLOBAL
     public static User user;
+    public static final DateTimeFormatter datetimeFormatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
 
     public static final String LOGTAG = "logApp", LOGDB = "logDB", LOGINTERES = "logInteres", LOGLINE = "---------------------------------------------";
     public static void LogDB(String s) {
@@ -286,23 +295,45 @@ public class G {
         return bytes;
     }
 
-    public static String timeAgo(Context context, Date dp, Date dnow) {
-        DateTime datePrev = new DateTime(dp);
-        DateTime dateNow  = new DateTime(dnow);
+    public static String timeAgo(Context context, DateTime datePrev, DateTime dateNow) {
         Period period = new Period(datePrev,dateNow);
 
         PeriodFormatter formatter = new PeriodFormatterBuilder()
-                .appendSeconds().appendSuffix(context.getString(R.string.seconds_ago))
-                .appendMinutes().appendSuffix(context.getString(R.string.minutes_ago))
-                .appendHours().appendSuffix(context.getString(R.string.hours_ago))
+                .appendMonths().appendSuffix(context.getString(R.string.months_ago)).printZeroNever()
                 .appendDays().appendSuffix(context.getString(R.string.days_ago))
-                .appendWeeks().appendSuffix(context.getString(R.string.weeks_ago))
-                .appendMonths().appendSuffix(context.getString(R.string.months_ago))
-                .appendYears().appendSuffix(context.getString(R.string.years_ago))
+                .appendHours().appendSuffix(context.getString(R.string.hours_ago))
+                .appendMinutes().appendSuffix(context.getString(R.string.minutes_ago))
+                //.appendSeconds().appendSuffix(context.getString(R.string.seconds_ago))
+                //.appendWeeks().appendSuffix(context.getString(R.string.weeks_ago))
+                //.appendYears().appendSuffix(context.getString(R.string.years_ago))
                 .printZeroNever()
                 .toFormatter();
 
         return formatter.print(period);
+    }
+
+
+
+    public static class Convert {
+        public static String dateToString(Date date) {
+            DateTime dateTime = new DateTime(date);
+            DateTimeFormatter formatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
+            String dateStr = formatter.print(dateTime);
+            return dateStr;
+        }
+
+
+        public static Date stringToDate(String str) {
+
+            DateTimeFormatter formatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
+            DateTime dateTime = formatter.parseDateTime(str);
+            Date date = dateTime.toDate();
+            return date;
+        }
+
+        public static DateTime dateToDatetime(Date date) {
+            return new DateTime(date);
+        }
     }
 }
 

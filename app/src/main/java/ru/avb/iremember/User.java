@@ -1,9 +1,18 @@
 package ru.avb.iremember;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.drive.DriveFile;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -17,8 +26,9 @@ public class User {
             email,
             id,
             photoUrl;
-    Date lastSync;
+    DateTime lastSync;
     Calendar lastSyncCalendar;
+    private String lastSyncText;
 
 
     public String getId() {return this.id;}
@@ -27,21 +37,21 @@ public class User {
     public boolean getEmailDefined() {if (this.email == G.NONE_STRING) return false; else return true;}
     public boolean getPhotoUrlDefined() {if (this.photoUrl == G.NONE_STRING) return false; else return true;}
     public boolean getLastSyncDefined() {
-        if (this.lastSync==null) G.Log("G.user.lastSync == null");
-        if (G.NONE_DATE==null) G.Log("G.NONE_DATE == null");
-        if (this.lastSync == G.NONE_DATE) return false; else return true;
+        if (this.lastSync==null) {G.Log("G.user.lastSync == null"); return false;}
+        if (this.lastSync == G.NONE_DATETIME) return false; else return true;
     }
     public String getEmail() {return this.email;}
     public String getPhotoUrl() {return this.photoUrl;}
-    public Date getLastSync() {
+    public DateTime getLastSync() {
         return this.lastSync;
     }
     public void setId(String id) {this.id = id;}
     public void setId(int id) {this.id = String.valueOf(id);}
     public void setDisplayName(String displayName) {this.displayName = displayName;}
     public void setEmail(String email) {this.email = email;}
-    public void setLastSync(Date date) {
-        this.lastSync = date;}
+    public void setLastSync(DateTime dateTime) {
+        this.lastSync = dateTime;
+    }
 
 
     public User() {
@@ -50,7 +60,7 @@ public class User {
         this.displayName = G.NONE_STRING;
         this.email = G.NONE_STRING;
         this.photoUrl = G.NONE_STRING;
-        this.lastSync = G.NONE_DATE;
+        this.lastSync = G.NONE_DATETIME;
         this.lastSyncCalendar = G.NONE_CALENDAR;
     }
 
@@ -60,7 +70,7 @@ public class User {
         this.displayName = displayName;
         this.email = email;
         this.photoUrl = photoUrl;
-        this.lastSync = G.NONE_DATE;
+        this.lastSync = G.NONE_DATETIME;
         this.lastSyncCalendar = G.NONE_CALENDAR;
     };
 
@@ -91,8 +101,33 @@ public class User {
         this.email = G.NONE_STRING;
         this.displayName = G.NONE_STRING;
         this.photoUrl = G.NONE_STRING;
-        this.lastSync = G.NONE_DATE;
+        this.lastSync = G.NONE_DATETIME;
         this.lastSyncCalendar = G.NONE_CALENDAR;
+    }
+
+    public String getLastSyncText(Context context, DateTime dateTime) {
+        Resources r = context.getResources();
+        String sBegin = r.getString(R.string.lastSync)+": ";
+        String datePattern = "";
+        String timePattern = "";
+        if (dateTime==G.NONE_DATETIME) return sBegin+r.getString(R.string.never);
+            if (dateTime.getDayOfYear()!=DateTime.now().getDayOfYear()) {
+                datePattern = "dd:MM:yyyy";
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(datePattern);
+                String date = formatter.print(dateTime);
+                return sBegin+r.getString(R.string.at_date)+" "+date;}
+            else { //The same day
+                datePattern=""; timePattern="HH:mm";
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(timePattern);
+                String time = formatter.print(dateTime);
+                return sBegin+r.getString(R.string.today)+" "+r.getString(R.string.at_time)+" "+time;}
+    }
+
+    public void setLastSyncText(String lastSyncText) {
+        this.lastSyncText = lastSyncText;
+    }
+    public String getLastSyncText() {
+        return this.lastSyncText;
     }
 }
 

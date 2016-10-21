@@ -128,9 +128,9 @@ public class Options extends AppCompatActivity {
     }
     public static Date readOption(String key, Date defaultValue) {
         String s = sharedPref.getString(key, defaultValue.toString());
-        Date value = Date.parse(s);
-        G.Log("Read int option: '"+key.toString()+ "', value(s) = "+s);
-        return sharedPref.getInt(key, defaultValue);
+        Date value = G.Convert.stringToDate(s);
+        G.Log("Read int option: '"+key.toString()+ "', value(String) = "+s+", value(Date) = "+value.toString());
+        return value;
     }
 
     public static void loadDefaultOptions() {
@@ -164,4 +164,6 @@ public class Options extends AppCompatActivity {
         G.Log("showNotification: "+showNotification);
         G.Log(G.LOGLINE);
     }
+
+
 }

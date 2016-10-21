@@ -18,7 +18,6 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         G.Log("MyApplication.onCreate()..");
-
         Options.initPreferences(this);
         Options.locale = Options.sharedPref.getString(Options.KEY_LOCALE, "none");
         G.Log("App language : '"+Options.locale+"'");

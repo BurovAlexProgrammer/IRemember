@@ -56,5 +56,8 @@
     <string name="weeks_ago">" weeks ago"</string>
     <string name="months_ago">" months ago"</string>
     <string name="years_ago">" years ago"</string>
+    <string name="at_date" />
+    <string name="at_time">at</string>
+    <string name="today">today</string>
 
 </resources>
