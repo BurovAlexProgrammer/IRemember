@@ -27,6 +27,7 @@ import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.DriveResource;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataBuffer;
 import com.google.android.gms.drive.MetadataChangeSet;
@@ -219,21 +220,6 @@ public class Google {
                 }
             });
 
-
-//            MetadataBuffer buffer = null;
-//            try {
-//                buffer = appFolder.queryChildren(apiClient, query).await().getMetadataBuffer();
-//
-//                if (buffer != null && buffer.getCount() > 0) {
-//                    G.Log("Found: " + buffer.getCount() + " file(s)");
-//                    return buffer.get(0).getDriveId();
-//                }
-//                return null;
-//            } finally {
-//                if (buffer != null) {
-//                    buffer.close();
-//                }
-//            }
             return null;
         }
 
@@ -269,18 +255,22 @@ public class Google {
                                 G.Log("ERROR fileCallback: Error while trying to create the file");
                                 return;
                             }
-                            else {
-                                G.Log("Created a file in App Folder: " + result.getDriveFile().getDriveId());
-
-                                Google.Drive.getDriveId(DB.DB_NAME);
-                                DateTime lastModif = new DateTime(Google.Drive.currentMetadata.getModifiedDate());
-                                user.setLastSync(lastModif);
-                                G.Log("Last sync text: "+user.getLastSyncText(context, user.getLastSync()));
-                                user.setLastSyncText(user.getLastSyncText(context, user.getLastSync()));
-                                //HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-                                //user.setLastSync();
+                            G.Log("Created a file in App Folder: " + result.getDriveFile().getDriveId());
+                            //Get metadata after uploading file to drive
+                            result.getDriveFile().getMetadata(Google.apiClient).setResultCallback(new ResultCallback<DriveResource.MetadataResult>() {
+                                @Override
+                                public void onResult(@NonNull DriveResource.MetadataResult metadataResult) {
+                                    G.Log("Get metadata after uploading file");
+                                    if (metadataResult.getStatus().isSuccess()==false) {G.Log("EXCEPTION: "+metadataResult.getStatus().getStatusMessage()); return;}
+                                    Drive.currentMetadata = metadataResult.getMetadata();
+                                    DateTime lastModif = new DateTime(Drive.currentMetadata.getModifiedDate());
+                                    user.setLastSync(lastModif);
+                                    G.Log("Last sync text: "+user.getLastSyncText(context, user.getLastSync()));
+                                    user.setLastSyncText(user.getLastSyncText(context, user.getLastSync()));
+                                    Options.writeOption(Options.KEY_LAST_SYNC, lastModif);
+                                    ((HomeActivity)context).updateUI();}
+                                });
                             }
-                        }
                     };
 
             final ResultCallback<DriveApi.DriveContentsResult> driveContentsCallback =

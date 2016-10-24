@@ -8,7 +8,12 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 
+import org.joda.time.DateTime;
+
+import java.sql.Timestamp;
 import java.util.Date;
+
+import static ru.avb.iremember.G.user;
 
 /**
  * Created by Alex on 27.04.2016.
@@ -20,7 +25,7 @@ public class Options extends AppCompatActivity {
                             isNeedWelcome,
                             showNotification;
     public static String    locale;
-    public static Date      lastSync;
+    public static DateTime lastSync;
 
 
     //OPTIONS PREFERENCES
@@ -28,7 +33,7 @@ public class Options extends AppCompatActivity {
                                 KEY_OPTIONS_EXIST = "isOptionsExist",
                                 KEY_LOCALE = "prefLocale",
                                 KEY_SHOW_NOTIFICATION = "prefShowNotif",
-                                KEY_LAST_SYNC = "prefastPref";
+                                KEY_LAST_SYNC = "prefLastSync";
     public static final String VALUE_OPTIONS_EXIST = "OptionsExist";
     public static final String VALUE_OPTIONS_FAIL = "OptionsFail",
                                 VALUE_TRUE = "true",
@@ -90,6 +95,8 @@ public class Options extends AppCompatActivity {
             G.Log("ERROR!! Option.locale didn't load. locale = default");
             locale = "default";
         }
+        lastSync = readOption(KEY_LAST_SYNC, G.NONE_DATETIME);
+        user.lastSync = lastSync;
         logOptions();
     }
 
@@ -108,9 +115,11 @@ public class Options extends AppCompatActivity {
         prefEditor.putInt(key, value);
         prefEditor.commit();
     }
-    public static void writeOption(String key, Date value) {
-        G.Log("Write date option: '"+key.toString()+ "', value = "+value.toString());
-        prefEditor.putString(key, value.toString());
+    public static void writeOption(String key, DateTime value) {
+        G.Log("Write datetime option: value(dt): "+value.toString());
+        String s = String.valueOf(value.getMillis());
+        G.Log("Write datetime option: '"+key.toString()+ "', value = "+s);
+        prefEditor.putString(key, s);
         prefEditor.commit();
     }
 
@@ -126,11 +135,17 @@ public class Options extends AppCompatActivity {
         G.Log("Read int option: '"+key.toString()+ "', value = "+sharedPref.getInt(key, defaultValue));
         return sharedPref.getInt(key, defaultValue);
     }
-    public static Date readOption(String key, Date defaultValue) {
-        String s = sharedPref.getString(key, defaultValue.toString());
-        Date value = G.Convert.stringToDate(s);
-        G.Log("Read int option: '"+key.toString()+ "', value(String) = "+s+", value(Date) = "+value.toString());
-        return value;
+    public static DateTime readOption(String key, DateTime defaultValue) {
+        String s = sharedPref.getString(key, G.NONE_STRING);
+        long l = Long.parseLong(s);
+        if (s==G.NONE_STRING) {
+            G.Log("Read datetime option: not found!");
+            return G.NONE_DATETIME;
+        } else {
+            DateTime value = new DateTime(l);
+            G.Log("Read datetime option: '" + key.toString() + "', value(String) = " + s + ", value(DateTime) = " + value.toString());
+            return value;
+        }
     }
 
     public static void loadDefaultOptions() {
@@ -139,7 +154,7 @@ public class Options extends AppCompatActivity {
         isNeedWelcome = true;
         locale = "default";
         showNotification = true;
-        lastSync = G.NONE_DATE;
+        lastSync = G.NONE_DATETIME;
     }
     public static void saveOptions() {
         G.Log("Saving options..");
@@ -162,8 +177,7 @@ public class Options extends AppCompatActivity {
         G.Log("isNeedWelcome: "+isNeedWelcome);
         G.Log("locale: "+locale);
         G.Log("showNotification: "+showNotification);
+        G.Log("lastSync: "+lastSync.toString());
         G.Log(G.LOGLINE);
     }
-
-
 }

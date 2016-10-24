@@ -2,20 +2,12 @@ package ru.avb.iremember;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.net.Uri;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.drive.DriveFile;
 
 import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Алекс on 22.08.2016.
@@ -26,8 +18,7 @@ public class User {
             email,
             id,
             photoUrl;
-    DateTime lastSync;
-    Calendar lastSyncCalendar;
+    public DateTime lastSync;
     private String lastSyncText;
 
 
@@ -61,7 +52,6 @@ public class User {
         this.email = G.NONE_STRING;
         this.photoUrl = G.NONE_STRING;
         this.lastSync = G.NONE_DATETIME;
-        this.lastSyncCalendar = G.NONE_CALENDAR;
     }
 
     public User(String id, String displayName, String email, String photoUrl) {
@@ -71,7 +61,6 @@ public class User {
         this.email = email;
         this.photoUrl = photoUrl;
         this.lastSync = G.NONE_DATETIME;
-        this.lastSyncCalendar = G.NONE_CALENDAR;
     };
 
     public void logData() {
@@ -82,7 +71,6 @@ public class User {
         G.Log("eMail: "+this.email);
         G.Log("photoURL: "+this.photoUrl);
         G.Log("lastSync: "+this.lastSync.toString());
-        G.Log("lastSyncCalendar: "+this.lastSyncCalendar.toString());
         G.Log("----------------------");
     }
 
@@ -102,7 +90,6 @@ public class User {
         this.displayName = G.NONE_STRING;
         this.photoUrl = G.NONE_STRING;
         this.lastSync = G.NONE_DATETIME;
-        this.lastSyncCalendar = G.NONE_CALENDAR;
     }
 
     public String getLastSyncText(Context context, DateTime dateTime) {
@@ -112,7 +99,7 @@ public class User {
         String timePattern = "";
         if (dateTime==G.NONE_DATETIME) return sBegin+r.getString(R.string.never);
             if (dateTime.getDayOfYear()!=DateTime.now().getDayOfYear()) {
-                datePattern = "dd:MM:yyyy";
+                datePattern = "dd.MM.yyyy";
                 DateTimeFormatter formatter = DateTimeFormat.forPattern(datePattern);
                 String date = formatter.print(dateTime);
                 return sBegin+r.getString(R.string.at_date)+" "+date;}

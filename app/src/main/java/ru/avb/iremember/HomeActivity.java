@@ -1,6 +1,5 @@
 package ru.avb.iremember;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -29,12 +28,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.drive.Drive;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
+import ru.avb.iremember.asyncs.CheckLastSync;
 import ru.avb.iremember.fragments.FragmentAccount;
 import ru.avb.iremember.fragments.FragmentCategories;
 import ru.avb.iremember.fragments.FragmentSettings;
+
+import static ru.avb.iremember.G.user;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -60,7 +61,7 @@ public class HomeActivity extends AppCompatActivity
         G.Log("================HOME ACTIVITY=================");
         initialViews(HomeActivity.this);
 
-        G.user = new User();     //init static user
+        user = new User();     //init static user
         Options.initializeOptions(this);
 
         //Google
@@ -78,6 +79,7 @@ public class HomeActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.container, fragmentAccount);
         fragmentTransaction.commit();
         getSupportActionBar().setTitle(getResources().getString(R.string.title_account));
+
     }
 
     @Override
@@ -247,15 +249,15 @@ public class HomeActivity extends AppCompatActivity
         G.Log("UpdateUI..");
         updateFragmentsUI();
         //Navigation header
-        if (G.user.isAuthorized) UrlImageViewHelper.setUrlDrawable(navHeader_accountAvatar,G.user.photoUrl,R.mipmap.placeholder_account);
+        if (user.isAuthorized) UrlImageViewHelper.setUrlDrawable(navHeader_accountAvatar, user.photoUrl,R.mipmap.placeholder_account);
         else navHeader_accountAvatar.setImageResource(R.mipmap.placeholder_account);
 
-        if (G.user.isAuthorized) navHeader_accountName.setText(G.user.displayName);
+        if (user.isAuthorized) navHeader_accountName.setText(user.displayName);
         else navHeader_accountName.setText(R.string.spaceholder_accountName);
 
-        if (G.user.isAuthorized) {
+        if (user.isAuthorized) {
             navHeader_accountEmail.setVisibility(View.VISIBLE);
-            navHeader_accountEmail.setText(G.user.email);
+            navHeader_accountEmail.setText(user.email);
         }
         else {
             navHeader_accountEmail.setVisibility(View.GONE);
@@ -276,7 +278,7 @@ public class HomeActivity extends AppCompatActivity
                         @Override
                         public void onResult(Status status) {
                             G.Log("Google Sing-Out successed. Status:" + status);
-                            G.user.clearData();
+                            user.clearData();
                             updateUI();
                         }
                     }
@@ -284,7 +286,7 @@ public class HomeActivity extends AppCompatActivity
         }
         else {
             G.Log("Google.signInApi is not connected");
-            G.user.clearData();
+            user.clearData();
             updateUI();
         }
     }
@@ -305,6 +307,8 @@ public class HomeActivity extends AppCompatActivity
                 public void onResult(GoogleSignInResult googleSignInResult) {
                     //hideProgress();
                     Google.handleSignInResult(googleSignInResult);
+                    CheckLastSync sync = new CheckLastSync();
+                    sync.execute(this);
                     updateUI();
                 }
             });
