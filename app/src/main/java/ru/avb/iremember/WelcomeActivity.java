@@ -81,7 +81,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == G.REQUEST_SIGN_IN_GOOGLE) {
             Google.lastSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            boolean isSuccess = Google.handleSignInResult(Google.lastSignInResult);
+            boolean isSuccess = Google.handleSignInResult(this, Google.lastSignInResult);
             updateUI(isSuccess);
         }
     }

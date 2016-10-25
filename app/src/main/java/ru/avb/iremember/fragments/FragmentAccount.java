@@ -155,12 +155,12 @@ public class FragmentAccount extends Fragment{
             public void onClick(View v) {
                 if (v.getId() == R.id.imageview_avatar) {
                     G.Log("Clicked on avatar");
-                    if (user.isAuthorized) signOut();
+                    if (user.isAuthorized()) signOut();
                     else signIn();
                     updateUI();
                 };
                 if (v.getId() == R.id.button_sign) {
-                    if (user.isAuthorized) signOut();
+                    if (user.isAuthorized()) signOut();
                     else signIn();
                     updateUI();
                 };
@@ -254,7 +254,7 @@ public class FragmentAccount extends Fragment{
 
     public void updateUI() {
         G.Log("FrAccount.updateUI..");
-        if (user.isAuthorized) {
+        if (user.isAuthorized()) {
             G.Log("User authorized");
             //AVATAR
             if (user.getPhotoUrl() != G.NONE_STRING)

@@ -30,10 +30,11 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
-import ru.avb.iremember.asyncs.CheckLastSync;
+import ru.avb.iremember.asyncs.checkLastSync;
 import ru.avb.iremember.fragments.FragmentAccount;
 import ru.avb.iremember.fragments.FragmentCategories;
 import ru.avb.iremember.fragments.FragmentSettings;
+import ru.avb.iremember.fragments.FragmentWelcome;
 
 import static ru.avb.iremember.G.user;
 
@@ -51,6 +52,7 @@ public class HomeActivity extends AppCompatActivity
     FragmentCategories fragmentCategories;
     FragmentSettings fragmentSettings;
     FragmentAccount fragmentAccount;
+    FragmentWelcome fragmentWelcome;
     FloatingActionButton faButton;
 
 
@@ -61,30 +63,34 @@ public class HomeActivity extends AppCompatActivity
         G.Log("================HOME ACTIVITY=================");
         initialViews(HomeActivity.this);
 
-        user = new User();     //init static user
+        user = new User(this);     //init static user
         Options.initializeOptions(this);
 
         //Google
         Google.signInInitialize(this, this, this);
         googleSilentSignIn();
 
-        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
-            //Run Welcome activity
-            Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
-            startActivityForResult(intent, G.REQUEST_WELCOME_FROM_MAIN);
-        }
-
         //Show initial fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fragmentAccount);
         fragmentTransaction.commit();
         getSupportActionBar().setTitle(getResources().getString(R.string.title_account));
-
-    }
+}
 
     @Override
     public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
+        //need welcome
+        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
+            //Run Welcome activity
+            //Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
+            //startActivityForResult(intent, G.REQUEST_WELCOME_FROM_MAIN);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragmentWelcome);
+            fragmentTransaction.commit();
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_welcome));
+        }
+
         updateUI();
     }
 
@@ -174,7 +180,7 @@ public class HomeActivity extends AppCompatActivity
         if (requestCode==G.REQUEST_SIGN_IN_GOOGLE) {
             G.Log("ActivityResult from Google.signIn");
             Google.lastSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            boolean isSuccess = Google.handleSignInResult(Google.lastSignInResult);
+            boolean isSuccess = Google.handleSignInResult(this, Google.lastSignInResult);
             G.Log("isSuccess: "+isSuccess);
             updateUI();
         }
@@ -249,13 +255,13 @@ public class HomeActivity extends AppCompatActivity
         G.Log("UpdateUI..");
         updateFragmentsUI();
         //Navigation header
-        if (user.isAuthorized) UrlImageViewHelper.setUrlDrawable(navHeader_accountAvatar, user.photoUrl,R.mipmap.placeholder_account);
+        if (user.isAuthorized()) UrlImageViewHelper.setUrlDrawable(navHeader_accountAvatar, user.photoUrl,R.mipmap.placeholder_account);
         else navHeader_accountAvatar.setImageResource(R.mipmap.placeholder_account);
 
-        if (user.isAuthorized) navHeader_accountName.setText(user.displayName);
+        if (user.isAuthorized()) navHeader_accountName.setText(user.displayName);
         else navHeader_accountName.setText(R.string.spaceholder_accountName);
 
-        if (user.isAuthorized) {
+        if (user.isAuthorized()) {
             navHeader_accountEmail.setVisibility(View.VISIBLE);
             navHeader_accountEmail.setText(user.email);
         }
@@ -297,7 +303,7 @@ public class HomeActivity extends AppCompatActivity
                 Auth.GoogleSignInApi.silentSignIn(Google.apiClient);
         if (pendResult.isDone()) {
             Google.lastSignInResult = pendResult.get();
-            Google.handleSignInResult(Google.lastSignInResult);
+            Google.handleSignInResult(HomeActivity.this, Google.lastSignInResult);
             updateUI();
         }
         else {
@@ -306,16 +312,16 @@ public class HomeActivity extends AppCompatActivity
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
                     //hideProgress();
-                    Google.handleSignInResult(googleSignInResult);
-                    CheckLastSync sync = new CheckLastSync();
+                    Google.handleSignInResult(HomeActivity.this, googleSignInResult);
+                    checkLastSync sync = new checkLastSync(HomeActivity.this);
                     sync.execute(this);
-                    updateUI();
+                    //updateUI();
                 }
             });
         }
     }
 
-    private void updateFragmentsUI() {
+    public void updateFragmentsUI() {
 //        if (toolbar.getTitle().equals(getString(R.string.title_account))) {
 //            G.Log("Update from activity FragmentAccount");
             if (fragmentAccount.isVisible()) {

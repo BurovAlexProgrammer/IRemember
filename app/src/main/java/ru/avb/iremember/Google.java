@@ -265,8 +265,8 @@ public class Google {
                                     Drive.currentMetadata = metadataResult.getMetadata();
                                     DateTime lastModif = new DateTime(Drive.currentMetadata.getModifiedDate());
                                     user.setLastSync(lastModif);
-                                    G.Log("Last sync text: "+user.getLastSyncText(context, user.getLastSync()));
-                                    user.setLastSyncText(user.getLastSyncText(context, user.getLastSync()));
+                                    G.Log("Last sync text: "+user.getLastSyncTextFromDatetime(context, user.getLastSync()));
+                                    user.setLastSyncText(user.getLastSyncTextFromDatetime(context, user.getLastSync()));
                                     Options.writeOption(Options.KEY_LAST_SYNC, lastModif);
                                     ((HomeActivity)context).updateUI();}
                                 });
@@ -340,11 +340,11 @@ public class Google {
         }
     }
 
-    public static boolean handleSignInResult(GoogleSignInResult result) {
+    public static boolean handleSignInResult(Context context, GoogleSignInResult result) {
         G.Log("Google.handleSignInResult..");
         if (result.isSuccess()) {
             Google.setSignInResult(result);
-            user.getDataFromGoogle();
+            user.getDataFromGoogle(context);
             user.logData();
             G.Log("Successfully");
             return true;

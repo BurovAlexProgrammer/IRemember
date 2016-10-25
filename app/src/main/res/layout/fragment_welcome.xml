@@ -1,0 +1,181 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ru.avb.iremember.fragments.FragmentAccount">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_title"
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:theme="@style/Title"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_app_descr"
+        android:id="@+id/nav_header_email"
+        android:layout_below="@+id/title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:theme="@style/Body2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/change_language_descr"
+        android:id="@+id/textView2"
+        android:theme="@style/Body1"
+        android:layout_below="@+id/nav_header_email"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/language"
+        android:id="@+id/buttonLanguage"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="3dp"
+        android:drawableLeft="@mipmap/locale_ru"
+        android:paddingRight="15dp"
+        android:maxHeight="@dimen/buttonMaxHeight"
+        android:theme="@style/ButtonNeutral"
+        android:layout_margin="4dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout2"
+        android:layout_marginBottom="0dp"
+        android:paddingBottom="0dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/later"
+            android:id="@+id/buttonCancel"
+            android:layout_alignTop="@+id/buttonOk"
+            android:layout_toRightOf="@+id/buttonOk"
+            android:layout_toEndOf="@+id/buttonOk"
+            android:theme="@style/ButtonNegative"
+            android:maxHeight="@dimen/buttonMaxHeight"
+            android:minHeight="@dimen/buttonMaxHeight"
+            android:layout_margin="4dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            android:id="@+id/buttonOk"
+            android:layout_alignTop="@+id/button_sign_in"
+            android:layout_alignRight="@+id/textView2"
+            android:layout_alignEnd="@+id/textView2"
+            android:layout_margin="4dp"
+            android:theme="@style/ButtonPositive"
+            android:maxHeight="@dimen/buttonMaxHeight"
+            android:minHeight="@dimen/buttonMaxHeight" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_out"
+        android:id="@+id/button_sign_out"
+        android:theme="@style/ButtonNeutral"
+        android:visibility="invisible"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:longClickable="false"
+        android:maxHeight="@dimen/buttonMaxHeight"
+        android:minHeight="@dimen/buttonMaxHeight"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_alignRight="@+id/button_sign_in"
+        android:layout_alignEnd="@+id/button_sign_in" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:id="@+id/relativeLayout"
+        android:layout_below="@+id/buttonLanguage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Aleks Aleksov (alksss88@gmial.com)"
+            android:id="@+id/nameAndEmail"
+            android:visibility="invisible"
+            android:layout_below="@+id/youAreSignedInAs"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:theme="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/youAreSignedInAs"
+            android:id="@+id/youAreSignedInAs"
+            android:visibility="invisible"
+            android:theme="@style/Body1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_in_google_descr"
+            android:id="@+id/signInGoogle_description"
+            android:theme="@style/Body1"
+            android:layout_alignTop="@+id/nameAndEmail"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/common_signin_button_text"
+        android:id="@+id/button_sign_in"
+        android:layout_alignTop="@+id/button_sign_out"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:theme="@style/ButtonNeutral"
+        android:drawableLeft="@mipmap/google_sign_in"
+        android:maxHeight="@dimen/buttonMaxHeight"
+        android:paddingLeft="4dp"
+        android:paddingRight="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_google_descr"
+        android:id="@+id/textView3"
+        android:theme="@style/Body1"
+        android:layout_below="@+id/button_sign_out"
+        android:layout_alignLeft="@+id/button_sign_out"
+        android:layout_alignStart="@+id/button_sign_out"
+        android:layout_marginTop="24dp" />
+
+</RelativeLayout>

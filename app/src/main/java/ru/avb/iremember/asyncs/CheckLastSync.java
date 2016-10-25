@@ -1,5 +1,6 @@
 package ru.avb.iremember.asyncs;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
@@ -16,6 +17,7 @@ import org.joda.time.DateTime;
 import ru.avb.iremember.DB;
 import ru.avb.iremember.G;
 import ru.avb.iremember.Google;
+import ru.avb.iremember.HomeActivity;
 
 import static ru.avb.iremember.G.user;
 import static ru.avb.iremember.Google.Drive.metadataBuffer;
@@ -25,10 +27,16 @@ import static ru.avb.iremember.Google.apiClient;
  * Created by Alex on 22.10.2016.
  */
 
-public class CheckLastSync extends AsyncTask {
+public class checkLastSync extends AsyncTask {
+    private Context context;
+
+    public checkLastSync(Context c) {
+        context = c;
+    }
+
     @Override
     protected Object doInBackground(Object[] params) {
-        G.Log("My CheckLastSync..");
+        G.Log("My checkLastSync..");
         Query query = new Query.Builder()
                 .addFilter(Filters.and(
                         Filters.eq(SearchableField.TITLE, DB.DB_NAME)))
@@ -41,8 +49,9 @@ public class CheckLastSync extends AsyncTask {
         com.google.android.gms.drive.Drive.DriveApi.query(apiClient,query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
             @Override
             public void onResult(@NonNull DriveApi.MetadataBufferResult callbackResult) {
-                G.Log("Callback CheckLastSync.CheckLastSync.onResult..");
+                G.Log("Callback checkLastSync.checkLastSync.onResult..");
                 user.lastSync = G.NONE_DATETIME;
+                Google.Drive.metadataBuffer = callbackResult.getMetadataBuffer();
                 if (callbackResult.getStatus().isSuccess()==false) {
                     G.Log("EXCEPTION: "+callbackResult.getStatus().getStatusMessage());
                     return;}
@@ -58,6 +67,8 @@ public class CheckLastSync extends AsyncTask {
 
                 metadataBuffer = callbackResult.getMetadataBuffer();
                 user.lastSync = new DateTime(metadataBuffer.get(0).getModifiedDate());
+                if (context.getClass()==HomeActivity.class) {((HomeActivity)context).updateUI(); ((HomeActivity)context).updateFragmentsUI();}
+
             }
         });
         return null;

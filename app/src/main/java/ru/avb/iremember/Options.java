@@ -150,6 +150,7 @@ public class Options extends AppCompatActivity {
 
     public static void loadDefaultOptions() {
         G.Log("Loading default options..");
+
         isOptionsExist = true;
         isNeedWelcome = true;
         locale = "default";
