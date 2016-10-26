@@ -1,5 +1,6 @@
 package ru.avb.iremember;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -36,6 +37,7 @@ import ru.avb.iremember.fragments.FragmentCategories;
 import ru.avb.iremember.fragments.FragmentSettings;
 import ru.avb.iremember.fragments.FragmentWelcome;
 
+import static ru.avb.iremember.G.homeFragmentManager;
 import static ru.avb.iremember.G.user;
 
 public class HomeActivity extends AppCompatActivity
@@ -66,32 +68,24 @@ public class HomeActivity extends AppCompatActivity
         user = new User(this);     //init static user
         Options.initializeOptions(this);
 
-        //Google
+        //Show initial fragment
+        //goToFragment(fragmentAccount, getString(R.string.title_account));
         Google.signInInitialize(this, this, this);
         googleSilentSignIn();
+        //need welcome
+        G.Log("onPostCreate");
+        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
+            goToFragment(fragmentWelcome, getString(R.string.title_welcome));
+        }
 
-        //Show initial fragment
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragmentAccount);
-        fragmentTransaction.commit();
-        getSupportActionBar().setTitle(getResources().getString(R.string.title_account));
+        updateUI();
 }
 
     @Override
     public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
-        //need welcome
-        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
-            //Run Welcome activity
-            //Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
-            //startActivityForResult(intent, G.REQUEST_WELCOME_FROM_MAIN);
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragmentWelcome);
-            fragmentTransaction.commit();
-            getSupportActionBar().setTitle(getResources().getString(R.string.title_welcome));
-        }
 
-        updateUI();
+
     }
 
     @Override
@@ -244,11 +238,15 @@ public class HomeActivity extends AppCompatActivity
         fragmentCategories = new FragmentCategories();
         fragmentSettings = new FragmentSettings();
         fragmentAccount = new FragmentAccount();
+        fragmentWelcome = new FragmentWelcome();
 
         navHeader = navView.getHeaderView(0);
         navHeader_accountName = (TextView) navHeader.findViewById(R.id.nav_header_nane_account);
         navHeader_accountEmail = (TextView) navHeader.findViewById(R.id.nav_header_email);
         navHeader_accountAvatar = (ImageView) navHeader.findViewById(R.id.nav_header_avatar);
+
+        G.homeFragment = fragmentCategories;
+        G.homeFragmentManager = getFragmentManager();
     }
 
     public void updateUI () {
@@ -338,5 +336,13 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+    public void goToFragment(Fragment fragment, String title) {
+        G.Log("goToFragment("+title+")");
+        FragmentTransaction fragmentTransaction = homeFragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.commit();
+        getSupportActionBar().setTitle(title);
     }
 }

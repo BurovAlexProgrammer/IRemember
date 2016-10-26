@@ -137,11 +137,11 @@ public class Options extends AppCompatActivity {
     }
     public static DateTime readOption(String key, DateTime defaultValue) {
         String s = sharedPref.getString(key, G.NONE_STRING);
-        long l = Long.parseLong(s);
-        if (s==G.NONE_STRING) {
+        if (s.equals(G.NONE_STRING)) {
             G.Log("Read datetime option: not found!");
             return G.NONE_DATETIME;
         } else {
+            long l = Long.parseLong(s);
             DateTime value = new DateTime(l);
             G.Log("Read datetime option: '" + key.toString() + "', value(String) = " + s + ", value(DateTime) = " + value.toString());
             return value;

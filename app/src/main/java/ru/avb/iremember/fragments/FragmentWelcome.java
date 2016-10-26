@@ -48,7 +48,7 @@ public class FragmentWelcome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_categories,null);
+        root = inflater.inflate(R.layout.fragment_welcome,null);
         G.Log("================WELCOME ACTIVITY=================");
         Options.initializeOptions(getActivity());
         G.Log("Options.locale: " + Options.locale);
@@ -64,6 +64,7 @@ public class FragmentWelcome extends Fragment {
                 if (v.getId() == R.id.buttonOk) {
                 }
                 if (v.getId() == R.id.buttonCancel) {
+
                 }
                 if (v.getId() == R.id.buttonLanguage) {
                     Intent intent = new Intent(parent, LanguageActivity.class);
@@ -100,7 +101,7 @@ public class FragmentWelcome extends Fragment {
             root.findViewById(R.id.signInGoogle_description).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.youAreSignedInAs).setVisibility(View.VISIBLE);
             root.findViewById(R.id.nameAndEmail).setVisibility(View.VISIBLE);
-            ((TextView)root.findViewById(R.id.nameAndEmail)).setText(G.user.displayName+ "  (" +G.user.email+ ")" );
+            ((TextView)root.findViewById(R.id.nameAndEmail)).setText(G.user.getDisplayName()+ "  (" +G.user.getEmail()+ ")" );
         }
         else {
             root.findViewById(R.id.button_sign_in).setVisibility(View.VISIBLE);

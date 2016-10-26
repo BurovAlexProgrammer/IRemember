@@ -3,6 +3,8 @@ package ru.avb.iremember;
 //Нужно локально хранить lastSync
 //Нужно обновить FragmentAccount from Google
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -95,6 +97,8 @@ public class G {
 
 
     //GLOBAL
+    public static Fragment homeFragment;
+    public static FragmentManager homeFragmentManager;
     public static User user;
     public static final DateTimeFormatter datetimeFormatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
 
