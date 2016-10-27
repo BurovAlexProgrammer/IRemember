@@ -66,6 +66,12 @@ public class Google {
     public static GoogleSignInAccount signInAccount;
     public static GoogleSignInResult lastSignInResult;
 
+    public static  class SingIn {
+        static boolean success;
+        private static String s;
+        public static void setSuccess(boolean bool) {success = bool;}
+        public static boolean getSucces() {return success;}
+    }
 
     public static boolean isResolvingError;
 
@@ -358,6 +364,7 @@ public class Google {
     public static void setSignInResult(GoogleSignInResult result) {
         lastSignInResult = result;
     }
+
 
     //public static void silentSignIn()
 }

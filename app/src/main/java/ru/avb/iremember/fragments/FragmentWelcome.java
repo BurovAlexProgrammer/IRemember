@@ -22,6 +22,7 @@ import java.util.List;
 
 import ru.avb.iremember.Category;
 import ru.avb.iremember.G;
+import ru.avb.iremember.Google;
 import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.LanguageActivity;
 import ru.avb.iremember.Options;
@@ -42,6 +43,7 @@ public class FragmentWelcome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        parent = ((HomeActivity)getActivity());
     }
 
     @Override
@@ -62,9 +64,11 @@ public class FragmentWelcome extends Fragment {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.buttonOk) {
+                    confirm();
+                    parent.goToFragment(G.homeFragment, G.homeFragmentTitle);
                 }
                 if (v.getId() == R.id.buttonCancel) {
-
+                    parent.goToFragment(G.homeFragment, G.homeFragmentTitle);
                 }
                 if (v.getId() == R.id.buttonLanguage) {
                     Intent intent = new Intent(parent, LanguageActivity.class);
@@ -93,7 +97,8 @@ public class FragmentWelcome extends Fragment {
     public interface OnFragmentInteractionListener {
     }
 
-    public void updateUI(boolean connected) {
+    public void updateUI() {
+        boolean connected = Google.lastSignInResult.isSuccess();
         G.Log("updateUI()");
         if (connected) {
             root.findViewById(R.id.button_sign_in).setVisibility(View.INVISIBLE);

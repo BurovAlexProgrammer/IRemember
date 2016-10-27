@@ -51,10 +51,12 @@ public class HomeActivity extends AppCompatActivity
     ImageView navHeader_accountAvatar;
     DrawerLayout drawer;
     ActionBarDrawerToggle drawerToggle;
-    FragmentCategories fragmentCategories;
-    FragmentSettings fragmentSettings;
-    FragmentAccount fragmentAccount;
-    FragmentWelcome fragmentWelcome;
+    public Fragment homeFragment;
+    public String homeFragmentTitle;
+    public FragmentCategories fragmentCategories;
+    public FragmentSettings fragmentSettings;
+    public FragmentAccount fragmentAccount;
+    public FragmentWelcome fragmentWelcome;
     FloatingActionButton faButton;
 
 
@@ -69,7 +71,8 @@ public class HomeActivity extends AppCompatActivity
         Options.initializeOptions(this);
 
         //Show initial fragment
-        //goToFragment(fragmentAccount, getString(R.string.title_account));
+
+        goToFragment(fragmentAccount, getString(R.string.title_account));
         Google.signInInitialize(this, this, this);
         googleSilentSignIn();
         //need welcome
@@ -246,6 +249,7 @@ public class HomeActivity extends AppCompatActivity
         navHeader_accountAvatar = (ImageView) navHeader.findViewById(R.id.nav_header_avatar);
 
         G.homeFragment = fragmentCategories;
+        G.homeFragmentTitle = getString(R.string.title_categories);
         G.homeFragmentManager = getFragmentManager();
     }
 
@@ -322,9 +326,8 @@ public class HomeActivity extends AppCompatActivity
     public void updateFragmentsUI() {
 //        if (toolbar.getTitle().equals(getString(R.string.title_account))) {
 //            G.Log("Update from activity FragmentAccount");
-            if (fragmentAccount.isVisible()) {
-                ((FragmentAccount)getFragmentManager().findFragmentById(R.id.container)).updateUI();
-            }
+            if (fragmentAccount.isVisible()) ((FragmentAccount)getFragmentManager().findFragmentById(R.id.container)).updateUI();
+        if (fragmentWelcome.isVisible()) ((FragmentWelcome)getFragmentManager().findFragmentById(R.id.container)).updateUI();
 //        }
     }
 

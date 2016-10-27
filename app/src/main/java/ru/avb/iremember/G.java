@@ -98,11 +98,13 @@ public class G {
 
     //GLOBAL
     public static Fragment homeFragment;
+    public static String homeFragmentTitle;
     public static FragmentManager homeFragmentManager;
     public static User user;
     public static final DateTimeFormatter datetimeFormatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
 
     public static final String LOGTAG = "logApp", LOGDB = "logDB", LOGINTERES = "logInteres", LOGLINE = "---------------------------------------------";
+
     public static void LogDB(String s) {
         Log.i(LOGDB, s);
     }
