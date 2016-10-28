@@ -98,7 +98,7 @@ public class FragmentWelcome extends Fragment {
     }
 
     public void updateUI() {
-        boolean connected = Google.lastSignInResult.isSuccess();
+        boolean connected = Google.SingIn.getSuccess();//Google.lastSignInResult.isSuccess();
         G.Log("updateUI()");
         if (connected) {
             root.findViewById(R.id.button_sign_in).setVisibility(View.INVISIBLE);

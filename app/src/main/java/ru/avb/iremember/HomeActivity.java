@@ -68,13 +68,15 @@ public class HomeActivity extends AppCompatActivity
         initialViews(HomeActivity.this);
 
         user = new User(this);     //init static user
+        DB.setDbName();
         Options.initializeOptions(this);
 
         //Show initial fragment
 
-        goToFragment(fragmentAccount, getString(R.string.title_account));
+        goToFragment(homeFragment, homeFragmentTitle);
         Google.signInInitialize(this, this, this);
         googleSilentSignIn();
+        DB.setDbName();
         //need welcome
         G.Log("onPostCreate");
         if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {

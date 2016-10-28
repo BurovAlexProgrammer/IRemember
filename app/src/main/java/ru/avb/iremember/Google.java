@@ -1,27 +1,18 @@
 package ru.avb.iremember;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.cast.CastRemoteDisplayLocalService;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.drive.Contents;
-import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
@@ -36,23 +27,14 @@ import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
 import com.google.android.gms.drive.query.SortOrder;
 import com.google.android.gms.drive.query.SortableField;
-import com.google.android.gms.location.ActivityRecognition;
 
 import org.joda.time.DateTime;
-import org.joda.time.Period;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringWriter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 import static ru.avb.iremember.G.user;
 
@@ -70,7 +52,7 @@ public class Google {
         static boolean success;
         private static String s;
         public static void setSuccess(boolean bool) {success = bool;}
-        public static boolean getSucces() {return success;}
+        public static boolean getSuccess() {return success;}
     }
 
     public static boolean isResolvingError;
@@ -232,9 +214,7 @@ public class Google {
         public static void deleteFile(String driveId) {
             G.Log("Google.Drive.deleteFile..");
             appFolder = com.google.android.gms.drive.Drive.DriveApi.getAppFolder(Google.apiClient);
-            G.Log("1");
-            getDriveId(DB.DB_NAME);
-            G.Log("2");
+            getDriveId(DB.dbName);
             //DriveFile driveFile = com.google.android.gms.drive.Drive.DriveApi.getFile()
             DriveFile driveFile = DriveId.decodeFromString(driveId).asDriveFile();
             driveFile.delete(apiClient).setResultCallback(new ResultCallback<Status>() {
@@ -349,6 +329,7 @@ public class Google {
     public static boolean handleSignInResult(Context context, GoogleSignInResult result) {
         G.Log("Google.handleSignInResult..");
         if (result.isSuccess()) {
+            Google.SingIn.setSuccess(true);
             Google.setSignInResult(result);
             user.getDataFromGoogle(context);
             user.logData();
@@ -356,6 +337,7 @@ public class Google {
             return true;
         }
         else {
+            Google.SingIn.setSuccess(false);
             G.Log("Failed!");
             return false;
         }

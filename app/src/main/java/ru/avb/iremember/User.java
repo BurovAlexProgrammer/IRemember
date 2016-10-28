@@ -78,6 +78,7 @@ public class User {
 
     public void logData() {
         G.Log("----Log User Data:----");
+        G.Log("db.name: "+DB.dbName);
         if (this==null) {G.Log("G.user is NULL."); G.Log("----------------------"); return;}
         G.Log("id: "+this.id);
         G.Log("Name: "+this.displayName);
@@ -110,11 +111,15 @@ public class User {
     }
 
     public String getLastSyncTextFromDatetime(Context context, DateTime dateTime) {
+        G.LogInteres("User.getLastSyncTextFromDatetime..");
         Resources r = context.getResources();
         String sBegin = r.getString(R.string.lastSync)+": ";
         String datePattern = "";
         String timePattern = "";
-        if (dateTime==G.NONE_DATETIME) return sBegin+r.getString(R.string.never);
+        G.LogInteres("dateTime:        "+dateTime);
+        G.LogInteres("G.NONE_DATETIME: "+G.NONE_DATETIME);
+        if (dateTime.equals(G.NONE_DATETIME)) {G.LogInteres("is equals"); return sBegin+r.getString(R.string.never);}
+            G.LogInteres("is not equals");
             if (dateTime.getDayOfYear()!=DateTime.now().getDayOfYear()) {
                 datePattern = "dd.MM.yyyy";
                 DateTimeFormatter formatter = DateTimeFormat.forPattern(datePattern);

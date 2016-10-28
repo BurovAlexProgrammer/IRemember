@@ -12,8 +12,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class DB {
-    public final static String
-            DB_NAME = "iremember.db",
+    public static final String LOCAL_NAME = "localUser.db";
+
+    public static String
+            dbName = LOCAL_NAME,
             TABLE_CATEGORIES = "categories";
 
     //Column name payment
@@ -24,7 +26,7 @@ public class DB {
 
     public static class DBHelper extends SQLiteOpenHelper {
         public DBHelper(Context context) {
-            super(context, DB_NAME, null, 3);
+            super(context, dbName, null, 3);
         }
 
         public void onCreate(SQLiteDatabase dbLocal) {
@@ -189,5 +191,12 @@ public class DB {
             G.Log(G.LOGLINE);
             return false;
         }
+    }
+
+    public static void setDbName() {
+        G.LogInteres("DB.setDbName..");
+        if (G.user == null) {dbName = LOCAL_NAME; G.LogInteres("User is null. ");}
+        if (G.user.isAuthorized()) {dbName = G.user.id+".db";}
+        G.LogInteres("DB.dbName="+dbName);
     }
 }
