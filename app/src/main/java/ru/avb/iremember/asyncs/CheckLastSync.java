@@ -39,7 +39,7 @@ public class checkLastSync extends AsyncTask {
         G.Log("My checkLastSync..");
         Query query = new Query.Builder()
                 .addFilter(Filters.and(
-                        Filters.eq(SearchableField.TITLE, DB.DB_NAME)))
+                        Filters.eq(SearchableField.TITLE, DB.dbName)))
                 .setSortOrder(new SortOrder.Builder()
                         .addSortDescending(SortableField.MODIFIED_DATE)
                         .build())
