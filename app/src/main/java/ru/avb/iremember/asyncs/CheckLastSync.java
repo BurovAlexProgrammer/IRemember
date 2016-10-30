@@ -27,10 +27,10 @@ import static ru.avb.iremember.Google.apiClient;
  * Created by Alex on 22.10.2016.
  */
 
-public class checkLastSync extends AsyncTask {
+public class CheckLastSync extends AsyncTask {
     private Context context;
 
-    public checkLastSync(Context c) {
+    public CheckLastSync(Context c) {
         context = c;
     }
 

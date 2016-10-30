@@ -96,6 +96,10 @@ public class G {
             REQUEST_NEED_RESTART = "rqNeedRestart";
 
 
+    public final static class SyncType {
+        public final static String FROM_SERVER = "from server",
+            TO_SERVER = "to server",
+            NOT_SELECTED = "not selected"; };
     //GLOBAL
     public static Fragment homeFragment;
     public static String homeFragmentTitle;

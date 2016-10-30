@@ -31,7 +31,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
-import ru.avb.iremember.asyncs.checkLastSync;
+import ru.avb.iremember.asyncs.CheckLastSync;
+import ru.avb.iremember.asyncs.syncData;
 import ru.avb.iremember.fragments.FragmentAccount;
 import ru.avb.iremember.fragments.FragmentCategories;
 import ru.avb.iremember.fragments.FragmentSettings;
@@ -51,8 +52,6 @@ public class HomeActivity extends AppCompatActivity
     ImageView navHeader_accountAvatar;
     DrawerLayout drawer;
     ActionBarDrawerToggle drawerToggle;
-    public Fragment homeFragment;
-    public String homeFragmentTitle;
     public FragmentCategories fragmentCategories;
     public FragmentSettings fragmentSettings;
     public FragmentAccount fragmentAccount;
@@ -73,7 +72,7 @@ public class HomeActivity extends AppCompatActivity
 
         //Show initial fragment
 
-        goToFragment(homeFragment, homeFragmentTitle);
+        goToFragment(G.homeFragment, G.homeFragmentTitle);
         Google.signInInitialize(this, this, this);
         googleSilentSignIn();
         DB.setDbName();
@@ -306,8 +305,11 @@ public class HomeActivity extends AppCompatActivity
         OptionalPendingResult<GoogleSignInResult> pendResult =
                 Auth.GoogleSignInApi.silentSignIn(Google.apiClient);
         if (pendResult.isDone()) {
+            G.Log("Pending is done");
             Google.lastSignInResult = pendResult.get();
             Google.handleSignInResult(HomeActivity.this, Google.lastSignInResult);
+            syncData syncData = new syncData(HomeActivity.this, G.SyncType.FROM_SERVER);
+            syncData.execute();
             updateUI();
         }
         else {
@@ -315,10 +317,11 @@ public class HomeActivity extends AppCompatActivity
             pendResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
+                    G.Log("On result");
                     //hideProgress();
                     Google.handleSignInResult(HomeActivity.this, googleSignInResult);
-                    checkLastSync sync = new checkLastSync(HomeActivity.this);
-                    sync.execute(this);
+                    //CheckLastSync sync = new CheckLastSync(HomeActivity.this);
+                    //sync.execute(this);
                     //updateUI();
                 }
             });
@@ -344,7 +347,10 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void goToFragment(Fragment fragment, String title) {
-        G.Log("goToFragment("+title+")");
+        G.Log("goToFragment("+fragment.toString()+", "+title+")");
+        if (homeFragmentManager==null) {
+            G.Log("FragmentManager is NULL!!!!!!!!!!!!!!!!");
+            homeFragmentManager=getFragmentManager();}
         FragmentTransaction fragmentTransaction = homeFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
