@@ -31,6 +31,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
+import ru.avb.iremember.asyncs.AsyncInfinity;
 import ru.avb.iremember.asyncs.CheckLastSync;
 import ru.avb.iremember.asyncs.syncData;
 import ru.avb.iremember.fragments.FragmentAccount;
@@ -64,6 +65,9 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
         G.Log("================HOME ACTIVITY=================");
+        AsyncInfinity asyncInf = new AsyncInfinity();
+        asyncInf.execute();
+
         initialViews(HomeActivity.this);
 
         user = new User(this);     //init static user
@@ -77,7 +81,6 @@ public class HomeActivity extends AppCompatActivity
         googleSilentSignIn();
         DB.setDbName();
         //need welcome
-        G.Log("onPostCreate");
         if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
             goToFragment(fragmentWelcome, getString(R.string.title_welcome));
         }
@@ -308,8 +311,8 @@ public class HomeActivity extends AppCompatActivity
             G.Log("Pending is done");
             Google.lastSignInResult = pendResult.get();
             Google.handleSignInResult(HomeActivity.this, Google.lastSignInResult);
-            syncData syncData = new syncData(HomeActivity.this, G.SyncType.FROM_SERVER);
-            syncData.execute();
+            //syncData syncData = new syncData(HomeActivity.this, G.SyncType.FROM_SERVER);
+            //syncData.execute();
             updateUI();
         }
         else {
