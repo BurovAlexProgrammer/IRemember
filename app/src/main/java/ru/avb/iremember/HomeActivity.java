@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -58,6 +59,7 @@ public class HomeActivity extends AppCompatActivity
     public FragmentAccount fragmentAccount;
     public FragmentWelcome fragmentWelcome;
     FloatingActionButton faButton;
+    AsyncInfinity asyncInfinity;
 
 
     @Override
@@ -65,8 +67,8 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
         G.Log("================HOME ACTIVITY=================");
-        AsyncInfinity asyncInf = new AsyncInfinity();
-        asyncInf.execute();
+        asyncInfinity = new AsyncInfinity(this);
+        asyncInfinity.execute();
 
         initialViews(HomeActivity.this);
 
@@ -160,6 +162,15 @@ public class HomeActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         G.Log("HomeActivity.onResume..");
+        G.Log("Status: "+asyncInfinity.getStatus());
+        if (asyncInfinity.getStatus()!=AsyncTask.Status.RUNNING) {asyncInfinity.execute();}
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        G.Log("HomeActivity.onPause..");
+        asyncInfinity.cancel(false);
     }
 
     @Override

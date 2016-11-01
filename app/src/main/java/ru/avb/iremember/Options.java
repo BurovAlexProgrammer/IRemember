@@ -33,7 +33,8 @@ public class Options extends AppCompatActivity {
                                 KEY_OPTIONS_EXIST = "isOptionsExist",
                                 KEY_LOCALE = "prefLocale",
                                 KEY_SHOW_NOTIFICATION = "prefShowNotif",
-                                KEY_LAST_SYNC = "prefLastSync";
+                                KEY_LAST_SYNC = "prefLastSync",
+                                KEY_USER_ID = "lastUserId";
     public static final String VALUE_OPTIONS_EXIST = "OptionsExist";
     public static final String VALUE_OPTIONS_FAIL = "OptionsFail",
                                 VALUE_TRUE = "true",
@@ -76,16 +77,16 @@ public class Options extends AppCompatActivity {
         prefEditor.commit();
     }
 
-    public static void initializeOptions(Activity activity) {
+    public static void initializeOptions(Context context) {
         G.Log("Initialize options.");
-        initPreferences(activity);
+        initPreferences(context);
         //Check options exist
         isOptionsExist = sharedPref.getBoolean(KEY_OPTIONS_EXIST, false);
         if (!isOptionsExist) {
             G.Log("Options are not found.");
             loadDefaultOptions();
             saveOptions();
-            initializeOptions(activity);
+            initializeOptions(context);
         } else G.Log("Options are exist");
         //Load all options
         isNeedWelcome = sharedPref.getBoolean(KEY_NEED_WELCOME, true);
