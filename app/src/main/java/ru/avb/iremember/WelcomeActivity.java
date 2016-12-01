@@ -28,10 +28,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        G.Log("================WELCOME ACTIVITY=================");
-        Options.initializeOptions(this);
-        G.Log("Options.locale: " + Options.locale);
-        setContentView(R.layout.welcome_activity);
+        G.Log("================WELCOME FRAGMENT================");
         Button buttonOk = (Button) findViewById(R.id.buttonOk);
         Button buttonCancel = (Button) findViewById(R.id.buttonCancel);
         Button buttonLanguage = (Button) findViewById(R.id.buttonLanguage);
@@ -67,10 +64,6 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
         buttonLanguage.setOnClickListener(onClick);
         findViewById(R.id.button_sign_in).setOnClickListener(onClick);
         buttonSignOut.setOnClickListener(onClick);
-
-        //----------Google----------
-       // Google.signInInitialize(this,this,this);
-        //---------------------------
     }
 
     @Override

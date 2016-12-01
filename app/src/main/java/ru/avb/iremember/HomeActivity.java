@@ -83,19 +83,17 @@ public class HomeActivity extends AppCompatActivity
         googleSilentSignIn();
         DB.setDbName();
         //need welcome
-        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
-            goToFragment(fragmentWelcome, getString(R.string.title_welcome));
+//        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
+//            goToFragment(fragmentWelcome, getString(R.string.title_welcome));
+//        }
+        if (Options.isNeedWelcome) {
+            Intent intent = new Intent(HomeActivity.this, IntroActivity.class);
+            startActivityForResult(intent, G.REQUEST_INTRO);
         }
-
         updateUI();
+
+        //finish();
 }
-
-    @Override
-    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -163,14 +161,19 @@ public class HomeActivity extends AppCompatActivity
         super.onResume();
         G.Log("HomeActivity.onResume..");
         G.Log("Status: "+asyncInfinity.getStatus());
-        if (asyncInfinity.getStatus()!=AsyncTask.Status.RUNNING) {asyncInfinity.execute();}
+        if (asyncInfinity.getStatus()!=AsyncTask.Status.RUNNING) {
+            //asyncInfinity.execute();
+            asyncInfinity.cancel(true);
+            asyncInfinity = new AsyncInfinity(this);
+            asyncInfinity.execute();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         G.Log("HomeActivity.onPause..");
-        asyncInfinity.cancel(false);
+        asyncInfinity.cancel(true);
     }
 
     @Override
@@ -195,6 +198,14 @@ public class HomeActivity extends AppCompatActivity
             boolean isSuccess = Google.handleSignInResult(this, Google.lastSignInResult);
             G.Log("isSuccess: "+isSuccess);
             updateUI();
+        }
+        if (requestCode==G.REQUEST_INTRO) {
+            G.Log("ActivityResult from IntroActivity");
+            if (resultCode==G.RESULT_CANCEL) {G.Log("Intro result: CANCELED");}
+            if (resultCode==G.RESULT_OK) {G.Log("Intro result: OK");
+                Options.writeOption(Options.KEY_NEED_WELCOME, false);
+            }
+            //After skip or done intro app
         }
 //        if (requestCode==G.REQUEST_RESOLVE_DRIVE_CONNECTION) {
 //            Google.driveApi.connect();

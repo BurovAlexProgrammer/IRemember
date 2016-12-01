@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <!-- android:theme="@style/Dialog_WindowNoTitle" -->
     <!--android:name=".MyApplication"-->
@@ -25,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".IntroActivity"
+            android:configChanges="locale"/>
         <activity
             android:name=".WelcomeActivity"
             android:configChanges="locale" />

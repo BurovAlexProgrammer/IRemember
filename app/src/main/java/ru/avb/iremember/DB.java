@@ -7,9 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Алекс on 16.02.2016.
- */
 
 public class DB {
     public static final String LOCAL_NAME = "localUser.db";

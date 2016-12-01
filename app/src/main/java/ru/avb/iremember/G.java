@@ -61,6 +61,7 @@ public class G {
             REQUEST_RESOLVE_ERROR = 7,
             REQUEST_FIRST = 8,
             REQUEST_LAST = 9,
+            REQUEST_INTRO = 10,
             RESULT_OK = 101,
             RESULT_CANCEL = 102,
             RESULT_LATER = 103;

@@ -30,7 +30,7 @@ public class AsyncInfinity extends AsyncTask {
             Options.initializeOptions(context);
             Options.readOption(Options.KEY_USER_ID, G.NONE_STRING);
             while (!finish) {
-                if (isCancelled()) return null;
+                if (isCancelled()) {G.Log("AsynInfinity3 canceled");return null;}
                 t+=1000;
                 sleep(1000);
                 G.LogInteres("t:"+t);

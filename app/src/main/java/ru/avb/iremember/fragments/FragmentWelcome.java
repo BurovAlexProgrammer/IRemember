@@ -36,6 +36,13 @@ public class FragmentWelcome extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+    Button buttonOk;
+    Button buttonSignIn;
+    Button buttonSignOut;
+    Button buttonLanguage;
+    Button buttonCancel;
+
     public FragmentWelcome() {
         // Required empty public constructor
     }
@@ -52,12 +59,13 @@ public class FragmentWelcome extends Fragment {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_welcome,null);
         G.Log("================WELCOME ACTIVITY=================");
-        Options.initializeOptions(getActivity());
-        G.Log("Options.locale: " + Options.locale);
-        Button buttonOk = (Button) root.findViewById(R.id.buttonOk);
-        Button buttonCancel = (Button) root.findViewById(R.id.buttonCancel);
-        Button buttonLanguage = (Button) root.findViewById(R.id.buttonLanguage);
-        Button buttonSignOut = (Button) root.findViewById(R.id.button_sign_out);
+
+        buttonOk = (Button) root.findViewById(R.id.buttonOk);
+        buttonCancel = (Button) root.findViewById(R.id.buttonCancel);
+        buttonLanguage = (Button) root.findViewById(R.id.buttonLanguage);
+        buttonSignOut = (Button) root.findViewById(R.id.button_sign_out);
+        buttonSignIn = (Button) root.findViewById(R.id.button_sign_in);
+
         updateLangButton();
 
         View.OnClickListener onClick = new View.OnClickListener() {
@@ -83,7 +91,7 @@ public class FragmentWelcome extends Fragment {
         buttonOk.setOnClickListener(onClick);
         buttonCancel.setOnClickListener(onClick);
         buttonLanguage.setOnClickListener(onClick);
-        root.findViewById(R.id.button_sign_in).setOnClickListener(onClick);
+        buttonSignIn.setOnClickListener(onClick);
         buttonSignOut.setOnClickListener(onClick);
         return root;
     }
@@ -101,16 +109,16 @@ public class FragmentWelcome extends Fragment {
         boolean connected = Google.SingIn.getSuccess();//Google.lastSignInResult.isSuccess();
         G.Log("updateUI()");
         if (connected) {
-            root.findViewById(R.id.button_sign_in).setVisibility(View.INVISIBLE);
-            root.findViewById(R.id.button_sign_out).setVisibility(View.VISIBLE);
+            buttonSignIn.setVisibility(View.INVISIBLE);
+            buttonSignOut.setVisibility(View.VISIBLE);
             root.findViewById(R.id.signInGoogle_description).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.youAreSignedInAs).setVisibility(View.VISIBLE);
             root.findViewById(R.id.nameAndEmail).setVisibility(View.VISIBLE);
             ((TextView)root.findViewById(R.id.nameAndEmail)).setText(G.user.getDisplayName()+ "  (" +G.user.getEmail()+ ")" );
         }
         else {
-            root.findViewById(R.id.button_sign_in).setVisibility(View.VISIBLE);
-            root.findViewById(R.id.button_sign_out).setVisibility(View.INVISIBLE);
+            buttonSignIn.setVisibility(View.VISIBLE);
+            buttonSignOut.setVisibility(View.INVISIBLE);
             root.findViewById(R.id.signInGoogle_description).setVisibility(View.VISIBLE);
             root.findViewById(R.id.youAreSignedInAs).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.nameAndEmail).setVisibility(View.INVISIBLE);
@@ -135,7 +143,7 @@ public class FragmentWelcome extends Fragment {
         image.setBounds( 0, 0, w-5, h-5 );
         //Drawable image = getResources().getDrawable(imageId);
         //((Button)findViewById(R.id.buttonLanguage)).setCompoundDrawablesWithIntrinsicBounds(image, null, null, null);
-        ((Button)root.findViewById(R.id.buttonLanguage)).setCompoundDrawables( image, null, null, null );
+        buttonLanguage.setCompoundDrawables( image, null, null, null );
 
     }
 
