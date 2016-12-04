@@ -1,25 +1,41 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.avb.iremember.fragments.First">
+    tools:context="ru.avb.iremember.fragments.First"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:background="#8262a6"
+    android:layout_gravity="center_horizontal">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-    <RadioButton
-        android:text="RadioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioButton" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView12"
+            android:layout_gravity="center_horizontal"
+            style="@style/Headline"
+            android:text="@string/intro1_headline"
+            android:textAlignment="center"
+            android:padding="16dp"
+            android:layout_margin="16dp" />
 
-    <CheckBox
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView6"
+            android:layout_gravity="center_vertical|center_horizontal"
+            app:srcCompat="@drawable/cat_pass_car"
+            android:tint="@color/cast_intro_overlay_button_background_color"
+            android:tintMode="multiply" />
+
+    </LinearLayout>
 
 </FrameLayout>

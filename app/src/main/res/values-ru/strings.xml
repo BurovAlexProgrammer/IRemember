@@ -28,4 +28,7 @@
     <string name="title_settings">Настройки</string>
     <string name="title_share">Поделиться</string>
     <string name="change_language">Сменить язык</string>
+    <string name="intro1_headline">Освободите себя от мелочей</string>
+    <string name="skip">Пропустить</string>
+    <string name="done">Готово</string>
 </resources>

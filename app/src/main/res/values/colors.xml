@@ -2,14 +2,14 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="colorShadow">#e2111111</color>
     <color name="colorCardview_onException">#d64b4b</color>
     
     <!-- DEFAULT THEME-->
     <color name="colorPrimary_default">#8637a0</color>
     <color name="colorPrimaryDark_default">#4d2557</color>
-    <color name="colorAccent_default">#8ac24a</color>
+    <color name="colorAccent_default">#b0d683</color>
     <color name="colorBackground_default">#fafafa</color>
     <color name="colorCardview_default">#fafafa</color>
 

@@ -46,6 +46,8 @@ public class IntroActivity extends AppIntro implements First.OnFragmentInteracti
 
         // Hide Skip/Done button.
         showSkipButton(true);
+        setSkipText(getResources().getString(R.string.skip));
+        setDoneText(getString(R.string.done));
         setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.

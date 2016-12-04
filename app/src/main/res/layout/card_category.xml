@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,7 +19,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:id="@+id/category_icon"
-                android:src="@mipmap/flag_usa"
+                android:src="@drawable/cat_pass_car"
                 android:layout_margin="8dp"
                 android:contentDescription="112233" />
 
