@@ -41,7 +41,7 @@ public class LanguageActivityCopy extends AppCompatActivity implements DialogOkC
 
         languageList = new ArrayList<>();
         languageList.add(new Language("ru", R.string.languageRuLabel, R.mipmap.locale_ru));
-        languageList.add(new Language("default", R.string.defaultLabel, R.mipmap.locale_default));
+        languageList.add(new Language("default", R.string.defaultLabel, R.drawable.locale_default));
         languageList.add(new Language("en", R.string.languageEnLabel, R.mipmap.locale_en));
 
         languageAdapter = new LanguageAdapter(languageList);

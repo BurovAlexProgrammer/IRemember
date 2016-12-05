@@ -148,9 +148,9 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
     public void updateLangButton() {
         G.Log("updateLangButton()");
         G.Log("locale: "+Options.locale);
-        int imageId = R.mipmap.locale_default;
+        int imageId = R.drawable.locale_default;
         switch (Options.locale) {
-            case "default": imageId=R.mipmap.locale_default; break;
+            case "default": imageId=R.drawable.locale_default; break;
             case "ru": imageId=R.mipmap.locale_ru; break;
             case "en": imageId=R.mipmap.locale_en; break;
 
