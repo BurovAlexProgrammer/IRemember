@@ -72,7 +72,7 @@
     <color name="textColorPrimary_black">#fafafafa</color>
     <color name="textColorSecondary_black">#dcfafafa</color>
     <color name="textColorTertiary_black">#b4fafafa</color>
-    <color name="textColorHint_black">#6edcdcdc</color>
+    <color name="textColorHint_black">#ffffff</color>
     <color name="textColorPrimaryDisableOnly_black">#3cf7f7f7</color>
 
     <color name="textColorPrimaryInverse_black">#212121</color>
