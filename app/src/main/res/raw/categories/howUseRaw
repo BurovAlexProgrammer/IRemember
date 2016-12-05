@@ -1,0 +1,4 @@
+in "res" directory I create new "database" directory
+That is not supported. You cannot invent new resource directories.
+
+Please put the files in res/raw/ (and use via getResources().openRawResource()) or assets/ (and use via getAssets().open()).
