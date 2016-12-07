@@ -3,7 +3,11 @@ package ru.avb.iremember;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -13,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+
+import java.util.Random;
 
 /**
  * Created by Alex on 06.12.2016.
@@ -79,8 +85,19 @@ public class testActivity extends Activity {
                 imageView = new ImageView(mContext);
                 imageView.setLayoutParams(new GridView.LayoutParams(85,85));
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                //imageView.setPadding(8, 8, 8, 8);
+                //imageView.setPadding(16,16,16,16);
+                imageView.setPadding(8, 8, 8, 8);
                 //imageView.setImageTintMode(PorterDuff.Mode.MULTIPLY);
+
+                //=======================TINT MODE=========================
+                //Random random=new Random();
+                //ColorFilter cf = new PorterDuffColorFilter(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)), PorterDuff.Mode.MULTIPLY);
+                //imageView.setImageResource(R.drawable.cat_bus);
+                //imageView.setColorFilter(cf);
+                //========================MAT COLOR PALETTE====================================
+
+
+
             } else {
                 imageView = (ImageView) convertView;
             }
@@ -99,6 +116,9 @@ public class testActivity extends Activity {
                 R.drawable.cat_test_tube, R.drawable.cat_timer,
                 R.drawable.cat_truck
         };
+
+        private TypedArray matColors = getResources().obtainTypedArray(R.array.mat_colors);
+
     }
 
     void printSecreenInfo(){
