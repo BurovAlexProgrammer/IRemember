@@ -37,6 +37,7 @@ import ru.avb.iremember.asyncs.CheckLastSync;
 import ru.avb.iremember.asyncs.syncData;
 import ru.avb.iremember.fragments.FragmentAccount;
 import ru.avb.iremember.fragments.FragmentCategories;
+import ru.avb.iremember.fragments.FragmentCreateCategory;
 import ru.avb.iremember.fragments.FragmentSettings;
 import ru.avb.iremember.fragments.FragmentWelcome;
 
@@ -58,7 +59,8 @@ public class HomeActivity extends AppCompatActivity
     public FragmentSettings fragmentSettings;
     public FragmentAccount fragmentAccount;
     public FragmentWelcome fragmentWelcome;
-    FloatingActionButton faButton;
+    public FragmentCreateCategory fragmentCreateCategory;
+    public FloatingActionButton faButton;
     AsyncInfinity asyncInfinity;
 
 
@@ -210,6 +212,8 @@ public class HomeActivity extends AppCompatActivity
 //        if (requestCode==G.REQUEST_RESOLVE_DRIVE_CONNECTION) {
 //            Google.driveApi.connect();
 //        }
+
+        updateUI();
     }
 
     @Override
@@ -247,11 +251,11 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         faButton = (FloatingActionButton) findViewById(R.id.fab);
+        faButton.setVisibility(View.INVISIBLE);
         faButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                goToFragment(fragmentCreateCategory, getString(R.string.title_new_category));
             }
         });
 
@@ -268,6 +272,8 @@ public class HomeActivity extends AppCompatActivity
         fragmentSettings = new FragmentSettings();
         fragmentAccount = new FragmentAccount();
         fragmentWelcome = new FragmentWelcome();
+        fragmentCreateCategory = new FragmentCreateCategory();
+
 
         navHeader = navView.getHeaderView(0);
         navHeader_accountName = (TextView) navHeader.findViewById(R.id.nav_header_nane_account);
@@ -297,6 +303,20 @@ public class HomeActivity extends AppCompatActivity
             navHeader_accountEmail.setVisibility(View.GONE);
             navHeader_accountEmail.setText(R.string.spaceholder_accountEmail);
         }
+        //Floating action button
+        if (fragmentCategories.isVisible()) {
+            G.Log("====true");
+            faButton.setVisibility(View.VISIBLE);
+        }
+        else {G.Log("====false");}
+
+        Fragment f = getFragmentManager().findFragmentById(R.id.container);
+        if (f instanceof FragmentCategories) {
+            // do something with f
+            G.Log("====is categories");
+            faButton.setVisibility(View.VISIBLE);
+        }
+        else G.Log("=====not categrioes");
     }
     public void signIn() {
         Google.signInInitialize(this,this,this);
@@ -356,7 +376,7 @@ public class HomeActivity extends AppCompatActivity
     public void updateFragmentsUI() {
 //        if (toolbar.getTitle().equals(getString(R.string.title_account))) {
 //            G.Log("Update from activity FragmentAccount");
-            if (fragmentAccount.isVisible()) ((FragmentAccount)getFragmentManager().findFragmentById(R.id.container)).updateUI();
+        if (fragmentAccount.isVisible()) ((FragmentAccount)getFragmentManager().findFragmentById(R.id.container)).updateUI();
         if (fragmentWelcome.isVisible()) ((FragmentWelcome)getFragmentManager().findFragmentById(R.id.container)).updateUI();
 //        }
     }
@@ -374,7 +394,7 @@ public class HomeActivity extends AppCompatActivity
     public void goToFragment(Fragment fragment, String title) {
         G.Log("goToFragment("+fragment.toString()+", "+title+")");
         if (homeFragmentManager==null) {
-            G.Log("FragmentManager is NULL!!!!!!!!!!!!!!!!");
+            G.Log("FragmentManager is NULL!!!");
             homeFragmentManager=getFragmentManager();}
         FragmentTransaction fragmentTransaction = homeFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);

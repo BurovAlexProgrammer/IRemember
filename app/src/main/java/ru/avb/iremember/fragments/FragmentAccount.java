@@ -57,8 +57,7 @@ public class FragmentAccount extends Fragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         thisActivity = (FragmentActivity)inflater.getContext();
         G.Log("FragmentAccount thisActivity = "+thisActivity.toString());
         View v = inflater.inflate(R.layout.fragment_account, null);

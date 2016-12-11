@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.fitness.data.Application;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

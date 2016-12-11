@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import ru.avb.iremember.G;
+import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.Options;
+import ru.avb.iremember.R;
 
 import static java.lang.Thread.sleep;
 
@@ -34,6 +36,12 @@ public class AsyncInfinity extends AsyncTask {
                 t+=1000;
                 sleep(1000);
                 G.LogInteres("t:"+t);
+                    if (((HomeActivity)context).getFragmentManager().findFragmentById(R.layout.fragment_categories)!=null) {
+
+                        if (((HomeActivity) context).getFragmentManager().findFragmentById(R.layout.fragment_categories).isVisible()) {
+                            G.LogInteres("Visible");
+                        }
+                    }
             }
         }
         catch (Exception e) {G.LogException(e);}

@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ru.avb.iremember.fragments.FragmentSettings"
-    android:orientation="vertical">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:orientation="vertical"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,10 +15,8 @@
         android:visibility="visible"
         android:background="@drawable/ripple_layout_default"
         android:clickable="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:orientation="vertical"
@@ -34,17 +31,9 @@
                 android:id="@+id/label4"
                 android:theme="@style/Body1"
                 android:focusable="true"
-                android:elegantTextHeight="false"
                 android:ellipsize="end"
                 android:text="@string/notification" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/caption4"
-                android:theme="@style/Caption"
-                android:text="@string/notification_caption"
-                android:layout_marginTop="4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,16 +41,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical|right">
+            android:gravity="center_vertical|end">
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/checkBox4"
-                android:layout_alignTop="@+id/text"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
                 android:checked="false"
                 android:focusable="false"
                 android:clickable="false" />
@@ -73,8 +58,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/devider1"
-        android:layout_gravity="right"
-        android:src="@drawable/devider_default" />
+        android:layout_gravity="end"
+        android:src="@drawable/devider_default"
+        android:contentDescription="" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,10 +71,8 @@
         android:visibility="visible"
         android:background="@drawable/ripple_layout_default"
         android:clickable="true"
-        android:layout_below="@+id/optionLayout4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:orientation="vertical"
@@ -103,7 +87,6 @@
                 android:id="@+id/label3"
                 android:theme="@style/Body1"
                 android:focusable="true"
-                android:elegantTextHeight="false"
                 android:ellipsize="end"
                 android:text="@string/language" />
 
@@ -121,8 +104,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical|right"
-            android:paddingRight="8dp">
+            android:gravity="center_vertical|end"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -137,7 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/devider2"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:src="@drawable/devider_default" />
 
     <LinearLayout
@@ -147,17 +132,14 @@
         android:orientation="horizontal"
         android:weightSum="2"
         android:visibility="invisible"
-        android:layout_below="@+id/optionLayout3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical">
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -165,16 +147,13 @@
                 android:id="@+id/label2"
                 android:theme="@style/Body1"
                 android:focusable="true"
-                android:elegantTextHeight="false"
-                android:ellipsize="end"
-                android:text="@string/language" />
+                android:ellipsize="end" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/caption2"
                 android:theme="@style/Caption"
-                android:text="@string/currentLanguage"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
@@ -183,14 +162,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="right">
+            android:gravity="end">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/change_language"
                 android:id="@+id/buttonLanguage"
-                android:layout_centerVertical="true"
                 android:theme="@style/ButtonPositive"
                 android:visibility="visible"
                 android:layout_gravity="center_vertical" />

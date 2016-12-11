@@ -158,4 +158,5 @@
     <style name="DefaultTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="DefaultTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

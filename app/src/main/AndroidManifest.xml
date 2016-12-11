@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/DefaultTheme">
         <activity
-            android:name=".testActivity"
+            android:name=".HomeActivity"
             android:configChanges="locale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

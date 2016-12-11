@@ -31,4 +31,10 @@
     <string name="intro1_headline">Освободите себя от мелочей</string>
     <string name="skip">Пропустить</string>
     <string name="done">Готово</string>
+    <string name="title_new_category">Новая категория</string>
+    <string name="title_welcome">Добро пожаловать</string>
+    <string name="weeks_ago">недель назад</string>
+    <string name="years_ago">лет назад</string>
+    <string name="today">сегодня</string>
+    <string name="title_activity_home"></string>
 </resources>

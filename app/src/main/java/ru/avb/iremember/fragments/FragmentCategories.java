@@ -3,6 +3,7 @@ package ru.avb.iremember.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import java.util.List;
 import ru.avb.iremember.Category;
 import ru.avb.iremember.DB;
 import ru.avb.iremember.G;
+import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.R;
 
 /**
@@ -31,6 +33,7 @@ import ru.avb.iremember.R;
 public class FragmentCategories extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    HomeActivity thisActivity;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -76,6 +79,10 @@ public class FragmentCategories extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        thisActivity = (HomeActivity) inflater.getContext();
+        //((HomeActivity)thisActivity)
+        thisActivity.faButton.setVisibility(View.VISIBLE);
+
         View v = inflater.inflate(R.layout.fragment_categories,null);
 
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.main_recyclerView);

@@ -100,9 +100,7 @@ public class testActivity extends Activity {
             }
 
             ImageView img = (ImageView)convertView.findViewById(R.id.image);
-            TextView text = (TextView)convertView.findViewById(R.id.text);
 
-            text.setText("");
             //img.setLayoutParams();
             img.setScaleType(ImageView.ScaleType.CENTER_CROP);
             //img.setBackgroundColor(matColorsInt[position]);
