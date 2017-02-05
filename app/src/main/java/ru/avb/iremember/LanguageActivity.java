@@ -189,7 +189,7 @@ public class LanguageActivity extends AppCompatActivity implements DialogOkCance
         Options.initPreferences(this);
         Options.prefEditor.putString(Options.KEY_LOCALE, languageAdapter.selectedLocale);
         Options.prefEditor.commit();
-        G.Log("Load locale: = "+Options.sharedPref.getString(Options.KEY_LOCALE, "none"));
+        G.Log("Check locale: = "+Options.sharedPref.getString(Options.KEY_LOCALE, "none"));
 
         Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName() );
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

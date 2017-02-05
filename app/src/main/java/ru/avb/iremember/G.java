@@ -148,6 +148,12 @@ public class G {
         return bm;
     }
 
+    public static class locale {
+        public static String default_ = "default",
+        ru = "ru",
+        en = "en";
+    }
+
 /*
     public static Bitmap getImageBitmap2(String url) {
         Bitmap bm = null;

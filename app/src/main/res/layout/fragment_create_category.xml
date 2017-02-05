@@ -62,10 +62,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/typeSpinner"
                 android:entries="@array/items_cat_condition"
-                android:popupBackground="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-                android:visibility="visible"
-                style="?attr/spinnerStyle" />
+                android:visibility="visible" />
         </LinearLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner" />
 
     </LinearLayout>
 

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,13 +67,15 @@ public class FragmentCreateCategory extends Fragment {
     private void setTypeSpinnerAdapter() {
         // Создаем адаптер ArrayAdapter с помощью массива строк и стандартной разметки элемета spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(thisActivity,
-                R.array.items_cat_condition, android.R.layout.simple_spinner_item);
+                R.array.items_cat_condition, android.R.layout.simple_spinner_dropdown_item);
         // Определяем разметку для использования при выборе элемента
-       //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+
+        //SpinnerAdapter adapter2 = new SpinnerAdapter(thisActivity, R.array.items_cat_condition);
 
         // Применяем адаптер к элементу pinner
-        adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        //adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
         typeSpinner.setAdapter(adapter);
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -115,4 +118,29 @@ public class FragmentCreateCategory extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    class SpinnerAdapter extends ArrayAdapter<String> {
+        public SpinnerAdapter(Context context, int resource) {
+            super(context, android.R.layout.simple_list_item_1, resource);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return initView(position,convertView);
+        }
+
+        private View initView(int position, View convertView) {
+            if(convertView == null)
+                convertView = View.inflate(getContext(),
+                        android.R.layout.simple_list_item_1,
+                        null);
+            TextView tvText1 = (TextView)convertView.findViewById(android.R.id.text1);
+            TextView tvText2 = (TextView)convertView.findViewById(android.R.id.text2);
+            tvText1.setText("pos: "+position);
+            tvText2.setText("t2");
+            return convertView;
+        }
+
+
+    }
 }

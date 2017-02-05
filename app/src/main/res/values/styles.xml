@@ -39,16 +39,17 @@
         <item name="android:textColorPrimaryDisableOnly">
             @color/textColorPrimaryDisableOnly_default
         </item>
+        <item name="android:dropDownHeight">150dp</item>
 
         <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse_default</item>
-        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse_default
-        </item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse_default</item>
         <item name="android:textColorTertiaryInverse">@color/textColorTertiaryInverse_default</item>
         <item name="android:textColorHintInverse">@color/textColorHintInverse_default</item>
         <item name="android:textColorPrimaryInverseDisableOnly">
             @color/textColorPrimaryInverseDisableOnly_default
         </item>
 
+        <item name="android:dropDownHintAppearance">@style/SpinnerItemTextAppearance</item>
     </style>
 
     <!-- GRAY THEME -->
@@ -159,4 +160,7 @@
 
     <style name="DefaultTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="SpinnerItemTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">?attr/textcolorButton</item>
+    </style>
 </resources>
