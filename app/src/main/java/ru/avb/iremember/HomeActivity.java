@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -45,7 +46,8 @@ import static ru.avb.iremember.G.homeFragmentManager;
 import static ru.avb.iremember.G.user;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        FragmentAccount.OnFragmentInteractionListener, FragmentCategories.OnFragmentInteractionListener, FragmentCreateCategory.OnFragmentInteractionListener, FragmentSettings.OnFragmentInteractionListener, FragmentWelcome.OnFragmentInteractionListener {
 
     Toolbar toolbar;
     NavigationView navView;
@@ -388,6 +390,11 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 
