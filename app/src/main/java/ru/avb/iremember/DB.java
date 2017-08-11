@@ -13,11 +13,34 @@ public class DB {
 
     public static String
             dbName = LOCAL_NAME,
-            TABLE_CATEGORIES = "categories";
+            TABLE_CATEGORIES = "categories",
+            TABLE_EVENTS = "events",
+            TABLE_NOTIFICS = "notifications";
 
-    //Column name payment
-    final static String CNP_ID = "id";
-    final static String CNP_ID_CREDIT = "idCredit";
+    //Column name categories
+    final static String
+            CNC_ID = "id",
+            CNC_LABEL = "label",
+            CNC_TYPE = "type",
+            CNC_ICON_ID = "icon_id",
+            CNC_PARENT_CATEGORY = "parent_category",
+            CNC_DATE_CREATED = "date_created",
+            CNC_DATE_MODIFIED = "date_modified",
+            CNC_INITIAL_VALUE = "initial_value",
+            CNC_FINAL_VALUE = "final_value",
+            CNC_FINAL_VALUE_ENABLED = "final_value_enabled",
+            CNC_NEGATIVE_VALUE_ENABLED = "negative_value_enabled",
+            CNC_PREDICTION_ENABLED = "prediction_enabled",
+            CNC_PREDICTION_PERIOD = "prediction_period",
+            CNC_EVERAGE_VALUE = "everage_value",
+            CNC_EVERAGE_VALUE_CALCULATE_ENABLED = "everage_value_calculate_enabled",
+            CNC_EVERAGE_VALUE_CALCULATE_EVENTCOUNT = "everage_value_calculate_eventcount";
+
+    //Column name events
+    final static String
+            CNE_ID = "id",
+    CNE_CATEGORY_ID = "category_id",
+    CNE_VALUE = "value";
 
     public static SQLiteDatabase db;
 

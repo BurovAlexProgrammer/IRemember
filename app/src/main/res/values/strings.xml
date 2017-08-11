@@ -67,7 +67,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="intro1_headline">Free yourself from little things</string>
     <string name="title_new_category">New category</string>
-    
+
     <string name="hint_cat_name">Category name</string>
     <string name="hint_cat_type">Category type</string>
     <string name="hint_cat_condition">Condition </string>
