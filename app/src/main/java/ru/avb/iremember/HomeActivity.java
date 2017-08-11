@@ -321,6 +321,7 @@ public class HomeActivity extends AppCompatActivity
         else G.Log("=====not categrioes");
     }
     public void signIn() {
+        G.Log("HomeActivity.signIn()");
         Google.signInInitialize(this,this,this);
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(Google.apiClient);
         startActivityForResult(signInIntent,G.REQUEST_SIGN_IN_GOOGLE);

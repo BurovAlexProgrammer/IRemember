@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class DB {
+    public static final int dbVersion = 4;
     public static final String LOCAL_NAME = "localUser.db";
 
     public static String
@@ -24,6 +25,7 @@ public class DB {
             CNC_TYPE = "type",
             CNC_ICON_ID = "icon_id",
             CNC_PARENT_CATEGORY = "parent_category",
+            CNC_ORDER_NUMBER = "order_number",
             CNC_DATE_CREATED = "date_created",
             CNC_DATE_MODIFIED = "date_modified",
             CNC_INITIAL_VALUE = "initial_value",
@@ -39,14 +41,42 @@ public class DB {
     //Column name events
     final static String
             CNE_ID = "id",
-    CNE_CATEGORY_ID = "category_id",
-    CNE_VALUE = "value";
+            CNE_CATEGORY_ID = "category_id",
+            CNE_VALUE = "value",
+            CNE_DATE_CREATED = "date_created",
+            CNE_DATE_MODIFIED = "date_modified";
+
+    //Column name notifications
+    final static String
+            CNN_ID = "id",
+            CNN_CATEGORY_ID = "category_id",
+            CNN_LABEL = "label",
+            CNN_VALUE = "value",
+            CNN_REPEAT_ENABLED = "repeat_enabled",
+            CNN_TIME_BEGIN = "time_begin",
+            CNN_TIME_END = "time_end",
+            CNN_FREQUENCY = "frequency",
+            CNN_LAST_REMINDER = "last_reminder";
+
+    //Table type of variables
+    final static String
+            TYPE_ID = "integer primary key autoincrement",
+            TYPE_INTEGER = "integer",
+            TYPE_TEXT = "text",
+            TYPE_DATE = "date",
+            TYPE_BOOLEAN = "boolean";
+    static String
+            TYPE_NUMERIC(int a, int b) {return "numeric ("+a+","+b+")";}
+    //Table signs
+    final static String
+            SPC = " ",
+            VRGL = ",";
 
     public static SQLiteDatabase db;
 
     public static class DBHelper extends SQLiteOpenHelper {
         public DBHelper(Context context) {
-            super(context, dbName, null, 3);
+            super(context, dbName, null, dbVersion);
         }
 
         public void onCreate(SQLiteDatabase dbLocal) {
@@ -54,6 +84,8 @@ public class DB {
                 G.Log("Create database");
                 db = dbLocal;
                 createTable(TABLE_CATEGORIES);
+                createTable(TABLE_EVENTS);
+                createTable(TABLE_NOTIFICS);
                 G.Log("Successfully");
             }
             catch (SQLException e) {G.Log("EXCEPTION: "+e.getMessage());}
@@ -61,10 +93,15 @@ public class DB {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            G.Log("onUpgrage Database from version "+oldVersion+" to version "+newVersion+"..");
             //read database rows
             DB.db = db;
             dropTable(TABLE_CATEGORIES);
             createTable(TABLE_CATEGORIES);
+            dropTable(TABLE_EVENTS);
+            createTable(TABLE_EVENTS);
+            dropTable(TABLE_NOTIFICS);
+            createTable(TABLE_NOTIFICS);
             closeDB();
             //write database rows
         }
@@ -138,20 +175,36 @@ public class DB {
     }
 
     public static void createTable(String tableName) {
-        G.Log("create table "+tableName);
-        if (tableName==TABLE_CATEGORIES) {
-            try
-            {
-                db.execSQL("create table "+TABLE_CATEGORIES+" (" +
-                        "id     integer primary key autoincrement," +
-                        "name   text" +
+        G.Log("createTable("+tableName+")");
+        try
+        {
+            if (tableName==TABLE_CATEGORIES) {
+                db.execSQL("create table " + TABLE_CATEGORIES + " (" +
+                        CNC_ID + " " + TYPE_ID + "," +
+                        CNC_LABEL + " " + TYPE_TEXT +
                         ");"
                 );
-                G.Log("Successfully");
+                G.Log("Table " + TABLE_CATEGORIES + " created successfully.");
             }
-            catch (SQLException e)		{G.Log("EXCEPTION: "+e.getMessage());}
-            catch (Exception e) {G.Log("EXC: "+e.getMessage());}
+            if (tableName==TABLE_EVENTS) {
+                db.execSQL("create table " + TABLE_EVENTS + " (" +
+                        CNE_ID + " " + TYPE_ID + "," +
+                        CNE_CATEGORY_ID + " " + TYPE_INTEGER +
+                        ");"
+                );
+                G.Log("Table " + TABLE_EVENTS + " created successfully.");
+            }
+            if (tableName==TABLE_NOTIFICS) {
+                db.execSQL("create table " + TABLE_NOTIFICS + " (" +
+                        CNN_ID + " " + TYPE_ID + "," +
+                        CNN_LABEL + " " + TYPE_TEXT +
+                        ");"
+                );
+                G.Log("Table " + TABLE_NOTIFICS + " created successfully.");
+            }
         }
+        catch (SQLException e)		{G.Log("EXCEPTION: "+e.getMessage());}
+        catch (Exception e) {G.Log("EXC: "+e.getMessage());}
     }
 
     private static void dropTable(String tableName) {
