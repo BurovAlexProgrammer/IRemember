@@ -9,14 +9,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class DB {
-    public static final int dbVersion = 4;
     public static final String LOCAL_NAME = "localUser.db";
+    public static final int dbVersion = 4;
 
     public static String
             dbName = LOCAL_NAME,
             TABLE_CATEGORIES = "categories",
             TABLE_EVENTS = "events",
             TABLE_NOTIFICS = "notifications";
+
+    //Column name payment
+    final static String CNP_ID = "id";
+    final static String CNP_ID_CREDIT = "idCredit";
+
+    public static SQLiteDatabase db;
+
 
     //Column name categories
     final static String
@@ -65,14 +72,8 @@ public class DB {
             TYPE_TEXT = "text",
             TYPE_DATE = "date",
             TYPE_BOOLEAN = "boolean";
-    static String
-            TYPE_NUMERIC(int a, int b) {return "numeric ("+a+","+b+")";}
-    //Table signs
-    final static String
-            SPC = " ",
-            VRGL = ",";
+            static String TYPE_NUMERIC(int a, int b) {return "numeric ("+a+","+b+")";}
 
-    public static SQLiteDatabase db;
 
     public static class DBHelper extends SQLiteOpenHelper {
         public DBHelper(Context context) {
@@ -97,10 +98,10 @@ public class DB {
             //read database rows
             DB.db = db;
             dropTable(TABLE_CATEGORIES);
-            createTable(TABLE_CATEGORIES);
             dropTable(TABLE_EVENTS);
-            createTable(TABLE_EVENTS);
             dropTable(TABLE_NOTIFICS);
+            createTable(TABLE_CATEGORIES);
+            createTable(TABLE_EVENTS);
             createTable(TABLE_NOTIFICS);
             closeDB();
             //write database rows
@@ -175,36 +176,34 @@ public class DB {
     }
 
     public static void createTable(String tableName) {
-        G.Log("createTable("+tableName+")");
-        try
-        {
-            if (tableName==TABLE_CATEGORIES) {
-                db.execSQL("create table " + TABLE_CATEGORIES + " (" +
-                        CNC_ID + " " + TYPE_ID + "," +
-                        CNC_LABEL + " " + TYPE_TEXT +
-                        ");"
-                );
-                G.Log("Table " + TABLE_CATEGORIES + " created successfully.");
+        G.Log("create table "+tableName);
+
+            try
+            {
+                if (tableName==TABLE_CATEGORIES) {
+                    db.execSQL("create table " + TABLE_CATEGORIES + " (" +
+                            CNC_ID +" "+ TYPE_ID + "," +
+                            CNC_LABEL +" "+ TYPE_TEXT + ");"
+                    );
+                }
+
+                if (tableName==TABLE_EVENTS) {
+                    db.execSQL("create table " + TABLE_EVENTS + " (" +
+                            CNE_ID +" "+ TYPE_ID +","+
+                            CNE_CATEGORY_ID +" "+ TYPE_INTEGER + ");"
+                    );
+                }
+
+                if (tableName==TABLE_NOTIFICS) {
+                    db.execSQL("create table " + TABLE_NOTIFICS + " (" +
+                            CNN_ID +" "+ TYPE_ID +","+
+                            CNN_LABEL +" "+ TYPE_TEXT +");"
+                    );
+                }
+                G.Log("Table " + tableName + " created successfully.");
             }
-            if (tableName==TABLE_EVENTS) {
-                db.execSQL("create table " + TABLE_EVENTS + " (" +
-                        CNE_ID + " " + TYPE_ID + "," +
-                        CNE_CATEGORY_ID + " " + TYPE_INTEGER +
-                        ");"
-                );
-                G.Log("Table " + TABLE_EVENTS + " created successfully.");
-            }
-            if (tableName==TABLE_NOTIFICS) {
-                db.execSQL("create table " + TABLE_NOTIFICS + " (" +
-                        CNN_ID + " " + TYPE_ID + "," +
-                        CNN_LABEL + " " + TYPE_TEXT +
-                        ");"
-                );
-                G.Log("Table " + TABLE_NOTIFICS + " created successfully.");
-            }
-        }
-        catch (SQLException e)		{G.Log("EXCEPTION: "+e.getMessage());}
-        catch (Exception e) {G.Log("EXC: "+e.getMessage());}
+            catch (SQLException e)		{G.Log("EXCEPTION: "+e.getMessage());}
+            catch (Exception e) {G.Log("EXC: "+e.getMessage());}
     }
 
     private static void dropTable(String tableName) {
@@ -217,17 +216,17 @@ public class DB {
         try {
             G.Log("Log table in INTERES");
             G.LogInteres("-------------rows in "+TABLE_CATEGORIES+"--------------");
-            //подключаемс¤ к Ѕƒ
+            //подключаемся к DB
             openReadableDB(context);
-            //делаем запрос всех данных из таблицы mytable, получаем Cursor
+            //делаем запрос всех данных из таблицы, получаем Cursor
             Cursor c = db.query(TABLE_CATEGORIES, null, null, null, null, null, null);
             //ставим позицию курсора на первую строку выборки
             //если в выборке нет строк, вернетс¤ false
             G.Log("Row count: "+c.getCount());
             int row = 0;
             if (c.moveToFirst()) {
-                int idColIndex = c.getColumnIndex("id");
-                int nameColIndex = c.getColumnIndex("name");
+                int idColIndex = c.getColumnIndex(CNC_ID);
+                int nameColIndex = c.getColumnIndex(CNC_LABEL);
                 do {
                     G.LogInteres("Row "+row+
                             "  id: "+c.getInt(idColIndex)+
@@ -246,7 +245,7 @@ public class DB {
         G.Log(G.LOGLINE);
         G.Log("Insert new record in table Categories");
         ContentValues values = new ContentValues();
-        values.put("name", "MyFirstRow");
+        values.put(CNC_LABEL, "MyFirstRow");
         try
         {
             openWritableDB(context);
