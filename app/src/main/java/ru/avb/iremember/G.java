@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,18 +114,16 @@ public class G {
     public static void LogDB(String s) {
         Log.i(LOGDB, s);
     }
-    public static void Log(String s) {
-        Log.i(LOGTAG, s); }
+    public static void Log(String s) {Log.i(LOGTAG, s); }
+    public static void LogE(String s) {Log.e(LOGTAG, s); }
+    public static void LogW(String s) {Log.w(LOGTAG, s); }
     public static void LogException(Exception e) {
         Log.i(LOGTAG, "EXCEPTION: "+e.getMessage());
     }
     public static void LogInteres(String s) {
         Log.i(LOGINTERES, s);}
 
-    public static void Toast(Context context,String s) {
-        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-    }
-
+    public static void Toast(Context context,String s) {Toast.makeText(context, s, Toast.LENGTH_SHORT).show();}
     public static void LogToast(Context context, String s) {
         Log(s);
         Toast(context, s);

@@ -3,6 +3,8 @@ package ru.avb.iremember;
 import android.app.Application;
 import android.content.res.Configuration;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.util.Locale;
 
 /**
@@ -18,6 +20,7 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         G.Log("MyApplication.onCreate()..");
+        Fabric.with(this, new Crashlytics());
         Options.initPreferences(this);
         String localeStr = Options.sharedPref.getString(Options.KEY_LOCALE, "none");
         if (localeStr.equals("none"))

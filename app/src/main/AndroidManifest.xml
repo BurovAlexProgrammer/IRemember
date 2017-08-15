@@ -39,6 +39,9 @@
             android:name=".LanguageActivity"
             android:configChanges="locale" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f88ca84d0ea4d1bc5e3ee99891ca0099d0532ac0" />
     </application>
 
 </manifest>
