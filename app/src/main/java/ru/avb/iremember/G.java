@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeField;
 import org.joda.time.DateTimeFieldType;
@@ -114,7 +116,9 @@ public class G {
     public static void LogDB(String s) {
         Log.i(LOGDB, s);
     }
-    public static void Log(String s) {Log.i(LOGTAG, s); }
+    public static void Log(String s) {
+        Crashlytics.log(Log.INFO, LOGTAG, s);
+        }
     public static void LogE(String s) {Log.e(LOGTAG, s); }
     public static void LogW(String s) {Log.w(LOGTAG, s); }
     public static void LogException(Exception e) {

@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -33,6 +34,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
+import io.fabric.sdk.android.Fabric;
 import ru.avb.iremember.asyncs.AsyncInfinity;
 import ru.avb.iremember.asyncs.CheckLastSync;
 import ru.avb.iremember.asyncs.syncData;
@@ -69,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.home_activity);
         G.Log("================HOME ACTIVITY=================");
         asyncInfinity = new AsyncInfinity(this);
@@ -150,7 +153,7 @@ public class HomeActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.container, fragmentAccount);
             getSupportActionBar().setTitle(R.string.title_account);}
         else if (id == R.id.nav_share) {
-
+            forceCrash(item.getActionView());
         }
 
         fragmentTransaction.commit();
@@ -385,12 +388,10 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -407,5 +408,9 @@ public class HomeActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
         getSupportActionBar().setTitle(title);
+    }
+
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
     }
 }

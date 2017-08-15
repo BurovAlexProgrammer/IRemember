@@ -19,17 +19,20 @@ public class MyApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        G.Log("MyApplication.onCreate()..");
         Fabric.with(this, new Crashlytics());
+        G.Log("[MyApplication.onCreate]");
         Options.initPreferences(this);
         String localeStr = Options.sharedPref.getString(Options.KEY_LOCALE, "none");
+        G.Log("Options.locale: '"+localeStr+"'");
         if (localeStr.equals("none"))
-            {Options.locale = G.locale.default_;}
+            {Options.locale = G.locale.default_;
+                locale = new Locale(Options.locale);
+                G.Log("Installed locale: "+locale.toString());}
         else {
             Options.locale = localeStr;
-            G.Log("App language : '"+Options.locale+"'");
             if (Options.locale.equals("default")) {Options.locale=getResources().getConfiguration().locale.getCountry();}
             locale = new Locale(Options.locale);
+            G.Log("Installed locale: "+locale.toString());
             Locale.setDefault(locale);
             Configuration config = new Configuration();
             config.setLocale(locale);
@@ -40,10 +43,12 @@ public class MyApplication extends Application{
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        G.Log("MyApplication.onConfigurationChanged()..");
-
-        locale = new Locale(Options.locale);
+        G.Log("[MyApplication.onConfigurationChanged]");
+        Options.initPreferences(this);
+        Options.locale = Options.sharedPref.getString(Options.KEY_LOCALE, G.locale.default_);
+        locale = new Locale(G.locale.ru);
         Locale.setDefault(locale);
+        G.Log("Installed locale: "+locale.toString());
         Configuration config = new Configuration();
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, null);
