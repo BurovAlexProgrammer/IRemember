@@ -71,45 +71,51 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.home_activity);
-        G.Log("================HOME ACTIVITY=================");
-        asyncInfinity = new AsyncInfinity(this);
-        asyncInfinity.execute();
+        try {
+            Fabric.with(this, new Crashlytics());
+            G.Log("[HomeActivity.onCreate]");
+            setContentView(R.layout.home_activity);
+//        Async test
+//        asyncInfinity = new AsyncInfinity(this);
+//        asyncInfinity.execute();
 
-        initialViews(HomeActivity.this);
+            initialViews(HomeActivity.this);
 
-        user = new User(this);     //init static user
-        DB.setDbName();
-        Options.initializeOptions(this);
+            user = new User(this);     //init static user
+            DB.setDbName();
+            Options.initializeOptions(this);
 
-        //Show initial fragment
+            //Show initial fragment
 
-        goToFragment(G.homeFragment, G.homeFragmentTitle);
-        Google.signInInitialize(this, this, this);
-        googleSilentSignIn();
-        DB.setDbName();
-        //need welcome
+            goToFragment(G.homeFragment, G.homeFragmentTitle);
+            Google.signInInitialize(this, this, this);
+            googleSilentSignIn();
+            DB.setDbName();
+            //need welcome
 //        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
 //            goToFragment(fragmentWelcome, getString(R.string.title_welcome));
 //        }
-        if (Options.isNeedWelcome) {
-            Intent intent = new Intent(HomeActivity.this, IntroActivity.class);
-            startActivityForResult(intent, G.REQUEST_INTRO);
-        }
-        updateUI();
+            if (Options.isNeedWelcome) {
+                Intent intent = new Intent(HomeActivity.this, IntroActivity.class);
+                startActivityForResult(intent, G.REQUEST_INTRO);
+            }
+            updateUI();
+        } catch (Exception e) {Crashlytics.logException(e);}
 
         //finish();
 }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        try {
+            G.Log("[HomeActivity.onBackPressed]");
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        } catch (Exception e) {Crashlytics.logException(e);}
     }
 
     @Override
@@ -121,72 +127,79 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        try {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_settings) {
+                return true;
+            }
+        } catch (Exception e) {Crashlytics.logException(e);}
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        try {
+            G.Log("[HomeActivity.onNavigationItemSelected]");
+            // Handle navigation view item clicks here.
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-        int id = item.getItemId();
+            int id = item.getItemId();
 
-        if (id == R.id.nav_categories) {
-            fragmentTransaction.replace(R.id.container, fragmentCategories);
-            getSupportActionBar().setTitle(R.string.title_categories);}
-        else if (id == R.id.nav_settings) {
-            fragmentTransaction.replace(R.id.container, fragmentSettings);
-            getSupportActionBar().setTitle(R.string.title_settings);}
-        else if (id == R.id.nav_account) {
-            fragmentTransaction.replace(R.id.container, fragmentAccount);
-            getSupportActionBar().setTitle(R.string.title_account);}
-        else if (id == R.id.nav_share) {
-            forceCrash(item.getActionView());
-        }
+            if (id == R.id.nav_categories) {
+                fragmentTransaction.replace(R.id.container, fragmentCategories);
+                getSupportActionBar().setTitle(R.string.title_categories);
+            } else if (id == R.id.nav_settings) {
+                fragmentTransaction.replace(R.id.container, fragmentSettings);
+                getSupportActionBar().setTitle(R.string.title_settings);
+            } else if (id == R.id.nav_account) {
+                fragmentTransaction.replace(R.id.container, fragmentAccount);
+                getSupportActionBar().setTitle(R.string.title_account);
+            } else if (id == R.id.nav_share) {
+                forceCrash(item.getActionView());
+            }
 
-        fragmentTransaction.commit();
+            fragmentTransaction.commit();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        } catch (Exception e) {Crashlytics.logException(e); return false;}
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        G.Log("HomeActivity.onResume..");
-        G.Log("Status: "+asyncInfinity.getStatus());
-        if (asyncInfinity.getStatus()!=AsyncTask.Status.RUNNING) {
-            //asyncInfinity.execute();
-            asyncInfinity.cancel(true);
-            asyncInfinity = new AsyncInfinity(this);
-            asyncInfinity.execute();
-        }
+        try {
+            G.Log("[HomeActivity.onResume]");
+//            Test async infinity
+//            G.Log("Status: " + asyncInfinity.getStatus());
+//            if (asyncInfinity.getStatus() != AsyncTask.Status.RUNNING) {
+//                //asyncInfinity.execute();
+//                asyncInfinity.cancel(true);
+//                asyncInfinity = new AsyncInfinity(this);
+//                asyncInfinity.execute();
+//            }
+        }catch (Exception e) {Crashlytics.logException(e);}
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        G.Log("HomeActivity.onPause..");
-        asyncInfinity.cancel(true);
+        G.Log("[HomeActivity.onPause]");
+        //asyncInfinity.cancel(true);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        G.Log("HomeActivity.onActivityResult..");
+        G.Log("[HomeActivity.onActivityResult]");
         //Welcome request
         if (requestCode==G.REQUEST_WELCOME_FROM_MAIN) {
             G.Log("ActivityResult from Welcome.Activity");
@@ -223,11 +236,12 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        G.Log("ERROR!! Connection Failed!");
+        G.Log("[HomeActivity.onConnectionFailed]");
         if (result.hasResolution()) {
             try {
                 result.startResolutionForResult(this, G.REQUEST_RESOLVE_DRIVE_CONNECTION);
             } catch (IntentSender.SendIntentException e) {
+                Crashlytics.logException(e);
                 // Unable to resolve, message user appropriately
             }
         } else {
@@ -252,137 +266,153 @@ public class HomeActivity extends AppCompatActivity
 
 
     private void initialViews(AppCompatActivity content) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        G.Log("[HomeActivity.initialViews]");
+        try {
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        faButton = (FloatingActionButton) findViewById(R.id.fab);
-        faButton.setVisibility(View.INVISIBLE);
-        faButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToFragment(fragmentCreateCategory, getString(R.string.title_new_category));
-            }
-        });
+            faButton = (FloatingActionButton) findViewById(R.id.fab);
+            faButton.setVisibility(View.INVISIBLE);
+            faButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goToFragment(fragmentCreateCategory, getString(R.string.title_new_category));
+                }
+            });
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+            drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawerToggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(drawerToggle);
+            drawerToggle.syncState();
 
-        navView = (NavigationView) findViewById(R.id.nav_view);
-        navView.setNavigationItemSelectedListener(this);
+            navView = (NavigationView) findViewById(R.id.nav_view);
+            navView.setNavigationItemSelectedListener(this);
 
-        fragmentCategories = new FragmentCategories();
-        fragmentSettings = new FragmentSettings();
-        fragmentAccount = new FragmentAccount();
-        fragmentWelcome = new FragmentWelcome();
-        fragmentCreateCategory = new FragmentCreateCategory();
+            fragmentCategories = new FragmentCategories();
+            fragmentSettings = new FragmentSettings();
+            fragmentAccount = new FragmentAccount();
+            fragmentWelcome = new FragmentWelcome();
+            fragmentCreateCategory = new FragmentCreateCategory();
 
 
-        navHeader = navView.getHeaderView(0);
-        navHeader_accountName = (TextView) navHeader.findViewById(R.id.nav_header_nane_account);
-        navHeader_accountEmail = (TextView) navHeader.findViewById(R.id.nav_header_email);
-        navHeader_accountAvatar = (ImageView) navHeader.findViewById(R.id.nav_header_avatar);
+            navHeader = navView.getHeaderView(0);
+            navHeader_accountName = (TextView) navHeader.findViewById(R.id.nav_header_nane_account);
+            navHeader_accountEmail = (TextView) navHeader.findViewById(R.id.nav_header_email);
+            navHeader_accountAvatar = (ImageView) navHeader.findViewById(R.id.nav_header_avatar);
 
-        G.homeFragment = fragmentCategories;
-        G.homeFragmentTitle = getString(R.string.title_categories);
-        G.homeFragmentManager = getFragmentManager();
+            G.homeFragment = fragmentCategories;
+            G.homeFragmentTitle = getString(R.string.title_categories);
+            G.homeFragmentManager = getFragmentManager();
+        } catch (Exception e) {Crashlytics.logException(e);}
     }
 
     public void updateUI () {
-        G.Log("UpdateUI..");
-        updateFragmentsUI();
-        //Navigation header
-        if (user.isAuthorized()) UrlImageViewHelper.setUrlDrawable(navHeader_accountAvatar, user.photoUrl,R.mipmap.placeholder_account);
-        else navHeader_accountAvatar.setImageResource(R.mipmap.placeholder_account);
+        try {
+            updateFragmentsUI();
+            G.Log("[HomeActivity.updateUI]");
+            //Navigation header
+            if (user.isAuthorized())
+                UrlImageViewHelper.setUrlDrawable(navHeader_accountAvatar, user.photoUrl, R.mipmap.placeholder_account);
+            else navHeader_accountAvatar.setImageResource(R.mipmap.placeholder_account);
 
-        if (user.isAuthorized()) navHeader_accountName.setText(user.displayName);
-        else navHeader_accountName.setText(R.string.spaceholder_accountName);
+            if (user.isAuthorized()) navHeader_accountName.setText(user.displayName);
+            else navHeader_accountName.setText(R.string.spaceholder_accountName);
 
-        if (user.isAuthorized()) {
-            navHeader_accountEmail.setVisibility(View.VISIBLE);
-            navHeader_accountEmail.setText(user.email);
-        }
-        else {
-            navHeader_accountEmail.setVisibility(View.GONE);
-            navHeader_accountEmail.setText(R.string.spaceholder_accountEmail);
-        }
-        //Floating action button
-        if (fragmentCategories.isVisible()) {
-            G.Log("====true");
-            faButton.setVisibility(View.VISIBLE);
-        }
-        else {G.Log("====false");}
+            if (user.isAuthorized()) {
+                navHeader_accountEmail.setVisibility(View.VISIBLE);
+                navHeader_accountEmail.setText(user.email);
+            } else {
+                navHeader_accountEmail.setVisibility(View.GONE);
+                navHeader_accountEmail.setText(R.string.spaceholder_accountEmail);
+            }
+            //Floating action button test
+            if (fragmentCategories.isVisible()) {
+                G.Log("====true");
+                faButton.setVisibility(View.VISIBLE);
+            } else {G.Log("====false");
+                faButton.setVisibility(View.INVISIBLE);}
 
-        Fragment f = getFragmentManager().findFragmentById(R.id.container);
-        if (f instanceof FragmentCategories) {
-            // do something with f
-            G.Log("====is categories");
-            faButton.setVisibility(View.VISIBLE);
-        }
-        else G.Log("=====not categrioes");
+            //TEST find needed category
+            Fragment f = getFragmentManager().findFragmentById(R.id.container);
+            if (f instanceof FragmentCategories) {
+                G.Log("==== Fragment is categories");
+                faButton.setVisibility(View.VISIBLE);
+            } else G.Log("=====Fragment is not categories");
+        } catch (Exception e) {Crashlytics.logException(e);}
     }
+
     public void signIn() {
-        Google.signInInitialize(this,this,this);
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(Google.apiClient);
-        startActivityForResult(signInIntent,G.REQUEST_SIGN_IN_GOOGLE);
+        try {
+            G.Log("[HomeActivity.signIn]");
+            Google.signInInitialize(this, this, this);
+            Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(Google.apiClient);
+            startActivityForResult(signInIntent, G.REQUEST_SIGN_IN_GOOGLE);
+        } catch (Exception e) {Crashlytics.logException(e);}
     }
 
     public void signOut() {
-        G.Log("signOut()");
-        if (Google.apiClient.isConnected()) {
-            Auth.GoogleSignInApi.signOut(Google.apiClient).setResultCallback(
-                    new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(Status status) {
-                            G.Log("Google Sing-Out successed. Status:" + status);
-                            user.clearData();
-                            updateUI();
+        try {
+            G.Log("[HomeActivity.signOut]");
+            if (Google.apiClient.isConnected()) {
+                Auth.GoogleSignInApi.signOut(Google.apiClient).setResultCallback(
+                        new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
+                                G.Log("Google Sing-Out successed. Status:" + status);
+                                user.clearData();
+                                updateUI();
+                            }
                         }
-                    }
-            );
-        }
-        else {
-            G.Log("Google.signInApi is not connected");
-            user.clearData();
-            updateUI();
-        }
+                );
+            } else {
+                G.Log("Google.signInApi is not connected");
+                user.clearData();
+                updateUI();
+            }
+        } catch (Exception e) {Crashlytics.logException(e);}
     }
+
     private void googleSilentSignIn() {
-        G.Log("Google.silentSignIn..");
-        // Try silent sign-in with Google Sign In API
-        OptionalPendingResult<GoogleSignInResult> pendResult =
-                Auth.GoogleSignInApi.silentSignIn(Google.apiClient);
-        if (pendResult.isDone()) {
-            G.Log("Pending is done");
-            Google.lastSignInResult = pendResult.get();
-            Google.handleSignInResult(HomeActivity.this, Google.lastSignInResult);
-            //syncData syncData = new syncData(HomeActivity.this, G.SyncType.FROM_SERVER);
-            //syncData.execute();
-            updateUI();
-        }
-        else {
-            //showProgress();
-            pendResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    G.Log("On result");
-                    //hideProgress();
-                    Google.handleSignInResult(HomeActivity.this, googleSignInResult);
-                    //CheckLastSync sync = new CheckLastSync(HomeActivity.this);
-                    //sync.execute(this);
-                    //updateUI();
-                }
-            });
-        }
+        try {
+            G.Log("[HomeActivity.googleSilentSignIn]");
+            // Try silent sign-in with Google Sign In API
+            OptionalPendingResult<GoogleSignInResult> pendResult =
+                    Auth.GoogleSignInApi.silentSignIn(Google.apiClient);
+            if (pendResult.isDone()) {
+                G.Log("Pending is done");
+                Google.lastSignInResult = pendResult.get();
+                Google.handleSignInResult(HomeActivity.this, Google.lastSignInResult);
+                //syncData syncData = new syncData(HomeActivity.this, G.SyncType.FROM_SERVER);
+                //syncData.execute();
+                updateUI();
+            } else {
+                //showProgress();
+                pendResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(GoogleSignInResult googleSignInResult) {
+                        G.Log("On result");
+                        //hideProgress();
+                        Google.handleSignInResult(HomeActivity.this, googleSignInResult);
+                        //CheckLastSync sync = new CheckLastSync(HomeActivity.this);
+                        //sync.execute(this);
+                        //updateUI();
+                    }
+                });
+            }
+        }catch (Exception e) {Crashlytics.logException(e);}
     }
 
     public void updateFragmentsUI() {
 //        if (toolbar.getTitle().equals(getString(R.string.title_account))) {
 //            G.Log("Update from activity FragmentAccount");
-        if (fragmentAccount.isVisible()) ((FragmentAccount)getFragmentManager().findFragmentById(R.id.container)).updateUI();
-        if (fragmentWelcome.isVisible()) ((FragmentWelcome)getFragmentManager().findFragmentById(R.id.container)).updateUI();
+        try {
+            G.Log("[HomeActivity.updateFragmentsUI]");
+            if (fragmentAccount.isVisible())
+                ((FragmentAccount) getFragmentManager().findFragmentById(R.id.container)).updateUI();
+            if (fragmentWelcome.isVisible())
+                ((FragmentWelcome) getFragmentManager().findFragmentById(R.id.container)).updateUI();
+        } catch (Exception e) {Crashlytics.logException(e);}
 //        }
     }
 
@@ -400,16 +430,21 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void goToFragment(Fragment fragment, String title) {
-        G.Log("goToFragment("+fragment.toString()+", "+title+")");
-        if (homeFragmentManager==null) {
-            G.Log("FragmentManager is NULL!!!");
-            homeFragmentManager=getFragmentManager();}
-        FragmentTransaction fragmentTransaction = homeFragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.commit();
-        getSupportActionBar().setTitle(title);
+        try {
+            G.Log("[HomeActivity.goToFragment]");
+            G.Log("goToFragment(" + fragment.toString() + ", " + title + ")");
+            if (homeFragmentManager == null) {
+                G.Log("Exception: FragmentManager is NULL!!!");
+                homeFragmentManager = getFragmentManager();
+            }
+            FragmentTransaction fragmentTransaction = homeFragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.commit();
+            getSupportActionBar().setTitle(title);
+        } catch (Exception e) {Crashlytics.logException(e);}
     }
 
+    //Test force crash
     public void forceCrash(View view) {
         throw new RuntimeException("This is a crash");
     }
