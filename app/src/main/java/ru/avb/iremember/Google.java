@@ -68,7 +68,7 @@ public class Google {
 
         void createFile(final GoogleApiClient gac, final DriveFolder fldr,
                         final String name, final String mime, final byte[] buff) {
-            G.Log("Google.Drive.createFile..");
+            G.Log("[Google.Drive.createFile]");
 
 
         }
@@ -107,10 +107,9 @@ public class Google {
                             if (metadataBuffer.getCount() != 0) {
                                 Drive.currentMetadata = metadataBuffer.get(0);
                                 Drive.currentDriveId = metadataBuffer.get(0).getDriveId().encodeToString();
-                                G.Log("current DriveID: " + Drive.currentDriveId);
-                                G.Log("file size: " + metadataBuffer.get(0).getFileSize());
-                                G.Log("last modif: " + metadataBuffer.get(0).getModifiedDate());
-                                G.Log(G.LOGLINE);
+                                G.Log("current DriveID: " + Drive.currentDriveId +"||"+
+                                "file size: " + metadataBuffer.get(0).getFileSize() +"||"+
+                                "last modif: " + metadataBuffer.get(0).getModifiedDate());
                             } else {
                                 G.Log("METADATA: NULL!");
                                 Drive.currentDriveId = G.NONE_STRING;

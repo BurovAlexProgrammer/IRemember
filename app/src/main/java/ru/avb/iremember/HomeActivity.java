@@ -142,7 +142,6 @@ public class HomeActivity extends AppCompatActivity
         try {
             G.Log("[HomeActivity.onNavigationItemSelected]");
             // Handle navigation view item clicks here.
-
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
             int id = item.getItemId();
@@ -164,6 +163,7 @@ public class HomeActivity extends AppCompatActivity
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
+            updateUI();
             return true;
         } catch (Exception e) {Crashlytics.logException(e); return false;}
     }

@@ -76,29 +76,29 @@ public class User {
     };
 
     public void logData() {
-        G.Log("----Log User Data:----");
+        G.Log("[User.logData]");
         G.Log("db.name: "+DB.dbName);
-        if (this==null) {G.Log("G.user is NULL."); G.Log("----------------------"); return;}
-        G.Log("id: "+this.id);
-        G.Log("Name: "+this.displayName);
-        G.Log("eMail: "+this.email);
-        G.Log("photoURL: "+this.photoUrl);
-        G.Log("lastSync: "+this.lastSync.toString());
-        G.Log("lastSyncText: "+this.lastSyncText);
-        G.Log("dataChanged: "+this.dataChanged);
-        G.Log("----------------------");
+        if (this==null) {G.Log("G.user: NULL."); return;}
+        G.Log("id: "+this.id+"||"+
+        "Name: "+this.displayName+"||"+
+        "eMail: "+this.email+"||"+
+        "photoURL: "+this.photoUrl+"||"+
+        "lastSync: "+this.lastSync.toString()+"||"+
+        "lastSyncText: "+this.lastSyncText+"||"+
+        "dataChanged: "+this.dataChanged);
+        G.Log("[//END//User.logData]");
     }
 
 
     public void getDataFromGoogle(Context context) {
-        G.Log("User.getDataFromGoogleSignInResult..");
+        G.Log("[User.getDataFromGoogle] SignInResult");
         if (Google.signInAccount==null) Google.setAccount(Google.lastSignInResult);
         GoogleSignInAccount account = Google.signInAccount;
         G.user = new User(context, account.getId(), account.getDisplayName(), account.getEmail(), account.getPhotoUrl().toString());
     }
 
     public void clearData() {
-        G.Log("User.clearData..");
+        G.Log("[User.clearData]");
         this.authorized = false;
         this.dataChanged = false;
         this.id = G.NONE_STRING;
@@ -110,7 +110,7 @@ public class User {
     }
 
     public String getLastSyncTextFromDatetime(Context context, DateTime dateTime) {
-        G.LogInteres("User.getLastSyncTextFromDatetime..");
+        G.LogInteres("[User.getLastSyncTextFromDatetime]");
         Resources r = context.getResources();
         String sBegin = r.getString(R.string.lastSync)+": ";
         String datePattern = "";
@@ -131,12 +131,7 @@ public class User {
                 return sBegin+r.getString(R.string.today)+" "+r.getString(R.string.at_time)+" "+time;}
     }
 
-    public void setLastSyncText(String lastSyncText) {
-        this.lastSyncText = lastSyncText;
-    }
-    public String getLastSyncText() {
-        G.Log("lastSyncText: "+lastSyncText);
-        return this.lastSyncText;
-    }
+    public void setLastSyncText(String lastSyncText) {this.lastSyncText = lastSyncText;}
+    public String getLastSyncText() {return this.lastSyncText;}
 }
 
