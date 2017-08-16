@@ -5,12 +5,9 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,8 +33,6 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 import io.fabric.sdk.android.Fabric;
 import ru.avb.iremember.asyncs.AsyncInfinity;
-import ru.avb.iremember.asyncs.CheckLastSync;
-import ru.avb.iremember.asyncs.syncData;
 import ru.avb.iremember.fragments.FragmentAccount;
 import ru.avb.iremember.fragments.FragmentCategories;
 import ru.avb.iremember.fragments.FragmentCreateCategory;
@@ -83,7 +78,7 @@ public class HomeActivity extends AppCompatActivity
 
             user = new User(this);     //init static user
             DB.setDbName();
-            Options.initializeOptions(this);
+            Options.initOptions(this);
 
             //Show initial fragment
 

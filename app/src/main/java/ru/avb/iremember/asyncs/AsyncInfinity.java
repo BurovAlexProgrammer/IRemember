@@ -29,7 +29,7 @@ public class AsyncInfinity extends AsyncTask {
             G.Log("AsynInfinity2!!");
             int t=0;
             //boolean b = true;
-            Options.initializeOptions(context);
+            Options.initOptions(context);
             Options.readOption(Options.KEY_USER_ID, G.NONE_STRING);
             while (!finish) {
                 if (isCancelled()) {G.Log("AsynInfinity3 canceled");return null;}

@@ -6,12 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.joda.time.DateTime;
-
-import java.sql.Timestamp;
-import java.util.Date;
 
 import static ru.avb.iremember.G.user;
 
@@ -48,7 +46,7 @@ public class Options extends AppCompatActivity {
     public static String KEY_THEME = "spCurrentTheme";
 
     public static void applyTheme(Activity activity, int theme) {
-        G.Log("Options.applyTheme(): ThemeId = "+theme );
+        G.Log("[Options.applyTheme]: ThemeId = "+theme);
         currentTheme = theme;
         spWriteTheme(activity);
         restartActivity(activity);
@@ -77,23 +75,23 @@ public class Options extends AppCompatActivity {
         prefEditor.commit();
     }
 
-    public static void initializeOptions(Context context) {
-        G.Log("Initialize options.");
+    public static void initOptions(Context context) {
+        G.Log("[Options.initOptions]");
         initPreferences(context);
         //Check options exist
         isOptionsExist = sharedPref.getBoolean(KEY_OPTIONS_EXIST, false);
         if (!isOptionsExist) {
-            G.Log("Options are not found.");
+            G.Log("Options: not found.");
             loadDefaultOptions();
             saveOptions();
-            initializeOptions(context);
-        } else G.Log("Options are exist");
+            initOptions(context);
+        } else G.Log("Options: exist");
         //Load all options
         isNeedWelcome = sharedPref.getBoolean(KEY_NEED_WELCOME, true);
         locale = sharedPref.getString(KEY_LOCALE, "none");
         showNotification = sharedPref.getBoolean(KEY_SHOW_NOTIFICATION, true);
         if (locale.equals("none")) {
-            G.Log("ERROR!! Option.locale didn't load. locale = default");
+            G.Log("EXCEPTION: Options.locale didn't load. locale = default");
             locale = "default";
         }
         lastSync = readOption(KEY_LAST_SYNC, G.NONE_DATETIME);
@@ -159,27 +157,28 @@ public class Options extends AppCompatActivity {
         lastSync = G.NONE_DATETIME;
     }
     public static void saveOptions() {
-        G.Log("Saving options..");
-        writeOption(KEY_OPTIONS_EXIST, isOptionsExist);
-        writeOption(KEY_NEED_WELCOME, isNeedWelcome);
-        writeOption(KEY_LOCALE, locale);
-        writeOption(KEY_SHOW_NOTIFICATION, showNotification);
-        writeOption(KEY_LAST_SYNC, lastSync);
+        G.Log("[Options.saveOptions]");
+        try {
+            writeOption(KEY_OPTIONS_EXIST, isOptionsExist);
+            writeOption(KEY_NEED_WELCOME, isNeedWelcome);
+            writeOption(KEY_LOCALE, locale);
+            writeOption(KEY_SHOW_NOTIFICATION, showNotification);
+            writeOption(KEY_LAST_SYNC, lastSync);
+        } catch (Exception e) {Crashlytics.logException(e);}
     }
 
     public static void initPreferences(Context context) {
+        G.Log("[Options.initPreferences] ONCE at one activity");
         sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         prefEditor = sharedPref.edit();
     }
 
     private static void logOptions() {
-        G.Log(G.LOGLINE);
-        G.Log("LOGGING OPTIONS..");
-        G.Log("isOptionsExist: "+isOptionsExist);
-        G.Log("isNeedWelcome: "+isNeedWelcome);
-        G.Log("locale: "+locale);
-        G.Log("showNotification: "+showNotification);
-        G.Log("lastSync: "+lastSync.toString());
-        G.Log(G.LOGLINE);
+        G.Log("[Options.logOptions]");
+        G.Log("isOptionsExist: "+isOptionsExist+"||"+
+        "isNeedWelcome: "+isNeedWelcome+"||"+
+        "locale: "+locale+"||"+
+        "showNotification: "+showNotification+"||"+
+        "lastSync: "+lastSync.toString());
     }
 }
