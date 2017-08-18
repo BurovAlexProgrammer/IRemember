@@ -83,7 +83,8 @@ public class HomeActivity extends AppCompatActivity
             //Show initial fragment
 
             goToFragment(G.homeFragment, G.homeFragmentTitle);
-            Google.signInInitialize(this, this, this);
+            //TODO find needed Google.signInInit(this, this, this);
+            Google.signInInit(this, this, this);
             googleSilentSignIn();
             DB.setDbName();
             //need welcome
@@ -198,7 +199,7 @@ public class HomeActivity extends AppCompatActivity
         //Welcome request
         if (requestCode==G.REQUEST_WELCOME_FROM_MAIN) {
             G.Log("ActivityResult from Welcome.Activity");
-            Google.signInInitialize(this, this, this);
+            //TODO find needed Google.signInInit(this, this, this);
             googleSilentSignIn();
             updateUI();
         }
@@ -339,8 +340,8 @@ public class HomeActivity extends AppCompatActivity
 
     public void signIn() {
         try {
-            G.Log("[HomeActivity.signIn]");
-            Google.signInInitialize(this, this, this);
+            G.Log("[HomeActivity->Google.signIn]");
+            //Google.signInInit(this, this, this);
             Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(Google.apiClient);
             startActivityForResult(signInIntent, G.REQUEST_SIGN_IN_GOOGLE);
         } catch (Exception e) {Crashlytics.logException(e);}
@@ -348,7 +349,7 @@ public class HomeActivity extends AppCompatActivity
 
     public void signOut() {
         try {
-            G.Log("[HomeActivity.signOut]");
+            G.Log("[HomeActivity->Google.signOut]");
             if (Google.apiClient.isConnected()) {
                 Auth.GoogleSignInApi.signOut(Google.apiClient).setResultCallback(
                         new ResultCallback<Status>() {
@@ -370,7 +371,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void googleSilentSignIn() {
         try {
-            G.Log("[HomeActivity.googleSilentSignIn]");
+            G.Log("[HomeActivity->googleSilentSignIn]");
             // Try silent sign-in with Google Sign In API
             OptionalPendingResult<GoogleSignInResult> pendResult =
                     Auth.GoogleSignInApi.silentSignIn(Google.apiClient);

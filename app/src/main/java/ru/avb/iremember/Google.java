@@ -310,9 +310,9 @@ public class Google {
     }
     //===========END DRIVE=================
 
-    public static void signInInitialize(FragmentActivity context, GoogleApiClient.ConnectionCallbacks callbacks, GoogleApiClient.OnConnectionFailedListener onConnectionFailed) {
+    public static void signInInit(FragmentActivity context, GoogleApiClient.ConnectionCallbacks callbacks, GoogleApiClient.OnConnectionFailedListener onConnectionFailed) {
         try {
-            G.Log("Google.sign-in initialization..");
+            G.Log("[Google.signInInit]");
             signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestEmail()
                     .requestScopes(com.google.android.gms.drive.Drive.SCOPE_FILE)
@@ -332,21 +332,24 @@ public class Google {
 
             G.Log("Successfully.");
         } catch (IllegalStateException e) {G.Log("FAILED!"); G.Log("EXCEPTION: "+e.getMessage());}
+          catch (Exception e) {G.Log("EXC: "+e.getMessage());}
     }
 
     public static void setAccount(GoogleSignInResult result) {
-        G.Log("Google.setAccount..");
-        lastSignInResult = result;
-        if (Google.lastSignInResult == null) {
-            G.Log("ERROR!! User has not authorized in Google. No data to get SignInAccount.");
-            return;}
-        else {
-            signInAccount = result.getSignInAccount();
-        }
+        try {
+            G.Log("[Google.setAccount]");
+            lastSignInResult = result;
+            if (Google.lastSignInResult == null) {
+                G.Log("ERROR!! User has not authorized in Google. No data to get SignInAccount.");
+                return;
+            } else {
+                signInAccount = result.getSignInAccount();
+            }
+        } catch (Exception e) {Crashlytics.logException(e);}
     }
 
     public static boolean handleSignInResult(Context context, GoogleSignInResult result) {
-        G.Log("Google.handleSignInResult..");
+        G.Log("[Google.handleSignInResult]");
         if (result.isSuccess()) {
             Google.SingIn.setSuccess(true);
             Google.setSignInResult(result);
@@ -357,7 +360,7 @@ public class Google {
         }
         else {
             Google.SingIn.setSuccess(false);
-            G.Log("Failed!");
+            G.Log("Google.handleSignInResult - Failed!");
             return false;
         }
     }
