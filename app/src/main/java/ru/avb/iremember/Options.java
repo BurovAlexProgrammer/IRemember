@@ -168,7 +168,6 @@ public class Options extends AppCompatActivity {
     }
 
     public static void initPreferences(Context context) {
-        G.Log("[Options.initPreferences] ONCE at one activity");
         sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         prefEditor = sharedPref.edit();
     }

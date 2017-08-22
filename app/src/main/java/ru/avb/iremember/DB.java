@@ -7,10 +7,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.crashlytics.android.Crashlytics;
+
 
 public class DB {
     public static final String LOCAL_NAME = "localUser.db";
-    public static final int dbVersion = 4;
+    public static final int dbVersion = 5;
 
     public static String
             dbName = LOCAL_NAME,
@@ -82,101 +84,88 @@ public class DB {
 
         public void onCreate(SQLiteDatabase dbLocal) {
             try {
-                G.Log("Create database");
+                G.Log("[DBHelper.onCreate]");
                 db = dbLocal;
                 createTable(TABLE_CATEGORIES);
                 createTable(TABLE_EVENTS);
                 createTable(TABLE_NOTIFICS);
-                G.Log("Successfully");
             }
-            catch (SQLException e) {G.Log("EXCEPTION: "+e.getMessage());}
+            catch (SQLException e) {Crashlytics.logException(e);}
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            G.Log("onUpgrage Database from version "+oldVersion+" to version "+newVersion+"..");
-            //read database rows
-            DB.db = db;
-            dropTable(TABLE_CATEGORIES);
-            dropTable(TABLE_EVENTS);
-            dropTable(TABLE_NOTIFICS);
-            createTable(TABLE_CATEGORIES);
-            createTable(TABLE_EVENTS);
-            createTable(TABLE_NOTIFICS);
-            closeDB();
-            //write database rows
+            try {
+                G.Log("[DBHelper.onUpgrade] onUpgrage DB from version " + oldVersion + " to version " + newVersion + "..");
+                //read database rows
+                DB.db = db;
+                dropTable(TABLE_CATEGORIES);
+                dropTable(TABLE_EVENTS);
+                dropTable(TABLE_NOTIFICS);
+                createTable(TABLE_CATEGORIES);
+                createTable(TABLE_EVENTS);
+                createTable(TABLE_NOTIFICS);
+                closeDB();
+                //write database rows
+            } catch (SQLException e) {Crashlytics.logException(e);}
         }
     }
 
     public static SQLiteDatabase getReadableDB(Context context) {
-        G.Log("get readable DB");
         try
         {
+            G.Log("[DB.getReadableDB]");
             DBHelper dbHelper = new DBHelper(context);
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            G.Log("Successfully");
         }
-        catch(SQLException e)
-        {
-            G.Log("EXCEPTION: "+e.getMessage());
-        }
+        catch(SQLException e) {Crashlytics.logException(e);}
         return db;
     }
+
     public static SQLiteDatabase getWritableDB(Context context) {
-        G.Log("get writable DB");
         try
         {
+            G.Log("[DB.getWritableDB]");
             DBHelper dbHelper = new DBHelper(context);
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            G.Log("Successfully");
         }
-        catch(SQLException e)
-        {
-            G.Log("EXCEPTION: "+e.getMessage());
-        }
+        catch(SQLException e) {Crashlytics.logException(e);}
         return db;
     }
+
     public static void openReadableDB(Context context) {
-        G.Log("open readable DB");
         try
         {
+            G.Log("[DB.openReadableDB]");
             DBHelper dbHelper = new DBHelper(context);
             db = dbHelper.getReadableDatabase();
-            G.Log("Successfully");
         }
-        catch(SQLException e)
-        {
-            G.Log("EXCEPTION: "+e.getMessage());
-        }
+        catch(SQLException e) {Crashlytics.logException(e);}
     }
+
     public static void openWritableDB(Context context) {
-        G.Log("open writable DB");
         try
         {
+            G.Log("[DB.openWritableDB]");
             DBHelper dbHelper = new DBHelper(context);
             db = dbHelper.getReadableDatabase();
-            G.Log("Successfully");
         }
-        catch(SQLException e)
-        {
-            G.Log("EXCEPTION: "+e.getMessage());
-        }
+        catch(SQLException e) {Crashlytics.logException(e);}
     }
 
     public static void closeDB() {
-        G.Log("close DB. off");
         try
         {
-            //db.close();
-            //G.Log("Database "+db.getPath().toString()+"  closed.");
-            //G.Log("Successfully");
+            G.Log("[DB.closeDB]");
+            final String path = db.getPath().toString();
+            db.close();
+            G.Log("Database "+path+"  closed successfully.");
         }
-        catch (SQLException e)
-        {G.Log("EXCEPTION: "+e.getMessage());}
+        catch (SQLException e) {Crashlytics.logException(e);}
     }
 
     public static void createTable(String tableName) {
-        G.Log("create table "+tableName);
+        G.Log("[DB.createTable ("+tableName+")]");
 
             try
             {
@@ -200,37 +189,38 @@ public class DB {
                             CNN_LABEL +" "+ TYPE_TEXT +");"
                     );
                 }
-                G.Log("Table " + tableName + " created successfully.");
+                //G.Log("Table " + tableName + " created successfully.");
             }
-            catch (SQLException e)		{G.Log("EXCEPTION: "+e.getMessage());}
-            catch (Exception e) {G.Log("EXC: "+e.getMessage());}
+            catch (SQLException e)		{Crashlytics.logException(e);}
     }
 
     private static void dropTable(String tableName) {
-        G.Log("drop table "+tableName);
-        try {db.execSQL("drop table " + tableName); G.Log("Successfully");}
-        catch (SQLException e) {G.Log("EXCEPTION: "+e.getMessage());}
+        G.Log("[DB.dropTable ("+tableName+")]");
+        try {db.execSQL("drop table " + tableName);
+            //G.Log("Successfully");
+        }
+        catch (SQLException e) {Crashlytics.logException(e);}
     }
 
     public static void logTable(Context context) {
         try {
-            G.Log("Log table in INTERES");
-            G.LogInteres("-------------rows in "+TABLE_CATEGORIES+"--------------");
+            G.Log("[DB.logTable] log table to tag 'logDB'");
+            G.LogDB("Rows count in table "+TABLE_CATEGORIES+": ");
             //подключаемся к DB
             openReadableDB(context);
             //делаем запрос всех данных из таблицы, получаем Cursor
             Cursor c = db.query(TABLE_CATEGORIES, null, null, null, null, null, null);
             //ставим позицию курсора на первую строку выборки
             //если в выборке нет строк, вернетс¤ false
-            G.Log("Row count: "+c.getCount());
+//            G.Log("Row count: "+c.getCount());
             int row = 0;
             if (c.moveToFirst()) {
                 int idColIndex = c.getColumnIndex(CNC_ID);
                 int nameColIndex = c.getColumnIndex(CNC_LABEL);
                 do {
-                    G.LogInteres("Row "+row+
+                    G.LogDB("Row "+row+
                             "  id: "+c.getInt(idColIndex)+
-                            "  name: "+c.getString(nameColIndex));
+                            "  label: "+c.getString(nameColIndex));
                     row++;
                 } while (c.moveToNext());
             }
@@ -238,11 +228,12 @@ public class DB {
             closeDB();
             G.LogInteres("------------------------------------------------------");
         }
-        catch (SQLException e) {G.Log("EXCEPTION: "+e.getMessage());}
+        catch (SQLException e) {Crashlytics.logException(e);}
     }
 
     public static boolean createRow(Context context) {
         G.Log(G.LOGLINE);
+        G.Log("[DB.createRow]");
         G.Log("Insert new record in table Categories");
         ContentValues values = new ContentValues();
         values.put(CNC_LABEL, "MyFirstRow");
@@ -259,16 +250,16 @@ public class DB {
         }
         catch (SQLException e)
         {
-            G.Log("EXCEPTION: "+e.getMessage());
+            Crashlytics.logException(e);
             G.Log(G.LOGLINE);
             return false;
         }
     }
 
     public static void setDbName() {
-        G.LogInteres("DB.setDbName..");
+        G.LogDB("[DB.setDbName]");
         if (G.user == null) {dbName = LOCAL_NAME; G.LogInteres("User is null. ");}
         if (G.user.isAuthorized()) {dbName = G.user.id+".db";}
-        G.LogInteres("DB.dbName="+dbName);
+        G.LogDB("DB.dbName="+dbName);
     }
 }
