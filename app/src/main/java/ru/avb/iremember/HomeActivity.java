@@ -91,11 +91,16 @@ public class HomeActivity extends AppCompatActivity
 //        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
 //            goToFragment(fragmentWelcome, getString(R.string.title_welcome));
 //        }
+
+            //TODO silentSignIn doesn't work, maybe because bottom
             if (Options.isNeedWelcome) {
                 Intent intent = new Intent(HomeActivity.this, IntroActivity.class);
                 startActivityForResult(intent, G.REQUEST_INTRO);
             }
-            updateUI();
+            G.Log("+++++++++++++++++++");
+
+            //TODO удалить ненужные updateUI
+            //updateUI();
         } catch (Exception e) {Crashlytics.logException(e);}
 
         //finish();
@@ -141,7 +146,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         try {
-            G.Log("[HomeActivity.onNavigationItemSelected]");
+            G.Log("[HomeActivity.onNavigationItemSelected] item: "+item.getTitle()+"  "+item.getTitleCondensed());
             // Handle navigation view item clicks here.
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
@@ -164,7 +169,8 @@ public class HomeActivity extends AppCompatActivity
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
-            updateUI();
+            //TODO удалить ненужные updateUI
+            //updateUI();
             return true;
         } catch (Exception e) {Crashlytics.logException(e); return false;}
     }
@@ -174,6 +180,8 @@ public class HomeActivity extends AppCompatActivity
         super.onResume();
         try {
             G.Log("[HomeActivity.onResume]");
+            googleSilentSignIn();
+            updateUI();
 //            Test async infinity
 //            G.Log("Status: " + asyncInfinity.getStatus());
 //            if (asyncInfinity.getStatus() != AsyncTask.Status.RUNNING) {
@@ -198,21 +206,22 @@ public class HomeActivity extends AppCompatActivity
         G.Log("[HomeActivity.onActivityResult]");
         //Welcome request
         if (requestCode==G.REQUEST_WELCOME_FROM_MAIN) {
-            G.Log("ActivityResult from Welcome.Activity");
+            G.Log("ActivityResult from: Welcome.Activity");
             //TODO find needed Google.signInInit(this, this, this);
             googleSilentSignIn();
             updateUI();
         }
         if (requestCode==G.REQUEST_CHANGE_LANGUAGE) {
-            G.Log("ActivityResult from HomeActivity.Settings");
+            G.Log("ActivityResult from: HomeActivity.Settings");
             G.Log("Result: "+data.toString());
             updateUI();
         }
         if (requestCode==G.REQUEST_SIGN_IN_GOOGLE) {
-            G.Log("ActivityResult from Google.signIn");
+            G.Log("ActivityResult from: Google.signIn");
             Google.lastSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             boolean isSuccess = Google.handleSignInResult(this, Google.lastSignInResult);
             G.Log("isSuccess: "+isSuccess);
+            DB.setDbName();
             updateUI();
         }
         if (requestCode==G.REQUEST_INTRO) {
@@ -357,6 +366,8 @@ public class HomeActivity extends AppCompatActivity
                             public void onResult(Status status) {
                                 G.Log("Google Sing-Out successed. Status:" + status);
                                 user.clearData();
+                                DB.setDbName();
+                                //TODO удалить ненужные updateUI
                                 updateUI();
                             }
                         }
@@ -364,6 +375,8 @@ public class HomeActivity extends AppCompatActivity
             } else {
                 G.Log("Google.signInApi is not connected");
                 user.clearData();
+                DB.setDbName();
+                //TODO удалить ненужные updateUI
                 updateUI();
             }
         } catch (Exception e) {Crashlytics.logException(e);}
@@ -381,6 +394,8 @@ public class HomeActivity extends AppCompatActivity
                 Google.handleSignInResult(HomeActivity.this, Google.lastSignInResult);
                 //syncData syncData = new syncData(HomeActivity.this, G.SyncType.FROM_SERVER);
                 //syncData.execute();
+                DB.setDbName();
+                //TODO удалить ненужные updateUI
                 updateUI();
             } else {
                 //showProgress();
@@ -390,6 +405,7 @@ public class HomeActivity extends AppCompatActivity
                         G.Log("On result");
                         //hideProgress();
                         Google.handleSignInResult(HomeActivity.this, googleSignInResult);
+                        DB.setDbName();
                         //CheckLastSync sync = new CheckLastSync(HomeActivity.this);
                         //sync.execute(this);
                         //updateUI();
@@ -437,6 +453,8 @@ public class HomeActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.container, fragment);
             fragmentTransaction.commit();
             getSupportActionBar().setTitle(title);
+            //TODO удалить ненужные updateUI
+            updateUI();
         } catch (Exception e) {Crashlytics.logException(e);}
     }
 

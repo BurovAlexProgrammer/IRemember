@@ -26,6 +26,7 @@ import ru.avb.iremember.R;
  * create an instance of this fragment.
  */
 public class FragmentSettings extends Fragment {
+    HomeActivity thisActivity;
     LinearLayout layout_optionLanguages, layout_optionNotificationEnable;
     CheckBox checkbox_notificationEnable;
     ImageView image_languageIcon;
@@ -74,10 +75,12 @@ public class FragmentSettings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        thisActivity = (HomeActivity)inflater.getContext();
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         initializeViews(v);
-        updateUI();
+        thisActivity.updateUI();
+        //updateUI();
         return v;
     }
 

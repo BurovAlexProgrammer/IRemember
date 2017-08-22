@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ import ru.avb.iremember.R;
 import static ru.avb.iremember.G.user;
 
 public class FragmentAccount extends Fragment{
-    FragmentActivity thisActivity;
+    HomeActivity thisActivity;
     TextView textview_name, textview_email, textview_lastSync, textView_sign;
     ImageView imageview_avatar;
     LinearLayout buttonSing;
@@ -58,10 +57,11 @@ public class FragmentAccount extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        thisActivity = (FragmentActivity)inflater.getContext();
-        G.Log("FragmentAccount thisActivity = "+thisActivity.toString());
+        thisActivity = (HomeActivity)inflater.getContext();
+        G.Log("[FragmentAccount.onCreateView] thisActivity = "+thisActivity.toString());
         View v = inflater.inflate(R.layout.fragment_account, null);
         initializeViews(v);
+        thisActivity.updateUI();
         updateUI();
         return v;
     }

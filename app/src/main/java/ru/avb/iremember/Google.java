@@ -271,6 +271,7 @@ public class Google {
                                         //Options.initPreferences(context);
                                         Options.writeOption(Options.KEY_LAST_SYNC, lastModif);
                                         G.Log("Options.lastSyncText: " + user.getLastSyncTextFromDatetime(context, user.getLastSync()));
+                                        //TODO удалить ненужные updateUI
                                         ((HomeActivity) context).updateUI();
                                     }
                                 });
@@ -327,8 +328,8 @@ public class Google {
                     .build();
             G.Log("google API: "+apiClient.toString());
 
-            Drive.appFolder = com.google.android.gms.drive.Drive.DriveApi.getAppFolder(apiClient);
-            G.Log("google drive appFolder: "+Drive.appFolder);
+            //Drive.appFolder = com.google.android.gms.drive.Drive.DriveApi.getAppFolder(apiClient);
+            //G.Log("google drive appFolder: "+Drive.appFolder);
 
             G.Log("Successfully.");
         } catch (IllegalStateException e) {G.Log("FAILED!"); G.Log("EXCEPTION: "+e.getMessage());}
@@ -361,6 +362,9 @@ public class Google {
         else {
             Google.SingIn.setSuccess(false);
             G.Log("Google.handleSignInResult - Failed!");
+            G.Log("Google.handleSignInResult: "+result.toString());
+            G.Log("Google.handleSignInResult status: "+result.getStatus());
+            G.Log("Google.handleSignInResult account: "+result.getSignInAccount());
             return false;
         }
     }

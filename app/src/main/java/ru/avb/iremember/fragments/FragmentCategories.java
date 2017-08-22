@@ -81,7 +81,8 @@ public class FragmentCategories extends Fragment {
         // Inflate the layout for this fragment
         thisActivity = (HomeActivity) inflater.getContext();
         //((HomeActivity)thisActivity)
-        thisActivity.faButton.setVisibility(View.VISIBLE);
+        //TODO must be on updateUI
+        //thisActivity.faButton.setVisibility(View.VISIBLE);
 
         View v = inflater.inflate(R.layout.fragment_categories,null);
 
@@ -98,6 +99,7 @@ public class FragmentCategories extends Fragment {
 
         CategoryAdapter cAdapter = new CategoryAdapter(categories);
         recyclerView.setAdapter(cAdapter);
+        thisActivity.updateUI();
         return v;
     }
 
