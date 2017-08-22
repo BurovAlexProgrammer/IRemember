@@ -115,8 +115,8 @@ public class FragmentAccount extends Fragment{
 
                 }
                 if (v.getId() == R.id.button2) readFile();
-                if (v.getId() == R.id.button3) DB.logTable(getActivity());
-                if (v.getId() == R.id.button4) DB.createRow(getActivity());
+                if (v.getId() == R.id.button3) DB.logTable(getActivity().getApplicationContext());
+                if (v.getId() == R.id.button4) DB.createRow(getActivity().getApplicationContext());
                 if (v.getId() == R.id.button5) deleteFile();
                 if (v.getId() == R.id.button6) downloadDbFromDrive();
                 //if (v.getId() == R.id.button7)
@@ -149,7 +149,7 @@ public class FragmentAccount extends Fragment{
 
     private void downloadDbFromDrive() {
         Google.Drive.appFolder = Drive.DriveApi.getAppFolder(Google.apiClient);
-        DB.getWritableDB(getActivity());
+        DB.openWritableDB(getActivity());
         Google.Drive.downloadFileFromDrive(getActivity(), DB.dbName, DB.db.getPath());
     }
 

@@ -59,6 +59,7 @@ public class Google {
     public static boolean isResolvingError;
 
     //=============DRIVE===================
+    //TODO драйв загружает первый файл, а удаляет последний
     public static class Drive {
         public static DriveFolder appFolder;
         public static MetadataBuffer metadataBuffer;

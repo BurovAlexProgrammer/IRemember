@@ -86,7 +86,6 @@ public class HomeActivity extends AppCompatActivity
             //TODO find needed Google.signInInit(this, this, this);
             Google.signInInit(this, this, this);
             googleSilentSignIn();
-            DB.setDbName();
             //need welcome
 //        if (Options.readOption(Options.KEY_NEED_WELCOME, true)) {
 //            goToFragment(fragmentWelcome, getString(R.string.title_welcome));
@@ -405,7 +404,6 @@ public class HomeActivity extends AppCompatActivity
                         G.Log("On result");
                         //hideProgress();
                         Google.handleSignInResult(HomeActivity.this, googleSignInResult);
-                        DB.setDbName();
                         //CheckLastSync sync = new CheckLastSync(HomeActivity.this);
                         //sync.execute(this);
                         //updateUI();

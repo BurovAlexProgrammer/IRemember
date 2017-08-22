@@ -1,5 +1,6 @@
 package ru.avb.iremember;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -78,7 +79,18 @@ public class DB {
 
 
     public static class DBHelper extends SQLiteOpenHelper {
-        public DBHelper(Context context) {
+        private static DBHelper sInstance;
+        public static synchronized DBHelper getInstance(Context context) {
+            // Use the application context, which will ensure that you
+            // don't accidentally leak an Activity's context.
+            // See this article for more information: http://bit.ly/6LRzfx
+            if (sInstance == null) {
+                sInstance = new DBHelper(context.getApplicationContext());
+            }
+            return sInstance;
+        }
+
+        private DBHelper(Context context) {
             super(context, dbName, null, dbVersion);
         }
 
@@ -105,29 +117,33 @@ public class DB {
                 createTable(TABLE_CATEGORIES);
                 createTable(TABLE_EVENTS);
                 createTable(TABLE_NOTIFICS);
-                closeDB();
+                DB.db.setVersion(newVersion);
+                db.setVersion(newVersion);
+                //closeDB();
                 //write database rows
             } catch (SQLException e) {Crashlytics.logException(e);}
         }
     }
 
     public static SQLiteDatabase getReadableDB(Context context) {
+        G.Log("[DB.getReadableDB]");
+        SQLiteDatabase db = null;
         try
         {
-            G.Log("[DB.getReadableDB]");
             DBHelper dbHelper = new DBHelper(context);
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            db = dbHelper.getReadableDatabase();
         }
         catch(SQLException e) {Crashlytics.logException(e);}
         return db;
     }
 
     public static SQLiteDatabase getWritableDB(Context context) {
+        G.Log("[DB.getWritableDB]");
+        SQLiteDatabase db = null;
         try
         {
-            G.Log("[DB.getWritableDB]");
             DBHelper dbHelper = new DBHelper(context);
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            db = dbHelper.getWritableDatabase();
         }
         catch(SQLException e) {Crashlytics.logException(e);}
         return db;
@@ -149,6 +165,7 @@ public class DB {
             G.Log("[DB.openWritableDB]");
             DBHelper dbHelper = new DBHelper(context);
             db = dbHelper.getReadableDatabase();
+
         }
         catch(SQLException e) {Crashlytics.logException(e);}
     }
@@ -160,6 +177,7 @@ public class DB {
             final String path = db.getPath().toString();
             db.close();
             G.Log("Database "+path+"  closed successfully.");
+            if (db == null) G.Log("is Null!!!!");
         }
         catch (SQLException e) {Crashlytics.logException(e);}
     }
@@ -232,26 +250,23 @@ public class DB {
     }
 
     public static boolean createRow(Context context) {
-        G.Log(G.LOGLINE);
         G.Log("[DB.createRow]");
         G.Log("Insert new record in table Categories");
-        ContentValues values = new ContentValues();
-        values.put(CNC_LABEL, "MyFirstRow");
         try
         {
             openWritableDB(context);
+            ContentValues values = new ContentValues();
+            values.put(CNC_LABEL, "MyFirstRow");
             for (int i=0;i<100;i++) {
                 db.insert(TABLE_CATEGORIES, null, values);
             }
             G.Log("Successfully");
             closeDB();
-            G.Log(G.LOGLINE);
             return true;
         }
         catch (SQLException e)
         {
             Crashlytics.logException(e);
-            G.Log(G.LOGLINE);
             return false;
         }
     }
