@@ -12,7 +12,6 @@ import com.crashlytics.android.Crashlytics;
 
 public class DB {
 
-    //TODO при выходе не меняется БД на локальную
     public static final String LOCAL_NAME = "localUser.db";
     public static final int dbVersion = 8;
 
@@ -24,7 +23,7 @@ public class DB {
 
     public static SQLiteDatabase db;
 
-    //Column name categories
+    //<editor-fold desc="Column name categories">
     final static String
             CNC_ID = "id",
             CNC_LABEL = "label",
@@ -45,16 +44,18 @@ public class DB {
             CNC_EVERAGE_VALUE_CALCULATE_EVENTCOUNT = "everage_value_calculate_eventcount",
             CNC_FAVORITE_ENABLED = "favorite_enabled",
             CNC_FAVORITE_ORDER_NUMBER = "favorite_order_number";
+    //</editor-fold>
 
-    //Column name events
+    //<editor-fold desc="Column name events">
     final static String
             CNE_ID = "id",
             CNE_CATEGORY_ID = "category_id",
             CNE_VALUE = "value",
             CNE_DATE_CREATED = "date_created",
             CNE_DATE_MODIFIED = "date_modified";
+    //</editor-fold>
 
-    //Column name notifications
+    //<editor-fold desc="Column name notifications">
     final static String
             CNN_ID = "id",
             CNN_CATEGORY_ID = "category_id",
@@ -65,6 +66,7 @@ public class DB {
             CNN_DAYTIME_END = "daytime_end",
             CNN_DATE_LAST_REMINDER = "date_last_reminder",
             CNN_DATE_NEXT_REMINDER = "date_next_reminder";
+    //</editor-fold>
 
     //Table type of variables
     final static String
@@ -301,7 +303,10 @@ public class DB {
     public static void setDbName() {
         G.LogDB("[DB.setDbName]");
         if (G.user == null) {dbName = LOCAL_NAME; G.LogInteres("User is null. ");}
-        if (G.user.isAuthorized()) {dbName = G.user.id+".db";}
+        if (G.user.isAuthorized())
+            dbName = G.user.id+".db";
+        else
+            dbName = DB.LOCAL_NAME;
         G.LogDB("DB.dbName="+dbName);
     }
 }
