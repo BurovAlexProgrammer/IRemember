@@ -220,6 +220,7 @@ public class Google {
             return null;
         }
 
+        //Delete first file (the oldest)
         public static void deleteFile(String driveId) {
             try {
                 G.Log("[Google.Drive.deleteFile]");

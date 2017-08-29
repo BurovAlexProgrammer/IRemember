@@ -1,6 +1,5 @@
 package ru.avb.iremember;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,8 +11,9 @@ import com.crashlytics.android.Crashlytics;
 
 
 public class DB {
+
     public static final String LOCAL_NAME = "localUser.db";
-    public static final int dbVersion = 5;
+    public static final int dbVersion = 8;
 
     public static String
             dbName = LOCAL_NAME,
@@ -21,14 +21,9 @@ public class DB {
             TABLE_EVENTS = "events",
             TABLE_NOTIFICS = "notifications";
 
-    //Column name payment
-    final static String CNP_ID = "id";
-    final static String CNP_ID_CREDIT = "idCredit";
-
     public static SQLiteDatabase db;
 
-
-    //Column name categories
+    //<editor-fold desc="Column name categories">
     final static String
             CNC_ID = "id",
             CNC_LABEL = "label",
@@ -46,27 +41,32 @@ public class DB {
             CNC_PREDICTION_PERIOD = "prediction_period",
             CNC_EVERAGE_VALUE = "everage_value",
             CNC_EVERAGE_VALUE_CALCULATE_ENABLED = "everage_value_calculate_enabled",
-            CNC_EVERAGE_VALUE_CALCULATE_EVENTCOUNT = "everage_value_calculate_eventcount";
+            CNC_EVERAGE_VALUE_CALCULATE_EVENTCOUNT = "everage_value_calculate_eventcount",
+            CNC_FAVORITE_ENABLED = "favorite_enabled",
+            CNC_FAVORITE_ORDER_NUMBER = "favorite_order_number";
+    //</editor-fold>
 
-    //Column name events
+    //<editor-fold desc="Column name events">
     final static String
             CNE_ID = "id",
             CNE_CATEGORY_ID = "category_id",
             CNE_VALUE = "value",
             CNE_DATE_CREATED = "date_created",
             CNE_DATE_MODIFIED = "date_modified";
+    //</editor-fold>
 
-    //Column name notifications
+    //<editor-fold desc="Column name notifications">
     final static String
             CNN_ID = "id",
             CNN_CATEGORY_ID = "category_id",
             CNN_LABEL = "label",
             CNN_VALUE = "value",
             CNN_REPEAT_ENABLED = "repeat_enabled",
-            CNN_TIME_BEGIN = "time_begin",
-            CNN_TIME_END = "time_end",
-            CNN_FREQUENCY = "frequency",
-            CNN_LAST_REMINDER = "last_reminder";
+            CNN_DAYTIME_BEGIN = "daytime_begin",
+            CNN_DAYTIME_END = "daytime_end",
+            CNN_DATE_LAST_REMINDER = "date_last_reminder",
+            CNN_DATE_NEXT_REMINDER = "date_next_reminder";
+    //</editor-fold>
 
     //Table type of variables
     final static String
@@ -189,25 +189,54 @@ public class DB {
             {
                 if (tableName==TABLE_CATEGORIES) {
                     db.execSQL("create table " + TABLE_CATEGORIES + " (" +
-                            CNC_ID +" "+ TYPE_ID + "," +
-                            CNC_LABEL +" "+ TYPE_TEXT + ");"
+                            CNC_ID +" "+ TYPE_ID +","+
+                            CNC_LABEL +" "+ TYPE_TEXT +","+
+                            CNC_TYPE +" "+ TYPE_TEXT +","+
+                            CNC_ICON_ID +" "+ TYPE_INTEGER +","+
+                            CNC_PARENT_CATEGORY +" "+ TYPE_INTEGER +","+
+                            CNC_ORDER_NUMBER +" "+ TYPE_INTEGER +","+
+                            CNC_DATE_CREATED +" "+ TYPE_DATE +","+
+                            CNC_DATE_MODIFIED +" "+ TYPE_DATE +","+
+                            CNC_INITIAL_VALUE  +" "+ TYPE_INTEGER +","+
+                            CNC_FINAL_VALUE  +" "+ TYPE_INTEGER +","+
+                            CNC_FINAL_VALUE_ENABLED  +" "+ TYPE_BOOLEAN +","+
+                            CNC_NEGATIVE_VALUE_ENABLED  +" "+ TYPE_BOOLEAN +","+
+                            CNC_PREDICTION_ENABLED  +" "+ TYPE_BOOLEAN +","+
+                            CNC_PREDICTION_PERIOD  +" "+ TYPE_INTEGER +","+
+                            CNC_EVERAGE_VALUE  +" "+ TYPE_INTEGER +","+
+                            CNC_EVERAGE_VALUE_CALCULATE_ENABLED  +" "+ TYPE_BOOLEAN +","+
+                            CNC_EVERAGE_VALUE_CALCULATE_EVENTCOUNT  +" "+ TYPE_INTEGER +","+
+                            CNC_FAVORITE_ENABLED  +" "+ TYPE_BOOLEAN +","+
+                            CNC_FAVORITE_ORDER_NUMBER  +" "+ TYPE_INTEGER +
+                            ");"
                     );
                 }
 
                 if (tableName==TABLE_EVENTS) {
                     db.execSQL("create table " + TABLE_EVENTS + " (" +
                             CNE_ID +" "+ TYPE_ID +","+
-                            CNE_CATEGORY_ID +" "+ TYPE_INTEGER + ");"
+                            CNE_CATEGORY_ID +" "+ TYPE_INTEGER +","+
+                            CNE_VALUE +" "+ TYPE_INTEGER +","+
+                            CNE_DATE_CREATED +" "+TYPE_DATE +","+
+                            CNE_DATE_MODIFIED +" "+TYPE_DATE +
+                            ");"
                     );
                 }
 
                 if (tableName==TABLE_NOTIFICS) {
                     db.execSQL("create table " + TABLE_NOTIFICS + " (" +
                             CNN_ID +" "+ TYPE_ID +","+
-                            CNN_LABEL +" "+ TYPE_TEXT +");"
+                            CNN_CATEGORY_ID +" "+ TYPE_INTEGER +","+
+                            CNN_LABEL +" "+ TYPE_TEXT +","+
+                            CNN_VALUE +" "+ TYPE_INTEGER +","+
+                            CNN_REPEAT_ENABLED +" "+ TYPE_BOOLEAN +","+
+                            CNN_DAYTIME_BEGIN +" "+ TYPE_INTEGER +","+
+                            CNN_DAYTIME_END +" "+ TYPE_INTEGER +","+
+                            CNN_DATE_LAST_REMINDER +" "+ TYPE_DATE +","+
+                            CNN_DATE_NEXT_REMINDER +" "+ TYPE_DATE +
+                            ");"
                     );
                 }
-                //G.Log("Table " + tableName + " created successfully.");
             }
             catch (SQLException e)		{Crashlytics.logException(e);}
     }
@@ -223,11 +252,11 @@ public class DB {
     public static void logTable(Context context) {
         try {
             G.Log("[DB.logTable] log table to tag 'logDB'");
-            G.LogDB("Rows count in table "+TABLE_CATEGORIES+": ");
             //подключаемся к DB
             openReadableDB(context);
             //делаем запрос всех данных из таблицы, получаем Cursor
             Cursor c = db.query(TABLE_CATEGORIES, null, null, null, null, null, null);
+            G.LogDB("Rows count in table "+TABLE_CATEGORIES+": "+c.getCount());
             //ставим позицию курсора на первую строку выборки
             //если в выборке нет строк, вернетс¤ false
 //            G.Log("Row count: "+c.getCount());
@@ -274,7 +303,10 @@ public class DB {
     public static void setDbName() {
         G.LogDB("[DB.setDbName]");
         if (G.user == null) {dbName = LOCAL_NAME; G.LogInteres("User is null. ");}
-        if (G.user.isAuthorized()) {dbName = G.user.id+".db";}
+        if (G.user.isAuthorized())
+            dbName = G.user.id+".db";
+        else
+            dbName = DB.LOCAL_NAME;
         G.LogDB("DB.dbName="+dbName);
     }
 }
