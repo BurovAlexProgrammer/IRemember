@@ -9,22 +9,16 @@ import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.Random;
-import java.util.zip.Inflater;
 
 /**
  * Created by Alex on 06.12.2016.
@@ -96,10 +90,10 @@ public class testActivity extends Activity {
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.item_icon_gallery, parent, false);
-                ImageView img = (ImageView)convertView.findViewById(R.id.image);
+                ImageView img = (ImageView)convertView.findViewById(R.id.icon);
             }
 
-            ImageView img = (ImageView)convertView.findViewById(R.id.image);
+            ImageView img = (ImageView)convertView.findViewById(R.id.icon);
 
             //img.setLayoutParams();
             img.setScaleType(ImageView.ScaleType.CENTER_CROP);

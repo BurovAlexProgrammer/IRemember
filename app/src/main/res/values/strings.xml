@@ -11,6 +11,11 @@
     <string name="lastSync">            Last sync                   </string>
     <string name="skip">                Skip                        </string>
     <string name="done">                Done                        </string>
+    <string name="enabled">             Enabled                     </string>
+    <string name="onceEvery">           once every                  </string>
+    <string name="days">                days                        </string>
+
+
 
 
     <string name="welcome_title">Welcome</string>
@@ -43,6 +48,7 @@
     <string name="title_account">Account</string>
     <string name="title_share">Share app</string>
     <string name="title_welcome">Welcome</string>
+    <string name="title_create_category">New category</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="spaceholder_accountName">Not logged in</string>
@@ -71,14 +77,48 @@
     <string name="hint_cat_name">Category name</string>
     <string name="hint_cat_type">Category type</string>
     <string name="hint_cat_condition">Condition </string>
+
+    <string name="initialValue">Initial value</string>
+    <string name="finalValue">Final value</string>
+    <string name="everageValueCalculate">Calculate automatically</string>
+    <string name="everageValueCalculate_for">for</string>
+    <string name="everageValueCalculate_operations">operations</string>
+    <string name="hint_finalValueOptional">If it is needed</string>
+    <string name="hint_cat_mean_value_per_day">Mean value per day</string>
+    <string name="unitLabel">Unit</string>
+    <string name="unitLabel_hint">Unit</string>
+    <string name="everage_value">Everage value</string>
+    <string name="prediction_label">Prediction</string>
+
+
     <string-array name="items_cat_condition">
         <item>Choose conditions</item>
         <item>Unit</item>
         <item>Time</item>
         <item>Unit or time</item>
     </string-array>
-    <string name="hint_cat_initial_value">Initial value</string>
-    <string name="hint_cat_finish_value">Finish value</string>
-    <string name="hint_cat_mean_value_per_day">Mean value per day</string>
-    <string name="hint_cat_abbreviations">Unit abbreviations</string>
+
+    <string-array name="items_everageEventCount">
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>7</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>365</item>
+    </string-array>
+
+    <string-array name="items_predictionPeriod">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>14</item>
+        <item>21</item>
+        <item>30</item>
+    </string-array>
 </resources>

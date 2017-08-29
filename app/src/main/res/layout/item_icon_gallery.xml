@@ -7,7 +7,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:id="@+id/image"
+        android:id="@+id/icon"
         app:srcCompat="@drawable/cat_health"
         android:tintMode="multiply"
         android:tint="@color/colorCardview_onException"

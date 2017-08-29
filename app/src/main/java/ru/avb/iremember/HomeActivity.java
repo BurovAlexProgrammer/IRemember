@@ -305,8 +305,9 @@ public class HomeActivity extends AppCompatActivity
             navHeader_accountEmail = (TextView) navHeader.findViewById(R.id.nav_header_email);
             navHeader_accountAvatar = (ImageView) navHeader.findViewById(R.id.nav_header_avatar);
 
-            G.homeFragment = fragmentCategories;
-            G.homeFragmentTitle = getString(R.string.title_categories);
+            //G.homeFragment = fragmentCategories;
+            G.homeFragment = fragmentCreateCategory;
+            G.homeFragmentTitle = getString(R.string.title_create_category);
             G.homeFragmentManager = getFragmentManager();
         } catch (Exception e) {Crashlytics.logException(e);}
     }
