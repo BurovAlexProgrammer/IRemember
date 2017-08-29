@@ -8,265 +8,309 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/ll1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/icon_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/cat_jeep" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5.93">
+
+                    <EditText
+                        android:id="@+id/editText_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/icon_category"
+                        android:layout_alignBaseline="@+id/icon_category"
+                        android:layout_alignBottom="@+id/icon_category"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="false"
+                        android:layout_toEndOf="@+id/icon_category"
+                        android:layout_toRightOf="@+id/icon_category"
+                        android:ems="10"
+                        android:hint="Enter name"
+                        android:inputType="textPersonName"
+                        android:paddingRight="8dp"
+                        android:paddingTop="16dp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/spinner_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:entries="@array/items_cat_condition"
+                    android:textAlignment="viewStart"
+                    android:theme="@style/Body2"
+                    android:visibility="visible" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/editText_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:padding="8dp"
+                    android:hint="@string/unitLabel_hint"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
+                    android:textAlignment="textEnd" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_valueInitial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:text="@string/initialValue"
+                    android:theme="@style/Body2" />
+
+                <EditText
+                    android:id="@+id/editText_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="123"
+                    android:inputType="number"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_valueFinal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/finalValue"
+                    android:theme="@style/Body2" />
+
+                <EditText
+                    android:id="@+id/editTex_finalValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/hint_finalValueOptional"
+                    android:inputType="number"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_valueEverage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/everage_value"
+                    android:theme="@style/Body2" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_everageValueCalculateEnabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/everageValueCalculate"
+                    android:theme="@style/Body2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_valueEverageSpace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.89"
+                    android:text="@string/everage_value"
+                    android:theme="@style/Body2"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/tv_for"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/everageValueCalculate_for"
+                    android:theme="@style/Body2" />
+
+                <Spinner
+                    android:id="@+id/spinner_ValueEverageEventcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="-8dp"
+                    android:entries="@array/items_everageEventCount"
+                    android:theme="@style/Body2"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_operations"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingEnd="-32dp"
+                    android:text="@string/everageValueCalculate_operations"
+                    android:theme="@style/Body2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_predictionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prediction_label"
+                    android:theme="@style/Body2" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_predictionEnabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/enabled"
+                    android:theme="@style/Body2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/predictionSecondLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:padding="8dp"
-                app:srcCompat="@drawable/cat_jeep" />
+                android:visibility="invisible">
 
-            <EditText
-                android:id="@+id/cat_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/icon"
-                android:layout_alignBaseline="@+id/icon"
-                android:layout_alignBottom="@+id/icon"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="false"
-                android:layout_toEndOf="@+id/icon"
-                android:layout_toRightOf="@+id/icon"
-                android:layout_weight="5.93"
-                android:ems="10"
-                android:hint="Enter name"
-                android:inputType="textPersonName"
-                android:paddingRight="8dp"
-                android:paddingTop="16dp" />
+                <TextView
+                    android:id="@+id/tv_predictionSpace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prediction_label"
+                    android:theme="@style/Body2"
+                    android:visibility="invisible" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_onceEvery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/onceEvery"
+                    android:theme="@style/Body2" />
 
-        <LinearLayout
-            android:id="@+id/ll2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
+                <Spinner
+                    android:id="@+id/spinner_redictionPeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="-8dp"
+                    android:entries="@array/items_predictionPeriod"
+                    android:textAlignment="viewStart"
+                    android:theme="@style/Body2"
+                    android:visibility="visible" />
 
-            <Spinner
-                android:id="@+id/typeSpinner"
-                android:layout_width="144dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:entries="@array/items_cat_condition"
-                android:textAlignment="viewStart"
-                android:theme="@style/Body2"
-                android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/days"
+                    android:theme="@style/Body2" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="5"
-                android:hint="@string/unitLabel_hint"
-                android:inputType="textPersonName"
-                android:maxLength="5"
-                android:singleLine="true"
-                android:textAlignment="textEnd" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/tv_valueInitial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:text="@string/initialValue"
-                android:theme="@style/Body2" />
-
-            <EditText
-                android:id="@+id/cat_valueInitial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:textAlignment="textEnd" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/tv_valueFinal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/finalValue"
-                android:theme="@style/Body2" />
-
-            <EditText
-                android:id="@+id/cat_valueFinal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/hint_finalValueOptional"
-                android:inputType="number"
-                android:textAlignment="textEnd" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/tv_valueEverage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/everage_value"
-                android:theme="@style/Body2" />
-
-            <CheckBox
-                android:id="@+id/cb_everageValueCalculateEnabled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="@string/everageValueCalculate"
-                android:theme="@style/Body2" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="hint" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
 
-            <TextView
-                android:id="@+id/tv_valueEverageSpace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.89"
-                android:text="@string/everage_value"
-                android:theme="@style/Body2"
-                android:visibility="invisible" />
+    </android.support.v4.widget.NestedScrollView>
 
-            <TextView
-                android:id="@+id/tv_for"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/everageValueCalculate_for"
-                android:theme="@style/Body2" />
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <Spinner
-                android:id="@+id/valueEverageEventCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="-8dp"
-                android:entries="@array/items_everageEventCount"
-                android:theme="@style/Body2"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/tv_operations"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingEnd="-32dp"
-                android:text="@string/everageValueCalculate_operations"
-                android:theme="@style/Body2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/tv_predictionLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/prediction_label"
-                android:theme="@style/Body2" />
-
-            <CheckBox
-                android:id="@+id/cb_predictionEnabled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/enabled"
-                android:theme="@style/Body2" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/predictionSecondLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:visibility="invisible">
-
-            <TextView
-                android:id="@+id/tv_predictionSpace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/prediction_label"
-                android:theme="@style/Body2"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/tv_onceEvery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/onceEvery"
-                android:theme="@style/Body2" />
-
-            <Spinner
-                android:id="@+id/spn_predictionPeriod"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="-8dp"
-                android:entries="@array/items_predictionPeriod"
-                android:textAlignment="viewStart"
-                android:theme="@style/Body2"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/tv_days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/days"
-                android:theme="@style/Body2" />
-        </LinearLayout>
-    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </FrameLayout>

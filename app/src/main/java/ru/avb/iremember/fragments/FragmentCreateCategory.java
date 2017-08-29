@@ -21,7 +21,9 @@ import ru.avb.iremember.R;
 
 public class FragmentCreateCategory extends Fragment {
     HomeActivity thisActivity;
-    Spinner  typeSpinner;
+    Spinner  spnrType, spnrValueEverageEventcount, spnrPredictionPeriod;
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -58,8 +60,8 @@ public class FragmentCreateCategory extends Fragment {
         thisActivity = (HomeActivity)inflater.getContext();
         thisActivity.faButton.setVisibility(View.INVISIBLE);
         View v = inflater.inflate(R.layout.fragment_create_category, container, false);
-        typeSpinner = (Spinner)v.findViewById(R.id.typeSpinner);
-        typeSpinner.setEnabled(true);
+        spnrType = (Spinner)v.findViewById(R.id.spinner_type);
+        spnrType.setEnabled(true);
         setTypeSpinnerAdapter();
         return v;
     }
@@ -76,8 +78,8 @@ public class FragmentCreateCategory extends Fragment {
 
         // Применяем адаптер к элементу pinner
         //adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
-        typeSpinner.setAdapter(adapter);
-        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnrType.setAdapter(adapter);
+        spnrType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 G.Log("===pos: "+position+",  id:"+id);

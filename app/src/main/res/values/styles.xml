@@ -163,4 +163,9 @@
     <style name="SpinnerItemTextAppearance" parent="TextAppearance.AppCompat.Button">
         <item name="android:textColor">?attr/textcolorButton</item>
     </style>
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorBackground_black</item>
+    </style>
 </resources>

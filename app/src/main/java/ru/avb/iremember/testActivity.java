@@ -90,10 +90,10 @@ public class testActivity extends Activity {
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.item_icon_gallery, parent, false);
-                ImageView img = (ImageView)convertView.findViewById(R.id.icon);
+                ImageView img = (ImageView)convertView.findViewById(R.id.icon_category);
             }
 
-            ImageView img = (ImageView)convertView.findViewById(R.id.icon);
+            ImageView img = (ImageView)convertView.findViewById(R.id.icon_category);
 
             //img.setLayoutParams();
             img.setScaleType(ImageView.ScaleType.CENTER_CROP);
