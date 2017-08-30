@@ -92,7 +92,7 @@
 
 
     <string-array name="items_cat_condition">
-        <item>Choose conditions</item>
+        <item>Condition</item>
         <item>Unit</item>
         <item>Time</item>
         <item>Unit or time</item>
