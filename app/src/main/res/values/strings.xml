@@ -89,6 +89,7 @@
     <string name="unitLabel_hint">Unit</string>
     <string name="everage_value">Everage value</string>
     <string name="prediction_label">Prediction</string>
+    <string name="everageValue">Everage value</string>
 
 
     <string-array name="items_cat_condition">

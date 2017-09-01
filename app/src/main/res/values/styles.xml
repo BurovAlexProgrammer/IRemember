@@ -9,6 +9,11 @@
         <attr name="textcolorButton" format="color" />
         <attr name="textcolorButtonPositive" format="color" />
         <attr name="textcolorButtonNegative" format="color" />
+        <!--
+        <attr name="textcolorPrimary" format="color" />
+        <attr name="textcolorSecondary" format="color" />
+        <attr name="textcolorTertiary" format="color" />
+        -->
         <attr name="colorCardview" format="color" />
         <attr name="colorCardviewSelected" format="color" />
     </declare-styleable>
@@ -116,6 +121,7 @@
         <item name="android:textColorPrimaryInverseDisableOnly">
             @color/textColorPrimaryInverseDisableOnly_black
         </item>
+
     </style>
 
     <style name="textColor_pink" parent="@android:style/TextAppearance">

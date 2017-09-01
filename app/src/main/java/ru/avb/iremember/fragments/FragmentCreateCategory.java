@@ -1,12 +1,14 @@
 package ru.avb.iremember.fragments;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import fr.ganfra.materialspinner.MaterialSpinner;
 import ru.avb.iremember.G;
 import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.R;
 
 public class FragmentCreateCategory extends Fragment {
     HomeActivity thisActivity;
-    Spinner  spnrType, spnrValueEverageEventcount, spnrPredictionPeriod;
-
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
+    Spinner spinnerType, spnrValueEverageEventcount, spnrPredictionPeriod;
 
     private OnFragmentInteractionListener mListener;
 
@@ -36,11 +32,9 @@ public class FragmentCreateCategory extends Fragment {
         // Required empty public constructor
     }
 
-    public static FragmentCreateCategory newInstance(String param1, String param2) {
+    public static FragmentCreateCategory newInstance() {
         FragmentCreateCategory fragment = new FragmentCreateCategory();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,10 +42,6 @@ public class FragmentCreateCategory extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -60,26 +50,33 @@ public class FragmentCreateCategory extends Fragment {
         thisActivity = (HomeActivity)inflater.getContext();
         thisActivity.faButton.setVisibility(View.INVISIBLE);
         View v = inflater.inflate(R.layout.fragment_create_category, container, false);
-        spnrType = (Spinner)v.findViewById(R.id.spinner_type);
-        spnrType.setEnabled(true);
+        spinnerType = (Spinner) v.findViewById(R.id.spinner_type);
+        spinnerType.setEnabled(true);
         setTypeSpinnerAdapter();
+
         return v;
     }
 
     private void setTypeSpinnerAdapter() {
         // Создаем адаптер ArrayAdapter с помощью массива строк и стандартной разметки элемета spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(thisActivity,
-                R.array.items_cat_condition, android.R.layout.simple_spinner_dropdown_item);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(thisActivity,
+        //        R.array.items_cat_condition, android.R.layout.simple_spinner_dropdown_item);
         // Определяем разметку для использования при выборе элемента
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        String[] ITEMS = getResources().getStringArray(R.array.items_cat_condition);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(thisActivity, android.R.layout.simple_dropdown_item_1line, ITEMS);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapter.setDropDownViewTheme(
+        //spinnerType = (MaterialSpinner)findViewById(R.id.spinner_type);
+        //spinnerType.setAdapter(adapter);
 
         //SpinnerAdapter adapter2 = new SpinnerAdapter(thisActivity, R.array.items_cat_condition);
 
         // Применяем адаптер к элементу pinner
         //adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
-        spnrType.setAdapter(adapter);
-        spnrType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //spinnerType.setAdapter(adapter);
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 G.Log("===pos: "+position+",  id:"+id);
