@@ -1,30 +1,32 @@
 package ru.avb.iremember.fragments;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import fr.ganfra.materialspinner.MaterialSpinner;
 import ru.avb.iremember.G;
 import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.R;
 
 public class FragmentCreateCategory extends Fragment {
     HomeActivity thisActivity;
-    Spinner spinnerType, spnrValueEverageEventcount, spnrPredictionPeriod;
+    Spinner spinnerType, spinnerEverageValueEventcount, spinnerPredictionPeriod;
+    EditText editTextName, editTextUnit, editTextInitialValue, editTextFinalValue, editTextEverageValue;
+    CheckBox checkBoxEverageCalculate, checkBoxPrediction;
+    LinearLayout layoutUnit, layoutEverageCalculate, layoutEverageManual, layoutDevider, layoutPrediction;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -50,11 +52,31 @@ public class FragmentCreateCategory extends Fragment {
         thisActivity = (HomeActivity)inflater.getContext();
         thisActivity.faButton.setVisibility(View.INVISIBLE);
         View v = inflater.inflate(R.layout.fragment_create_category, container, false);
-        spinnerType = (Spinner) v.findViewById(R.id.spinner_type);
+        initViews(v);
         spinnerType.setEnabled(true);
-        setTypeSpinnerAdapter();
+
 
         return v;
+    }
+
+    public void initViews(View v) {
+        spinnerType = (Spinner)v.findViewById(R.id.spinner_type);
+        spinnerEverageValueEventcount = (Spinner)v.findViewById(R.id.spinner_ValueEverageEventcount);
+        spinnerPredictionPeriod = (Spinner)v.findViewById(R.id.spinner_redictionPeriod);
+        editTextName = (EditText)v.findViewById(R.id.editText_name);
+        editTextUnit = (EditText)v.findViewById(R.id.editText_unit);
+        editTextInitialValue = (EditText)v.findViewById(R.id.editText_initialValue);
+        editTextFinalValue = (EditText)v.findViewById(R.id.editText_finalValue);
+        editTextEverageValue = (EditText)v.findViewById(R.id.editText_everageValue);
+        checkBoxEverageCalculate = (CheckBox)v.findViewById(R.id.checkBox_everageValueCalculateEnabled);
+        checkBoxPrediction = (CheckBox)v.findViewById(R.id.checkBox_predictionEnabled);
+        layoutUnit = (LinearLayout)v.findViewById(R.id.layout_unitSelected);
+        layoutEverageCalculate = (LinearLayout)v.findViewById(R.id.layout_everageValueCalculate);
+        layoutEverageManual = (LinearLayout)v.findViewById(R.id.layout_everageValueManual);
+        layoutDevider = (LinearLayout)v.findViewById(R.id.layout_deviderAfterEverage);
+        layoutPrediction = (LinearLayout)v.findViewById(R.id.layout_predictionEnabled);
+
+        setTypeSpinnerAdapter();
     }
 
     private void setTypeSpinnerAdapter() {
@@ -66,6 +88,9 @@ public class FragmentCreateCategory extends Fragment {
 
         String[] ITEMS = getResources().getStringArray(R.array.items_cat_condition);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(thisActivity, android.R.layout.simple_dropdown_item_1line, ITEMS);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(thisActivity, R.array.items_cat_condition);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //adapter.setDropDownViewTheme(
         //spinnerType = (MaterialSpinner)findViewById(R.id.spinner_type);
@@ -75,7 +100,7 @@ public class FragmentCreateCategory extends Fragment {
 
         // Применяем адаптер к элементу pinner
         //adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
-        //spinnerType.setAdapter(adapter);
+        spinnerType.setAdapter(adapter);
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -88,6 +113,7 @@ public class FragmentCreateCategory extends Fragment {
                 G.Log("===nothing: ");
             }
         });
+        spinnerType.setEnabled(true);
     }
 
     public void onButtonPressed(Uri uri) {
