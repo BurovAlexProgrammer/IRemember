@@ -25,323 +25,323 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_tablets"
                     android:id="@+id/imageView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:tint="@color/colorAccent_default"
-                    android:tintMode="src_in" />
+                    android:tintMode="src_in"
+                    app:srcCompat="@drawable/cat_tablets" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_mechanic"
                     android:id="@+id/imageView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:tint="@color/colorPrimary"
-                    android:tintMode="src_in" />
+                    android:tintMode="src_in"
+                    app:srcCompat="@drawable/cat_mechanic" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_jeep"
                     android:id="@+id/imageView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:tint="@color/colorButtonNegative_default"
-                    android:tintMode="src_in" />
+                    android:tintMode="src_in"
+                    app:srcCompat="@drawable/cat_jeep" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_home"
                     android:id="@+id/imageView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:tint="@color/textColorHint_black"
-                    android:tintMode="src_in" />
+                    android:tintMode="src_in"
+                    app:srcCompat="@drawable/cat_home" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_health"
                     android:id="@+id/imageView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:tint="@color/colorCardview_onException"
-                    android:tintMode="src_in" />
+                    android:tintMode="src_in"
+                    app:srcCompat="@drawable/cat_health" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_drop"
                     android:id="@+id/imageView9"
-                    android:tint="@color/colorAccent"
-                    android:tintMode="src_in" />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_bus"
+                    android:tint="@color/colorAccent"
+                    android:tintMode="src_in"
+                    app:srcCompat="@drawable/cat_drop" />
+
+                <ImageView
                     android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:tint="@color/cast_intro_overlay_button_background_color"
-                    android:tintMode="src_in" />
+                    android:tintMode="src_in"
+                    app:srcCompat="@drawable/cat_bus" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_tablets"
                     android:id="@+id/imageView7"
-                    android:tint="@color/colorAccent_default"
-                    android:tintMode="multiply" />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_mechanic"
+                    android:tint="@color/colorAccent_default"
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_tablets" />
+
+                <ImageView
                     android:id="@+id/imageView13"
-                    android:tint="@color/colorPrimary"
-                    android:tintMode="multiply" />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_jeep"
+                    android:tint="@color/colorPrimary"
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_mechanic" />
+
+                <ImageView
                     android:id="@+id/imageView12"
-                    android:tint="@color/colorButtonNegative_default"
-                    android:tintMode="multiply" />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_home"
+                    android:tint="@color/colorButtonNegative_default"
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_jeep" />
+
+                <ImageView
                     android:id="@+id/imageView11"
-                    android:tint="@color/textColorHint_black"
-                    android:tintMode="multiply" />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_health"
+                    android:tint="@color/textColorHint_black"
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_home" />
+
+                <ImageView
                     android:id="@+id/imageView10"
-                    android:tint="@color/colorCardview_onException"
-                    android:tintMode="multiply" />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_drop"
+                    android:tint="@color/colorCardview_onException"
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_health" />
+
+                <ImageView
                     android:id="@+id/imageView9"
-                    android:tint="@color/colorAccent"
-                    android:tintMode="multiply" />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_bus"
+                    android:tint="@color/colorAccent"
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_drop" />
+
+                <ImageView
                     android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:tint="@color/cast_intro_overlay_button_background_color"
-                    android:tintMode="multiply" />
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_bus" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_tablets"
                     android:tint="@color/colorAccent_default"
-                    android:tintMode="src_atop" />
+                    android:tintMode="src_atop"
+                    app:srcCompat="@drawable/cat_tablets" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_mechanic"
                     android:tint="@color/colorPrimary"
-                    android:tintMode="src_atop" />
+                    android:tintMode="src_atop"
+                    app:srcCompat="@drawable/cat_mechanic" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_jeep"
                     android:tint="@color/colorButtonNegative_default"
-                    android:tintMode="src_atop" />
+                    android:tintMode="src_atop"
+                    app:srcCompat="@drawable/cat_jeep" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_home"
                     android:tint="@color/textColorHint_black"
-                    android:tintMode="src_atop" />
+                    android:tintMode="src_atop"
+                    app:srcCompat="@drawable/cat_home" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_health"
                     android:tint="@color/colorCardview_onException"
-                    android:tintMode="src_atop" />
+                    android:tintMode="src_atop"
+                    app:srcCompat="@drawable/cat_health" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_drop"
                     android:tint="@color/colorAccent"
-                    android:tintMode="src_atop" />
+                    android:tintMode="src_atop"
+                    app:srcCompat="@drawable/cat_drop" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_bus"
                     android:tint="@color/cast_intro_overlay_button_background_color"
-                    android:tintMode="src_atop" />
+                    android:tintMode="src_atop"
+                    app:srcCompat="@drawable/cat_bus" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_tablets"
                     android:tint="@color/colorAccent_default"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_tablets" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_mechanic"
                     android:tint="@color/colorPrimary"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_mechanic" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_jeep"
                     android:tint="@color/colorButtonNegative_default"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_jeep" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_home"
                     android:tint="@color/textColorHint_black"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_home" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_health"
                     android:tint="@color/colorCardview_onException"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_health" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_drop"
                     android:tint="@color/colorAccent"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_drop" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_bus"
                     android:tint="@color/cast_intro_overlay_button_background_color"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_bus" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_truck"
                     android:tint="@color/colorPrimary"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_truck" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_timer"
                     android:tint="@color/colorButtonNegative_default"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_timer" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_test_tube"
                     android:tint="@color/textColorHint_black"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_test_tube" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_shopping"
                     android:tint="@color/colorCardview_onException"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_shopping" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_pass_car"
                     android:tint="@color/colorAccent"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_pass_car" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_minivan"
                     android:tint="@color/cast_intro_overlay_button_background_color"
-                    android:tintMode="screen" />
+                    android:tintMode="screen"
+                    app:srcCompat="@drawable/cat_minivan" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_truck"
                     android:tint="@color/colorPrimary"
-                    android:tintMode="multiply" />
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_truck" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_timer"
                     android:tint="@color/colorButtonNegative_default"
-                    android:tintMode="multiply" />
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_timer" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_test_tube"
                     android:tint="@color/textColorHint_black"
-                    android:tintMode="multiply" />
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_test_tube" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_shopping"
                     android:tint="@color/colorCardview_onException"
-                    android:tintMode="multiply" />
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_shopping" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_pass_car"
                     android:tint="@color/colorAccent"
-                    android:tintMode="multiply" />
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_pass_car" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cat_minivan"
                     android:tint="@color/cast_intro_overlay_button_background_color"
-                    android:tintMode="multiply" />
+                    android:tintMode="multiply"
+                    app:srcCompat="@drawable/cat_minivan" />
             </TableRow>
 
         </TableLayout>

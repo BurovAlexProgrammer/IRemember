@@ -100,26 +100,26 @@
     </string-array>
 
     <string-array name="items_everageEventCount">
-        <item>2</item>
-        <item>3</item>
-        <item>5</item>
-        <item>7</item>
-        <item>10</item>
-        <item>20</item>
-        <item>30</item>
-        <item>365</item>
+        <item>for 2 last events</item>
+        <item>for 3 last events</item>
+        <item>for 5 last events</item>
+        <item>for 7 last events</item>
+        <item>for 10 last events</item>
+        <item>for 20 last events</item>
+        <item>for 30 last events</item>
+        <item>for 365 last events</item>
     </string-array>
 
     <string-array name="items_predictionPeriod">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>14</item>
-        <item>21</item>
-        <item>30</item>
+        <item>once every 1 day</item>
+        <item>once every 2 days</item>
+        <item>once every 3 days</item>
+        <item>once every 4 days</item>
+        <item>once every 5 days</item>
+        <item>once every 6 days</item>
+        <item>once every 7 days</item>
+        <item>once every 14 days</item>
+        <item>once every 21 days</item>
+        <item>once every 30 days</item>
     </string-array>
 </resources>

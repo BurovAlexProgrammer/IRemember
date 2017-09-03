@@ -1,6 +1,7 @@
 package ru.avb.iremember.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -26,6 +27,10 @@ public class FragmentCreateCategory extends Fragment {
     EditText editTextName, editTextUnit, editTextInitialValue, editTextFinalValue, editTextEverageValue;
     CheckBox checkBoxEverageCalculate, checkBoxPrediction;
     LinearLayout layoutUnit, layoutEverageCalculate, layoutEverageManual, layoutDevider, layoutPrediction;
+    public static String iconPath = "";
+    public static Color iconColor;
+    public static int iconTintMode;
+    public static int selectedCondition = 0;
 
 
     private OnFragmentInteractionListener mListener;
@@ -77,6 +82,8 @@ public class FragmentCreateCategory extends Fragment {
         layoutPrediction = (LinearLayout)v.findViewById(R.id.layout_predictionEnabled);
 
         setTypeSpinnerAdapter();
+
+        update();
     }
 
     private void setTypeSpinnerAdapter() {
@@ -105,7 +112,7 @@ public class FragmentCreateCategory extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 G.Log("===pos: "+position+",  id:"+id);
-
+                selectedCondition = position;
             }
 
             @Override
@@ -166,6 +173,12 @@ public class FragmentCreateCategory extends Fragment {
             return convertView;
         }
 
+
+    }
+
+    public void update() {
+        if (selectedCondition == 1) {editTextUnit.setVisibility(View.VISIBLE); }
+            else {editTextUnit.setVisibility(View.GONE);}
 
     }
 }
