@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,37 +83,31 @@ public class FragmentCreateCategory extends Fragment {
         layoutPrediction = (LinearLayout)v.findViewById(R.id.layout_predictionEnabled);
 
         setTypeSpinnerAdapter();
-
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                update();
+            }
+        };
+        checkBoxEverageCalculate.setOnClickListener(onClickListener);
+        checkBoxPrediction.setOnClickListener(onClickListener);
         update();
     }
 
     private void setTypeSpinnerAdapter() {
-        // Создаем адаптер ArrayAdapter с помощью массива строк и стандартной разметки элемета spinner
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(thisActivity,
-        //        R.array.items_cat_condition, android.R.layout.simple_spinner_dropdown_item);
-        // Определяем разметку для использования при выборе элемента
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         String[] ITEMS = getResources().getStringArray(R.array.items_cat_condition);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(thisActivity, android.R.layout.simple_dropdown_item_1line, ITEMS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(thisActivity, R.array.items_cat_condition);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //adapter.setDropDownViewTheme(
-        //spinnerType = (MaterialSpinner)findViewById(R.id.spinner_type);
-        //spinnerType.setAdapter(adapter);
-
-        //SpinnerAdapter adapter2 = new SpinnerAdapter(thisActivity, R.array.items_cat_condition);
-
-        // Применяем адаптер к элементу pinner
-        //adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
         spinnerType.setAdapter(adapter);
+        spinnerType.setEnabled(true);
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                G.Log("===pos: "+position+",  id:"+id);
+                //G.Log("===pos: "+position+",  id:"+id);
                 selectedCondition = position;
+                update();
             }
 
             @Override
@@ -120,7 +115,6 @@ public class FragmentCreateCategory extends Fragment {
                 G.Log("===nothing: ");
             }
         });
-        spinnerType.setEnabled(true);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -177,8 +171,26 @@ public class FragmentCreateCategory extends Fragment {
     }
 
     public void update() {
+        G.Log("[FragmentCreateCategory.update]");
         if (selectedCondition == 1) {editTextUnit.setVisibility(View.VISIBLE); }
             else {editTextUnit.setVisibility(View.GONE);}
-
+        //Everage value calculate
+        if (checkBoxEverageCalculate.isChecked()) {
+            layoutEverageCalculate.setVisibility(View.VISIBLE);
+            layoutEverageManual.setVisibility(View.GONE);
+            layoutDevider.setVisibility(View.VISIBLE);
+        }
+        else {
+            layoutEverageCalculate.setVisibility(View.GONE);
+            layoutEverageManual.setVisibility(View.VISIBLE);
+            layoutDevider.setVisibility(View.GONE);
+        }
+        //Prediction
+        if (checkBoxPrediction.isChecked()) {
+            layoutPrediction.setVisibility(View.VISIBLE);
+        }
+        else {
+            layoutPrediction.setVisibility(View.GONE);
+        }
     }
 }

@@ -171,7 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="32dp"
-            android:paddingTop="4dp">
+            android:paddingTop="8dp">
 
             <CheckBox
                 android:id="@+id/checkBox_everageValueCalculateEnabled"
@@ -191,13 +191,14 @@
             android:orientation="horizontal"
             android:paddingRight="4dp"
             android:paddingStart="32dp"
-            android:paddingTop="4dp">
+            android:paddingTop="8dp">
 
 
             <LinearLayout
                 android:id="@+id/layout_everageValueCalculate"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="visible">
 
                 <Spinner
                     android:id="@+id/spinner_ValueEverageEventcount"
@@ -215,15 +216,15 @@
                 android:id="@+id/layout_everageValueManual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="4dp">
+                android:paddingLeft="4dp"
+                android:visibility="gone">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-16dp"
                     android:gravity="top"
-                    android:paddingTop="0dp"
-                    android:visibility="visible">
+                    android:paddingTop="0dp">
 
                     <EditText
                         android:id="@+id/editText_everageValue"
@@ -234,8 +235,7 @@
                         android:hint="@string/everageValue"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:paddingTop="0dp"
-                        android:visibility="gone" />
+                        android:paddingTop="0dp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 

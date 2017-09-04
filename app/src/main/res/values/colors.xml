@@ -87,4 +87,6 @@
 
     <!-- DEVIDER -->
     <color name="deviderColor_light">#e0e0e0</color>
+    <item name="gray_holo_dark" type="color">#ff464646</item>
+    <item name="gray_holo_light" type="color">#ffd0d0d0</item>
 </resources>
