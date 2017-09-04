@@ -1,5 +1,6 @@
 package ru.avb.iremember.fragments;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import ru.avb.iremember.DialogDateTimePicker;
 import ru.avb.iremember.G;
 import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.R;
@@ -28,6 +30,7 @@ public class FragmentCreateCategory extends Fragment {
     EditText editTextName, editTextUnit, editTextInitialValue, editTextFinalValue, editTextEverageValue;
     CheckBox checkBoxEverageCalculate, checkBoxPrediction;
     LinearLayout layoutUnit, layoutEverageCalculate, layoutEverageManual, layoutDevider, layoutPrediction;
+    DialogFragment dialogDateTimePicker;
     public static String iconPath = "";
     public static Color iconColor;
     public static int iconTintMode;
@@ -82,16 +85,24 @@ public class FragmentCreateCategory extends Fragment {
         layoutDevider = (LinearLayout)v.findViewById(R.id.layout_deviderAfterEverage);
         layoutPrediction = (LinearLayout)v.findViewById(R.id.layout_predictionEnabled);
 
+        dialogDateTimePicker = new DialogDateTimePicker();
+
         setTypeSpinnerAdapter();
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                if (v.getId()==editTextInitialValue.getId()) {showDateTimePicker();}
                 update();
             }
         };
         checkBoxEverageCalculate.setOnClickListener(onClickListener);
         checkBoxPrediction.setOnClickListener(onClickListener);
+        editTextInitialValue.setOnClickListener(onClickListener);
         update();
+    }
+
+    public void showDateTimePicker() {
+        dialogDateTimePicker.show(getFragmentManager(), "dialogDateTimePicker");
     }
 
     private void setTypeSpinnerAdapter() {
