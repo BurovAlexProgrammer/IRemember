@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical|center_horizontal"
@@ -41,10 +43,82 @@
                     android:orientation="vertical">
 
 
-                    <DatePicker
-                        android:id="@+id/datePicker2"
+                    <LinearLayout
+                        android:id="@+id/layout_datePicker"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="8dp">
+
+                        <NumberPicker
+                            android:id="@+id/picker_day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:overScrollMode="always" />
+
+                        <NumberPicker
+                            android:id="@+id/picker_month"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <NumberPicker
+                            android:id="@+id/picker_year"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_calendar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="8dp"
+                        android:visibility="gone">
+
+                        <DatePicker
+                            android:id="@+id/calendar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="16dp">
+
+                        <ImageView
+                            android:id="@+id/icon_calendar"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="0.08"
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/ic_calendar" />
+
+                        <Button
+                            android:id="@+id/button_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.92"
+                            android:paddingBottom="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingTop="16dp"
+                            android:text="@string/next" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -54,17 +128,41 @@
                     android:orientation="vertical">
 
                     <TimePicker
-                        android:id="@+id/timePicker2"
+                        android:id="@+id/timePicker"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:id="@+id/button_ok"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="16dp">
+
+                        <Button
+                            android:id="@+id/button_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.92"
+                            android:text="@string/ok" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tab3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
+                    <DatePicker
+                        android:id="@+id/datePicker3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

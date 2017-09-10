@@ -4,6 +4,7 @@
     <string name="cancel">              Cancel                      </string>
     <string name="understand">          Understand                  </string>
     <string name="later">               Later                       </string>
+    <string name="next">                Next                        </string>
     <string name="finish">              Finish                      </string>
     <string name="defaultLabel">        Default                     </string>
     <string name="restart">             Restart                     </string>
@@ -14,7 +15,8 @@
     <string name="enabled">             Enabled                     </string>
     <string name="onceEvery">           once every                  </string>
     <string name="days">                days                        </string>
-
+    <string name="date">                Date                        </string>
+    <string name="time">                Time                        </string>
 
 
 
