@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.math.MathUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
     Button buttonOk;
     TabHost tabHost;
     LinearLayout layoutDatePicker, layoutCalendar;
+    int minYear;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -68,8 +70,8 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         int[] days = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
         String[] daysStr = new String[31];
         for (int i=0; i<days.length; i++) {daysStr[i] = ""+days[i];}
-        pickerDay.setMinValue(0);
-        pickerDay.setMaxValue(daysStr.length-1);
+        pickerDay.setMinValue(1);
+        pickerDay.setMaxValue(daysStr.length);
         pickerDay.setDisplayedValues(daysStr);
         pickerDay.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         pickerDay.setWrapSelectorWheel(true);
@@ -78,15 +80,15 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         int[] months = {1,2,3,4,5,6,7,8,9,10,11,12};
         String[] monthsStr = new String[months.length];
         for (int i=0; i<monthsStr.length; i++) {monthsStr[i] = ""+months[i];}
-        pickerMonth.setMinValue(0);
-        pickerMonth.setMaxValue(monthsStr.length-1);
+        pickerMonth.setMinValue(1);
+        pickerMonth.setMaxValue(monthsStr.length);
         pickerMonth.setDisplayedValues(monthsStr);
 //        pickerMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         pickerMonth.setWrapSelectorWheel(true);
 
         pickerYear = v.findViewById(R.id.picker_year);
-        int minYear = 2000;
-        int[] years = new int[50];
+        minYear = 2000;
+        final int[] years = new int[50];
         for (int i=0; i<years.length; i++) {years[i]=minYear+i;}
         String[] yearsStr = new String[years.length];
         for (int i=0; i<yearsStr.length; i++) {yearsStr[i] = ""+years[i];}
@@ -100,9 +102,36 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         int currentMonth = DateTime.now().getMonthOfYear();
         int currentYear = DateTime.now().getYear();
         G.Log("Current date: "+currentDay+"-"+currentMonth+"-"+currentYear);
-        pickerDay.setValue(currentDay-1);
-        pickerMonth.setValue(currentMonth-1);
+        pickerDay.setValue(currentDay);
+        pickerMonth.setValue(currentMonth);
         pickerYear.setValue(currentYear-minYear);
+        pickerMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+//                G.Log("i: "+i+"   i1: "+i1 );
+                int maxDayInMonth = 31;
+                switch (i1) {
+                    case 1: maxDayInMonth = 31; break;
+                    case 2: maxDayInMonth = 28; break;
+                    case 3: maxDayInMonth = 31; break;
+                    case 4: maxDayInMonth = 30; break;
+                    case 5: maxDayInMonth = 31; break;
+                    case 6: maxDayInMonth = 30; break;
+                    case 7: maxDayInMonth = 31; break;
+                    case 8: maxDayInMonth = 31; break;
+                    case 9: maxDayInMonth = 30; break;
+                    case 10: maxDayInMonth = 31; break;
+                    case 11: maxDayInMonth = 30; break;
+                    case 12: maxDayInMonth = 31; break;
+                }
+                int yearSelected = minYear+pickerYear.getValue();
+                G.Log("year selected: "+yearSelected);
+                if (((yearSelected%4)==0)&&(i1==2)) maxDayInMonth=29;
+                G.Log("Max day: "+maxDayInMonth);
+                if (pickerDay.getValue()>maxDayInMonth) pickerDay.setValue(maxDayInMonth);
+            }
+        });
+
 
         Button buttonNext = v.findViewById(R.id.button_next);
         buttonNext.setOnClickListener(new View.OnClickListener() {
