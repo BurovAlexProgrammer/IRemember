@@ -16,4 +16,8 @@ public class Category {
         this.name = name;
         this.iconId = iconId;
     }
+
+    public final class Condition{
+        public static final int NOTSELECTED=0, UNIT=1, TIME=2;
+    }
 }

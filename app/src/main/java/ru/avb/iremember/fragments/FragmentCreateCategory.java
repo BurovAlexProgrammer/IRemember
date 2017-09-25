@@ -19,12 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+
+import ru.avb.iremember.Category;
 import ru.avb.iremember.DialogDateTimePicker;
 import ru.avb.iremember.G;
 import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.R;
 
-public class FragmentCreateCategory extends Fragment {
+public class FragmentCreateCategory extends Fragment implements DialogDateTimePicker.OnCompleteListener{
     HomeActivity thisActivity;
     Spinner spinnerType, spinnerEverageValueEventcount, spinnerPredictionPeriod;
     EditText editTextName, editTextUnit, editTextInitialValue, editTextFinalValue, editTextEverageValue;
@@ -91,19 +94,23 @@ public class FragmentCreateCategory extends Fragment {
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.getId()==editTextInitialValue.getId()) {showDateTimePicker();}
+                if (v.getId()==editTextInitialValue.getId()) {showDateTimePicker(G.TAG_SET_DATETIME_TO_INIT_VALUE);}
+                if (v.getId()==editTextFinalValue.getId()) {showDateTimePicker(G.TAG_SET_DATETIME_TO_FINAL_VALUE);}
                 update();
             }
         };
         checkBoxEverageCalculate.setOnClickListener(onClickListener);
         checkBoxPrediction.setOnClickListener(onClickListener);
         editTextInitialValue.setOnClickListener(onClickListener);
+        editTextFinalValue.setOnClickListener(onClickListener);
         update();
     }
 
-    public void showDateTimePicker() {
-        dialogDateTimePicker.show(getFragmentManager(), "dialogDateTimePicker");
+    public void showDateTimePicker(String tag) {
+        dialogDateTimePicker.show(getFragmentManager(), tag);
     }
+
+
 
     private void setTypeSpinnerAdapter() {
         String[] ITEMS = getResources().getStringArray(R.array.items_cat_condition);
@@ -183,8 +190,12 @@ public class FragmentCreateCategory extends Fragment {
 
     public void update() {
         G.Log("[FragmentCreateCategory.update]");
-        if (selectedCondition == 1) {editTextUnit.setVisibility(View.VISIBLE); }
-            else {editTextUnit.setVisibility(View.GONE);}
+        if (selectedCondition == 1) {  //Selexted Unit type
+            editTextUnit.setVisibility(View.VISIBLE);
+        }
+        else {
+            editTextUnit.setVisibility(View.GONE);
+        }
         //Everage value calculate
         if (checkBoxEverageCalculate.isChecked()) {
             layoutEverageCalculate.setVisibility(View.VISIBLE);
@@ -202,6 +213,40 @@ public class FragmentCreateCategory extends Fragment {
         }
         else {
             layoutPrediction.setVisibility(View.GONE);
+        }
+        setDefaultInitialValue();
+    }
+
+    void setDefaultInitialValue() {
+        if (selectedCondition == Category.Condition.UNIT) editTextInitialValue.setText("0");
+        if (selectedCondition == Category.Condition.TIME) {
+            String currentDay = DateTime.now().getDayOfMonth() + "";
+            currentDay = currentDay.length() == 1 ? "0" + currentDay : currentDay;
+            String currentMonth = DateTime.now().getMonthOfYear() + "";
+            currentMonth = currentMonth.length() == 1 ? "0" + currentMonth : currentMonth;
+            editTextInitialValue.setText(currentDay + "." + currentMonth + "." + DateTime.now().getYear());
+        }
+    }
+
+    @Override
+    public void onCompleteDialog(Bundle bundle) {
+
+        int request = bundle.getInt(G.KEY_REQUEST);
+        String tag = bundle.getString(G.KEY_TAG);
+        if (request == G.Request.SET_DATETIME) {
+            int result = bundle.getInt(G.KEY_RESULT);
+            G.Log("From Dialog tag: '"+tag+"'. Result="+result);
+            if (result == G.Result.OK) {
+                if (tag==G.TAG_SET_DATETIME_TO_INIT_VALUE) {
+                    int day = bundle.getInt("keyDlgDay");
+                    G.Log("INITIAL VALUEEEE");
+                    G.Log(day+"");
+                }
+                if (tag==G.TAG_SET_DATETIME_TO_FINAL_VALUE) {
+                    G.Log("FINAL VALUEEEE");
+                }
+            }
+            if (result == G.Result.CANCEL) {}
         }
     }
 }

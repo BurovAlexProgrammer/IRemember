@@ -60,7 +60,7 @@ public class IntroActivity extends AppIntro implements First.OnFragmentInteracti
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         Intent intent = new Intent();
-        setResult(G.RESULT_CANCEL, intent);
+        setResult(G.Result.CANCEL, intent);
         this.finish();
     }
 
@@ -68,7 +68,7 @@ public class IntroActivity extends AppIntro implements First.OnFragmentInteracti
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         Intent intent = new Intent();
-        setResult(G.RESULT_OK, intent);
+        setResult(G.Result.OK, intent);
         this.finish();
     }
 

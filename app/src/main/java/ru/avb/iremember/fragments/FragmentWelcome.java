@@ -80,7 +80,7 @@ public class FragmentWelcome extends Fragment {
                 }
                 if (v.getId() == R.id.buttonLanguage) {
                     Intent intent = new Intent(parent, LanguageActivity.class);
-                    startActivityForResult(intent, G.REQUEST_CHANGE_LANGUAGE);
+                    startActivityForResult(intent, G.Request.CHANGE_LANGUAGE);
                 }
                 if (v.getId() == R.id.button_sign_in) parent.signIn();
                 if (v.getId() == R.id.button_sign_out) parent.signOut();

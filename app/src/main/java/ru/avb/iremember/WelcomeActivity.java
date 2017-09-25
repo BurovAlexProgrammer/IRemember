@@ -51,7 +51,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
                 }
                 if (v.getId() == R.id.buttonLanguage) {
                     Intent intent = new Intent(WelcomeActivity.this, LanguageActivity.class);
-                    startActivityForResult(intent, G.REQUEST_CHANGE_LANGUAGE);
+                    startActivityForResult(intent, G.Request.CHANGE_LANGUAGE);
                 }
                 if (v.getId() == R.id.button_sign_in) signIn();
                 if (v.getId() == R.id.button_sign_out) signOut();
@@ -69,10 +69,10 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == G.REQUEST_CHANGE_LANGUAGE) {
+        if (requestCode == G.Request.CHANGE_LANGUAGE) {
         }
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == G.REQUEST_SIGN_IN_GOOGLE) {
+        if (requestCode == G.Request.SIGN_IN_GOOGLE) {
             Google.lastSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             boolean isSuccess = Google.handleSignInResult(this, Google.lastSignInResult);
             updateUI(isSuccess);
@@ -108,7 +108,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
 
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(Google.apiClient);
-        startActivityForResult(signInIntent,G.REQUEST_SIGN_IN_GOOGLE);
+        startActivityForResult(signInIntent,G.Request.SIGN_IN_GOOGLE);
     }
 
     public void signOut() {

@@ -52,22 +52,31 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class G {
 
-    //LOCAL
+    public final class Request {
+        public static final int
+                ADD_CATEGORY = 1,
+                SELECT_CATEGORY_ICON = 2,
+                WELCOME_FROM_MAIN = 3,
+                CHANGE_LANGUAGE = 4,
+                SIGN_IN_GOOGLE = 5,
+                RESOLVE_DRIVE_CONNECTION = 6,
+                RESOLVE_ERROR = 7,
+                FIRST = 8,
+                LAST = 9,
+                INTRO = 10,
+                NEED_RESTART = 11,
+                SET_DATETIME = 12;
+    }
+    public final class Result {
+        public static final int
+                OK = 101,
+                CANCEL = 102,
+                LATER = 103;
+    }
+
     public static final int
-            ZERO = -999,
-            REQUEST_ADD_CATEGORY = 1,
-            REQUEST_SELECT_CATEGORY_ICON = 2,
-            REQUEST_WELCOME_FROM_MAIN = 3,
-            REQUEST_CHANGE_LANGUAGE = 4,
-            REQUEST_SIGN_IN_GOOGLE = 5,
-            REQUEST_RESOLVE_DRIVE_CONNECTION = 6,
-            REQUEST_RESOLVE_ERROR = 7,
-            REQUEST_FIRST = 8,
-            REQUEST_LAST = 9,
-            REQUEST_INTRO = 10,
-            RESULT_OK = 101,
-            RESULT_CANCEL = 102,
-            RESULT_LATER = 103;
+            ZERO = -999;
+
 
     public static final String
             PREF_FILENAME = "prfs",
@@ -90,14 +99,15 @@ public class G {
     public static final Calendar NONE_CALENDAR = new GregorianCalendar(2000,1,1);
 
     public static final String
-            TAG_NEED_RESTART = "dlgNeedrestart";
+            TAG_NEED_RESTART = "dlgNeedrestart",
+            TAG_SET_DATETIME_TO_INIT_VALUE = "dlgSetDateTimetoInitialValue",
+            TAG_SET_DATETIME_TO_FINAL_VALUE = "dlgSetDateTimetoFinalValue";
 
     public static final String
             KEY_REQUEST = "kRequest",
             KEY_RESULT = "kResult",
             KEY_TAG = "kTag",
-            KEY_LOCALE = "kLocale",
-            REQUEST_NEED_RESTART = "rqNeedRestart";
+            KEY_LOCALE = "kLocale";
 
 
     public final static class SyncType {

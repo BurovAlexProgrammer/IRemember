@@ -1,5 +1,6 @@
 package ru.avb.iremember;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -22,12 +23,18 @@ import org.joda.time.DateTime;
  * Created by Alex on 04.09.2017.
  */
 
-public class DialogDateTimePicker extends DialogFragment implements View.OnClickListener{
+public class DialogDateTimePicker extends DialogFragment implements View.OnClickListener {
     NumberPicker pickerDay, pickerMonth, pickerYear;
     Button buttonOk;
     TabHost tabHost;
     LinearLayout layoutDatePicker, layoutCalendar;
     int minYear;
+
+    public interface OnCompleteListener {
+        public abstract void onCompleteDialog(Bundle bundle);
+    }
+    private OnCompleteListener onCompleteListener;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -140,6 +147,19 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
                 tabHost.setCurrentTabByTag("tag2");
             }
         });
+        Button buttonOk = v.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle args = new Bundle();
+                args.putInt(G.KEY_REQUEST, G.Request.SET_DATETIME);
+                args.putInt(G.KEY_RESULT, G.Result.OK);
+                args.putString(G.KEY_TAG, G.TAG_SET_DATETIME_TO_INIT_VALUE);
+                args.putInt("keyDlgDay", pickerDay.getValue());
+                onCompleteListener.onCompleteDialog(args);
+                dismiss();
+            }
+        });
 
         ImageView iconCalendar = v.findViewById(R.id.icon_calendar);
         iconCalendar.setOnClickListener(new View.OnClickListener() {
@@ -157,5 +177,25 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         });
     }
 
+    // make sure the Activity implemented it
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            this.onCompleteListener = (OnCompleteListener) activity;
+        }
+        catch (final ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnCompleteListener");
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+    }
 
 }

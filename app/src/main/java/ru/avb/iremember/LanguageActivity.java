@@ -210,13 +210,13 @@ public class LanguageActivity extends AppCompatActivity implements DialogOkCance
 
     @Override
     public void onCompleteDialog(Bundle bundle) {
-        String request = bundle.getString(G.KEY_REQUEST);
+        int request = bundle.getInt(G.KEY_REQUEST);
         String tag = bundle.getString(G.KEY_TAG);
-        if (request == G.REQUEST_NEED_RESTART) {
+        if (request == G.Request.NEED_RESTART) {
             int result = bundle.getInt(G.KEY_RESULT);
             G.Log("From Dialog tag: '"+tag+"'. Result="+result);
-            if (result == G.RESULT_OK) {confirm();}
-            if (result == G.RESULT_CANCEL) {cancel();}
+            if (result == G.Result.OK) {confirm();}
+            if (result == G.Result.CANCEL) {cancel();}
         }
     }
 }

@@ -147,7 +147,7 @@ public class FragmentSettings extends Fragment {
 
     void chooseLanguges() {
         Intent intent = new Intent(this.getActivity(), LanguageActivity.class);
-        startActivityForResult(intent, G.REQUEST_CHANGE_LANGUAGE);
+        startActivityForResult(intent, G.Request.CHANGE_LANGUAGE);
         G.Log("FrSettings.chooseLanguages..");
     }
 

@@ -37,8 +37,8 @@ public class DialogOkCancel extends DialogFragment{
                 @Override
                 public void onClick(View v) {
                     Bundle args = new Bundle();
-                    args.putString(G.KEY_REQUEST, G.REQUEST_NEED_RESTART);
-                    args.putInt(G.KEY_RESULT, G.RESULT_OK);
+                    args.putInt(G.KEY_REQUEST, G.Request.NEED_RESTART);
+                    args.putInt(G.KEY_RESULT, G.Result.OK);
                     args.putString(G.KEY_TAG, G.TAG_NEED_RESTART);
                     completeListener.onCompleteDialog(args);
                     dismiss();
@@ -48,8 +48,8 @@ public class DialogOkCancel extends DialogFragment{
                 @Override
                 public void onClick(View v) {
                     Bundle args = new Bundle();
-                    args.putString(G.KEY_REQUEST, G.REQUEST_NEED_RESTART);
-                    args.putInt(G.KEY_RESULT, G.RESULT_CANCEL);
+                    args.putInt(G.KEY_REQUEST, G.Request.NEED_RESTART);
+                    args.putInt(G.KEY_RESULT, G.Result.CANCEL);
                     args.putString(G.KEY_TAG, G.TAG_NEED_RESTART);
                     completeListener.onCompleteDialog(args);
                     dismiss();

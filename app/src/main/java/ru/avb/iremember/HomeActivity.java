@@ -44,7 +44,7 @@ import static ru.avb.iremember.G.user;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        FragmentAccount.OnFragmentInteractionListener, FragmentCategories.OnFragmentInteractionListener, FragmentCreateCategory.OnFragmentInteractionListener, FragmentSettings.OnFragmentInteractionListener, FragmentWelcome.OnFragmentInteractionListener {
+        FragmentAccount.OnFragmentInteractionListener, FragmentCategories.OnFragmentInteractionListener, FragmentCreateCategory.OnFragmentInteractionListener, FragmentSettings.OnFragmentInteractionListener, FragmentWelcome.OnFragmentInteractionListener, DialogDateTimePicker.OnCompleteListener {
 
     Toolbar toolbar;
     NavigationView navView;
@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity
             //TODO silentSignIn doesn't work, maybe because bottom
             if (Options.isNeedWelcome) {
                 Intent intent = new Intent(HomeActivity.this, IntroActivity.class);
-                startActivityForResult(intent, G.REQUEST_INTRO);
+                startActivityForResult(intent, G.Request.INTRO);
             }
             G.Log("+++++++++++++++++++");
 
@@ -204,18 +204,18 @@ public class HomeActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         G.Log("[HomeActivity.onActivityResult]");
         //Welcome request
-        if (requestCode==G.REQUEST_WELCOME_FROM_MAIN) {
+        if (requestCode==G.Request.WELCOME_FROM_MAIN) {
             G.Log("ActivityResult from: Welcome.Activity");
             //TODO find needed Google.signInInit(this, this, this);
             googleSilentSignIn();
             updateUI();
         }
-        if (requestCode==G.REQUEST_CHANGE_LANGUAGE) {
+        if (requestCode==G.Request.CHANGE_LANGUAGE) {
             G.Log("ActivityResult from: HomeActivity.Settings");
             G.Log("Result: "+data.toString());
             updateUI();
         }
-        if (requestCode==G.REQUEST_SIGN_IN_GOOGLE) {
+        if (requestCode==G.Request.SIGN_IN_GOOGLE) {
             G.Log("ActivityResult from: Google.signIn");
             Google.lastSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             boolean isSuccess = Google.handleSignInResult(this, Google.lastSignInResult);
@@ -223,10 +223,10 @@ public class HomeActivity extends AppCompatActivity
             DB.setDbName();
             updateUI();
         }
-        if (requestCode==G.REQUEST_INTRO) {
+        if (requestCode==G.Request.INTRO) {
             G.Log("ActivityResult from IntroActivity");
-            if (resultCode==G.RESULT_CANCEL) {G.Log("Intro result: CANCELED");}
-            if (resultCode==G.RESULT_OK) {G.Log("Intro result: OK");
+            if (resultCode==G.Result.CANCEL) {G.Log("Intro result: CANCELED");}
+            if (resultCode==G.Result.OK) {G.Log("Intro result: OK");
                 Options.writeOption(Options.KEY_NEED_WELCOME, false);
             }
             //After skip or done intro app
@@ -243,7 +243,7 @@ public class HomeActivity extends AppCompatActivity
         G.Log("[HomeActivity.onConnectionFailed]");
         if (result.hasResolution()) {
             try {
-                result.startResolutionForResult(this, G.REQUEST_RESOLVE_DRIVE_CONNECTION);
+                result.startResolutionForResult(this, G.Request.RESOLVE_DRIVE_CONNECTION);
             } catch (IntentSender.SendIntentException e) {
                 Crashlytics.logException(e);
                 // Unable to resolve, message user appropriately
@@ -257,7 +257,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (result.hasResolution()) {
             try {
                 Google.isResolvingError = true;
-                result.startResolutionForResult(this, G.REQUEST_RESOLVE_ERROR);
+                result.startResolutionForResult(this, G.Request.RESOLVE_ERROR);
             } catch (IntentSender.SendIntentException e) {
                 // There was an error with the resolution intent. Try again.
                 Google.apiClient.connect();
@@ -352,7 +352,7 @@ public class HomeActivity extends AppCompatActivity
             G.Log("[HomeActivity->Google.signIn]");
             //Google.signInInit(this, this, this);
             Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(Google.apiClient);
-            startActivityForResult(signInIntent, G.REQUEST_SIGN_IN_GOOGLE);
+            startActivityForResult(signInIntent, G.Request.SIGN_IN_GOOGLE);
         } catch (Exception e) {Crashlytics.logException(e);}
     }
 
@@ -460,5 +460,33 @@ public class HomeActivity extends AppCompatActivity
     //Test force crash
     public void forceCrash(View view) {
         throw new RuntimeException("This is a crash");
+    }
+
+    @Override
+    public void onCompleteDialog(Bundle bundle) {
+        G.Log("onComplete..");
+        int request = bundle.getInt(G.KEY_REQUEST);
+        String tag = bundle.getString(G.KEY_TAG);
+//        if (request == G.Request.NEED_RESTART) {
+//            int result = bundle.getInt(G.KEY_RESULT);
+//            G.Log("From Dialog tag: '"+tag+"'. Result="+result);
+//            if (result == G.Result.OK) {confirm();}
+//            if (result == G.Result.CANCEL) {cancel();}
+//        }
+        if (request == G.Request.SET_DATETIME) {
+            int result = bundle.getInt(G.KEY_RESULT);
+            G.Log("From Dialog tag: '"+tag+"'. Result="+result);
+            if (result == G.Result.OK) {
+                if (tag==G.TAG_SET_DATETIME_TO_INIT_VALUE) {
+                    int day = bundle.getInt("keyDlgDay");
+                    G.Log("INITIAL VALUEEEE");
+                    G.Log("day: "+day+"");
+                }
+                if (tag==G.TAG_SET_DATETIME_TO_FINAL_VALUE) {
+                    G.Log("FINAL VALUEEEE");
+                }
+            }
+            if (result == G.Result.CANCEL) {}
+        }
     }
 }
