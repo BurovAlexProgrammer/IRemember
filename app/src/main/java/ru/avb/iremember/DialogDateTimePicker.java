@@ -1,6 +1,7 @@
 package ru.avb.iremember;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -29,11 +30,18 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
     TabHost tabHost;
     LinearLayout layoutDatePicker, layoutCalendar;
     int minYear;
+    int selectedDay, selectedMonth, selectedYear;
 
     public interface OnCompleteListener {
         public abstract void onCompleteDialog(Bundle bundle);
     }
     private OnCompleteListener onCompleteListener;
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        G.Log("TAG: "+getTag());
+        return super.onCreateDialog(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -108,14 +116,27 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         int currentDay = DateTime.now().getDayOfMonth();
         int currentMonth = DateTime.now().getMonthOfYear();
         int currentYear = DateTime.now().getYear();
+
+        selectedDay = currentDay;
+        selectedMonth = currentMonth;
+        selectedYear = currentYear;
+
         G.Log("Current date: "+currentDay+"-"+currentMonth+"-"+currentYear);
         pickerDay.setValue(currentDay);
         pickerMonth.setValue(currentMonth);
         pickerYear.setValue(currentYear-minYear);
+
+        pickerDay.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                selectedDay = i1;
+            }
+        });
         pickerMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-//                G.Log("i: "+i+"   i1: "+i1 );
+//              G.Log("i: "+i+"   i1: "+i1 );
+                selectedMonth = i1;
                 int maxDayInMonth = 31;
                 switch (i1) {
                     case 1: maxDayInMonth = 31; break;
@@ -131,11 +152,24 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
                     case 11: maxDayInMonth = 30; break;
                     case 12: maxDayInMonth = 31; break;
                 }
-                int yearSelected = minYear+pickerYear.getValue();
-                G.Log("year selected: "+yearSelected);
-                if (((yearSelected%4)==0)&&(i1==2)) maxDayInMonth=29;
+                pickerYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                        selectedYear = minYear+i1;
+                    }
+                });
+                selectedYear = minYear+pickerYear.getValue();
+                G.Log("year selected: "+selectedYear);
+                //Если високосный год
+                if (((selectedYear%4)==0)&&(i1==2)) maxDayInMonth=29;
                 G.Log("Max day: "+maxDayInMonth);
                 if (pickerDay.getValue()>maxDayInMonth) pickerDay.setValue(maxDayInMonth);
+            }
+        });
+        pickerYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                selectedYear = minYear+pickerYear.getValue();
             }
         });
 
@@ -154,8 +188,10 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
                 Bundle args = new Bundle();
                 args.putInt(G.KEY_REQUEST, G.Request.SET_DATETIME);
                 args.putInt(G.KEY_RESULT, G.Result.OK);
-                args.putString(G.KEY_TAG, G.TAG_SET_DATETIME_TO_INIT_VALUE);
-                args.putInt("keyDlgDay", pickerDay.getValue());
+                args.putString(G.KEY_TAG, getTag());
+                args.putInt(G.KEY_DLG_DAY, pickerDay.getValue());
+                args.putInt(G.KEY_DLG_MONTH, selectedMonth);
+                args.putInt(G.KEY_DLG_YEAR, selectedYear);
                 onCompleteListener.onCompleteDialog(args);
                 dismiss();
             }

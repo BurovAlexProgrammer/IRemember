@@ -107,7 +107,10 @@ public class G {
             KEY_REQUEST = "kRequest",
             KEY_RESULT = "kResult",
             KEY_TAG = "kTag",
-            KEY_LOCALE = "kLocale";
+            KEY_LOCALE = "kLocale",
+            KEY_DLG_DAY = "kDlgDay",
+            KEY_DLG_MONTH = "kDlgMonth",
+            KEY_DLG_YEAR = "kDlgYear";
 
 
     public final static class SyncType {

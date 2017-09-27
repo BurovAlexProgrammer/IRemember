@@ -478,9 +478,14 @@ public class HomeActivity extends AppCompatActivity
             G.Log("From Dialog tag: '"+tag+"'. Result="+result);
             if (result == G.Result.OK) {
                 if (tag==G.TAG_SET_DATETIME_TO_INIT_VALUE) {
-                    int day = bundle.getInt("keyDlgDay");
+                    int day = bundle.getInt(G.KEY_DLG_DAY);
+                    int month = bundle.getInt(G.KEY_DLG_MONTH);
+                    int year = bundle.getInt(G.KEY_DLG_YEAR);
+
                     G.Log("INITIAL VALUEEEE");
                     G.Log("day: "+day+"");
+                    G.Log("month: "+month);
+                    G.Log("year: "+year);
                 }
                 if (tag==G.TAG_SET_DATETIME_TO_FINAL_VALUE) {
                     G.Log("FINAL VALUEEEE");
