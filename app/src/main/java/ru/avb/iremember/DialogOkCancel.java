@@ -27,7 +27,7 @@ public class DialogOkCancel extends DialogFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_ok_cancel, null);
-        if (dialogTag == G.TAG_NEED_RESTART) {
+        if (dialogTag == G.Tag.NEED_RESTART) {
             getDialog().setTitle(R.string.changeLanguageNeedRestart_title);
             //((TextView)v.findViewById(R.id.title)).setText(R.string.changeLanguageNeedRestart_title);
             ((TextView)v.findViewById(R.id.message)).setText(R.string.changeLanguageNeedRestart_descript);
@@ -39,7 +39,7 @@ public class DialogOkCancel extends DialogFragment{
                     Bundle args = new Bundle();
                     args.putInt(G.KEY_REQUEST, G.Request.NEED_RESTART);
                     args.putInt(G.KEY_RESULT, G.Result.OK);
-                    args.putString(G.KEY_TAG, G.TAG_NEED_RESTART);
+                    args.putString(G.KEY_TAG, G.Tag.NEED_RESTART);
                     completeListener.onCompleteDialog(args);
                     dismiss();
                 }
@@ -50,7 +50,7 @@ public class DialogOkCancel extends DialogFragment{
                     Bundle args = new Bundle();
                     args.putInt(G.KEY_REQUEST, G.Request.NEED_RESTART);
                     args.putInt(G.KEY_RESULT, G.Result.CANCEL);
-                    args.putString(G.KEY_TAG, G.TAG_NEED_RESTART);
+                    args.putString(G.KEY_TAG, G.Tag.NEED_RESTART);
                     completeListener.onCompleteDialog(args);
                     dismiss();
                 }

@@ -23,14 +23,17 @@ import org.joda.time.DateTime;
 /**
  * Created by Alex on 04.09.2017.
  */
-
+//TODO исправить - при выборе дня, не должно быть дней выше maxDayInMonth
 public class DialogDateTimePicker extends DialogFragment implements View.OnClickListener {
+    int mode = 0;
+    int DATE = 0, DATETIME = 1;
     NumberPicker pickerDay, pickerMonth, pickerYear;
+    TimePicker timePicker;
     Button buttonOk;
     TabHost tabHost;
     LinearLayout layoutDatePicker, layoutCalendar;
     int minYear;
-    int selectedDay, selectedMonth, selectedYear;
+    int selectedDay, selectedMonth, selectedYear, selectedHour, selectedMinute;
 
     public interface OnCompleteListener {
         public abstract void onCompleteDialog(Bundle bundle);
@@ -39,7 +42,6 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        G.Log("TAG: "+getTag());
         return super.onCreateDialog(savedInstanceState);
     }
 
@@ -47,8 +49,9 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_date_time_picker, null);
-        //v.findViewById(R.id.button_ok).setOnClickListener(this);
-        //v.findViewById(R.id.button_cancel).setOnClickListener(this);
+        if ((getTag()==G.Tag.SET_DATE_TO_FINAL_VALUE)||(getTag()==G.Tag.SET_DATE_TO_INIT_VALUE)) mode = DATE;
+        if ((getTag()==G.Tag.SET_DATETIME_TO_FINAL_VALUE)||(getTag()==G.Tag.SET_DATETIME_TO_INIT_VALUE)) mode = DATETIME;
+
         initViews(v);
         return v;
     }
@@ -70,10 +73,17 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         tabSpec.setIndicator(getString(R.string.date));
         tabSpec.setContent(R.id.tab1);
         tabHost.addTab(tabSpec);
-        tabSpec = tabHost.newTabSpec("tag2");
-        tabSpec.setIndicator(getString(R.string.time));
-        tabSpec.setContent(R.id.tab2);
-        tabHost.addTab(tabSpec);
+        if (mode==DATETIME) {
+            tabSpec = tabHost.newTabSpec("tag2");
+            tabSpec.setIndicator(getString(R.string.time));
+            tabSpec.setContent(R.id.tab2);
+            tabHost.addTab(tabSpec);
+        }
+        if (mode==DATE) {
+            v.findViewById(R.id.tab2).setVisibility(View.GONE);
+            ((Button)v.findViewById(R.id.button_next)).setText(getString(R.string.ok));
+        }
+
 //        tabSpec = tabHost.newTabSpec("tag3");
 //        tabSpec.setIndicator("Nhbfasf");
 //        tabSpec.setContent(R.id.tab3);
@@ -116,12 +126,16 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         int currentDay = DateTime.now().getDayOfMonth();
         int currentMonth = DateTime.now().getMonthOfYear();
         int currentYear = DateTime.now().getYear();
+        int currentHour = DateTime.now().getHourOfDay();
+        int currentMinute = DateTime.now().getMinuteOfHour();
 
         selectedDay = currentDay;
         selectedMonth = currentMonth;
         selectedYear = currentYear;
+        selectedHour = currentHour;
+        selectedMinute = currentMinute;
 
-        G.Log("Current date: "+currentDay+"-"+currentMonth+"-"+currentYear);
+        G.Log("Current date: "+currentDay+"-"+currentMonth+"-"+currentYear+"  "+selectedHour+":"+selectedMinute);
         pickerDay.setValue(currentDay);
         pickerMonth.setValue(currentMonth);
         pickerYear.setValue(currentYear-minYear);
@@ -132,68 +146,50 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
                 selectedDay = i1;
             }
         });
+
         pickerMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-//              G.Log("i: "+i+"   i1: "+i1 );
                 selectedMonth = i1;
-                int maxDayInMonth = 31;
-                switch (i1) {
-                    case 1: maxDayInMonth = 31; break;
-                    case 2: maxDayInMonth = 28; break;
-                    case 3: maxDayInMonth = 31; break;
-                    case 4: maxDayInMonth = 30; break;
-                    case 5: maxDayInMonth = 31; break;
-                    case 6: maxDayInMonth = 30; break;
-                    case 7: maxDayInMonth = 31; break;
-                    case 8: maxDayInMonth = 31; break;
-                    case 9: maxDayInMonth = 30; break;
-                    case 10: maxDayInMonth = 31; break;
-                    case 11: maxDayInMonth = 30; break;
-                    case 12: maxDayInMonth = 31; break;
-                }
-                pickerYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                    @Override
-                    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                        selectedYear = minYear+i1;
-                    }
-                });
-                selectedYear = minYear+pickerYear.getValue();
-                G.Log("year selected: "+selectedYear);
-                //Если високосный год
-                if (((selectedYear%4)==0)&&(i1==2)) maxDayInMonth=29;
-                G.Log("Max day: "+maxDayInMonth);
-                if (pickerDay.getValue()>maxDayInMonth) pickerDay.setValue(maxDayInMonth);
-            }
-        });
-        pickerYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                selectedYear = minYear+pickerYear.getValue();
+                //Set max day by month
+                if (pickerDay.getValue()>getMaxDayInMonth(selectedMonth,selectedYear)) pickerDay.setValue(getMaxDayInMonth(selectedMonth,selectedYear));
             }
         });
 
+        pickerYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                selectedYear = minYear+i1;
+            }
+        });
+
+        G.Log(G.LOGLINE);
+        //TODO при повторном вызове не сбрасывает время
+        timePicker = v.findViewById(R.id.timePicker);
+        timePicker.setIs24HourView(true);
+        timePicker.setCurrentHour(selectedHour);
+        timePicker.setCurrentMinute(selectedMinute);
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+                selectedHour = timePicker.getCurrentHour();
+                selectedMinute = timePicker.getCurrentMinute();
+            }
+        });
 
         Button buttonNext = v.findViewById(R.id.button_next);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tabHost.setCurrentTabByTag("tag2");
+                if (mode==DATETIME) tabHost.setCurrentTabByTag("tag2");
+                if (mode==DATE) sendResult();
             }
         });
         Button buttonOk = v.findViewById(R.id.button_ok);
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle args = new Bundle();
-                args.putInt(G.KEY_REQUEST, G.Request.SET_DATETIME);
-                args.putInt(G.KEY_RESULT, G.Result.OK);
-                args.putString(G.KEY_TAG, getTag());
-                args.putInt(G.KEY_DLG_DAY, pickerDay.getValue());
-                args.putInt(G.KEY_DLG_MONTH, selectedMonth);
-                args.putInt(G.KEY_DLG_YEAR, selectedYear);
-                onCompleteListener.onCompleteDialog(args);
-                dismiss();
+                sendResult();
             }
         });
 
@@ -234,4 +230,40 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         super.onCancel(dialog);
     }
 
+
+    public int getMaxDayInMonth (int month, int year) {
+        int maxDayInMonth = 30;
+        switch (month) {
+            case 1: maxDayInMonth = 31; break;
+            case 2: maxDayInMonth = 28; break;
+            case 3: maxDayInMonth = 31; break;
+            case 4: maxDayInMonth = 30; break;
+            case 5: maxDayInMonth = 31; break;
+            case 6: maxDayInMonth = 30; break;
+            case 7: maxDayInMonth = 31; break;
+            case 8: maxDayInMonth = 31; break;
+            case 9: maxDayInMonth = 30; break;
+            case 10: maxDayInMonth = 31; break;
+            case 11: maxDayInMonth = 30; break;
+            case 12: maxDayInMonth = 31; break;
+        }
+        //Если високосный год
+        if (((year%4)==0)&&(month==2)) maxDayInMonth=29;
+        return maxDayInMonth;
+    }
+
+    public void sendResult() {
+        G.Log("Send result.. With tag: "+getTag());
+        Bundle args = new Bundle();
+        args.putInt(G.KEY_REQUEST, G.Request.SET_DATETIME);
+        args.putInt(G.KEY_RESULT, G.Result.OK);
+        args.putString(G.KEY_TAG, getTag());
+        args.putInt(G.KEY_DLG_DAY, selectedDay);
+        args.putInt(G.KEY_DLG_MONTH, selectedMonth);
+        args.putInt(G.KEY_DLG_YEAR, selectedYear);
+        args.putInt(G.KEY_DLG_HOUR, selectedHour);
+        args.putInt(G.KEY_DLG_MINUTE, selectedMinute);
+        onCompleteListener.onCompleteDialog(args);
+        dismiss();
+    }
 }

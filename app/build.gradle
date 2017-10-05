@@ -51,4 +51,5 @@ dependencies {
     }
     compile 'com.github.ganfra:material-spinner:1.1.1'
     compile 'com.github.florent37:singledateandtimepicker:1.2.0'
+    compile 'com.satsuware.lib:usefulviews:+'
 }

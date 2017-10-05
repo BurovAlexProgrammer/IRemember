@@ -133,7 +133,7 @@ public class FragmentAccount_bug extends Fragment{
         textview_name = (TextView)parent.findViewById(R.id.textview_name);
         textview_email = (TextView)parent.findViewById(R.id.textview_email);
         textview_lastSync = (TextView)parent.findViewById(R.id.textview_lastSync);
-        textView_sign = (TextView)parent.findViewById(R.id.textview_sign);
+        textView_sign = (TextView)parent.findViewById(R.id.textview_button);
         buttonSing = (LinearLayout)parent.findViewById(R.id.button_sign);
         buttonSing.setOnClickListener(onClick);
         //temp

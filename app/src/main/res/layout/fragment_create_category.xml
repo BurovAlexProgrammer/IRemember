@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ls="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -86,15 +87,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Spinner
+            <com.satsuware.usefulviews.LabelledSpinner
                 android:id="@+id/spinner_type"
                 android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_centerVertical="true"
-                android:entries="@array/items_cat_condition"
-                android:gravity="center_vertical"
-                android:hint="BetterSpinner"
-                android:theme="@style/Body2" />
+                android:layout_height="wrap_content"
+                android:theme="@style/Body2"
+                ls:labelText=""
+                ls:widgetColor="#F44336" />
 
             <LinearLayout
                 android:id="@+id/layout_unitSelected"
@@ -130,7 +129,7 @@
                 android:ems="10"
                 android:hint="@string/initialValue"
                 android:inputType="number"
-                android:maxLength="10"
+                android:maxLength="17"
                 android:textAlignment="textStart" />
         </android.support.design.widget.TextInputLayout>
 
@@ -145,7 +144,7 @@
                 android:ems="10"
                 android:hint="@string/finalValue"
                 android:inputType="number"
-                android:maxLength="10"
+                android:maxLength="17"
                 android:textAlignment="textStart" />
             </android.support.design.widget.TextInputLayout>
 
@@ -303,8 +302,52 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingTop="8dp"
+            android:src="@drawable/devider_default" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:gravity="center"
+            android:id="@+id/button_ok"
+            android:clickable="true"
+            android:background="@drawable/ripple_layout_default">
+
+            <ImageView
+                android:id="@+id/image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_input_add" />
+
+            <TextView
+                android:id="@+id/textview_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:elegantTextHeight="false"
+                android:ellipsize="end"
+                android:focusable="true"
+                android:text="@string/createCategory"
+                android:theme="@style/Body2" />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@drawable/devider_default" />
+
+
 
     </LinearLayout>
+
 
 </ScrollView>
 

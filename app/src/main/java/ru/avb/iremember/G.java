@@ -73,6 +73,16 @@ public class G {
                 CANCEL = 102,
                 LATER = 103;
     }
+    public final class Tag {
+        public final static String
+                NEED_RESTART = "dlgNeedrestart",
+                SET_DATETIME_TO_INIT_VALUE = "dlgSetDateTimeToInitialValue",
+                SET_DATETIME_TO_FINAL_VALUE = "dlgSetDateTimeToFinalValue",
+                SET_DATE_TO_INIT_VALUE = "dlgSetDateToInitialValue",
+                SET_DATE_TO_FINAL_VALUE = "dlgSetDateToFinalValue",
+                SET_ICON = "dlgSetIcon";
+
+    }
 
     public static final int
             ZERO = -999;
@@ -99,18 +109,15 @@ public class G {
     public static final Calendar NONE_CALENDAR = new GregorianCalendar(2000,1,1);
 
     public static final String
-            TAG_NEED_RESTART = "dlgNeedrestart",
-            TAG_SET_DATETIME_TO_INIT_VALUE = "dlgSetDateTimetoInitialValue",
-            TAG_SET_DATETIME_TO_FINAL_VALUE = "dlgSetDateTimetoFinalValue";
-
-    public static final String
             KEY_REQUEST = "kRequest",
             KEY_RESULT = "kResult",
             KEY_TAG = "kTag",
             KEY_LOCALE = "kLocale",
             KEY_DLG_DAY = "kDlgDay",
             KEY_DLG_MONTH = "kDlgMonth",
-            KEY_DLG_YEAR = "kDlgYear";
+            KEY_DLG_YEAR = "kDlgYear",
+            KEY_DLG_HOUR = "kDlgHour",
+            KEY_DLG_MINUTE = "kDlgMinute";
 
 
     public final static class SyncType {

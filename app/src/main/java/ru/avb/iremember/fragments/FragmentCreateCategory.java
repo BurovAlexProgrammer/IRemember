@@ -7,17 +7,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.satsuware.usefulviews.LabelledSpinner;
 
 import org.joda.time.DateTime;
 
@@ -26,19 +32,48 @@ import ru.avb.iremember.DialogDateTimePicker;
 import ru.avb.iremember.G;
 import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.R;
+import ru.avb.iremember.dialogs.DialogIconPicker;
 
-public class FragmentCreateCategory extends Fragment implements DialogDateTimePicker.OnCompleteListener{
+public class FragmentCreateCategory extends Fragment {
     HomeActivity thisActivity;
-    Spinner spinnerType, spinnerEverageValueEventcount, spinnerPredictionPeriod;
-    EditText editTextName, editTextUnit, editTextInitialValue, editTextFinalValue, editTextEverageValue;
+    LabelledSpinner spinnerType;
+    Spinner spinnerEverageValueEventcount, spinnerPredictionPeriod;
+    EditText editTextName, editTextInitialValue, editTextFinalValue, editTextUnit, editTextEverageValue;
     CheckBox checkBoxEverageCalculate, checkBoxPrediction;
+    ImageView imageViewCategoryIcon;
+    LinearLayout buttonOk;
     LinearLayout layoutUnit, layoutEverageCalculate, layoutEverageManual, layoutDevider, layoutPrediction;
     DialogFragment dialogDateTimePicker;
+    DialogIconPicker dialogIconPicker;
+    public static View root;
     public static String iconPath = "";
     public static Color iconColor;
     public static int iconTintMode;
     public static int selectedCondition = 0;
+    public static date initDatetime, finalDatetime;
+    public static class date{
+        int day, month, year, hour, minute;
+        public date(int day, int month, int year) {this.day=day; this.month=month; this.year=year; this.hour=0; this.minute=0;}
+        public date(int day, int month, int year, int hour, int minute) {this.day = day; this.month = month; this.year = year; this.hour = hour; this.minute = minute;}
 
+        @Override
+        public String toString() {
+            String s="";
+            if (day<10) s+="0"; s+=day;
+            s+=".";
+            if (month<10) s+="0"; s+=month;
+            s+=".";
+            s+=year;
+            if (hour==0 && minute==0) return s;
+            else {
+                s+="  ";
+                if (hour<10) s+="0"; s+=hour;
+                s+=":";
+                if (minute<10) s+="0"; s+=minute;
+            }
+            return s;
+        }
+    }
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,6 +99,7 @@ public class FragmentCreateCategory extends Fragment implements DialogDateTimePi
         thisActivity = (HomeActivity)inflater.getContext();
         thisActivity.faButton.setVisibility(View.INVISIBLE);
         View v = inflater.inflate(R.layout.fragment_create_category, container, false);
+        root = v;
         initViews(v);
         spinnerType.setEnabled(true);
 
@@ -72,7 +108,7 @@ public class FragmentCreateCategory extends Fragment implements DialogDateTimePi
     }
 
     public void initViews(View v) {
-        spinnerType = (Spinner)v.findViewById(R.id.spinner_type);
+        spinnerType = (LabelledSpinner)v.findViewById(R.id.spinner_type);
         spinnerEverageValueEventcount = (Spinner)v.findViewById(R.id.spinner_ValueEverageEventcount);
         spinnerPredictionPeriod = (Spinner)v.findViewById(R.id.spinner_redictionPeriod);
         editTextName = (EditText)v.findViewById(R.id.editText_name);
@@ -82,27 +118,48 @@ public class FragmentCreateCategory extends Fragment implements DialogDateTimePi
         editTextEverageValue = (EditText)v.findViewById(R.id.editText_everageValue);
         checkBoxEverageCalculate = (CheckBox)v.findViewById(R.id.checkBox_everageValueCalculateEnabled);
         checkBoxPrediction = (CheckBox)v.findViewById(R.id.checkBox_predictionEnabled);
+        imageViewCategoryIcon = (ImageView)v.findViewById(R.id.icon_category);
         layoutUnit = (LinearLayout)v.findViewById(R.id.layout_unitSelected);
         layoutEverageCalculate = (LinearLayout)v.findViewById(R.id.layout_everageValueCalculate);
         layoutEverageManual = (LinearLayout)v.findViewById(R.id.layout_everageValueManual);
         layoutDevider = (LinearLayout)v.findViewById(R.id.layout_deviderAfterEverage);
         layoutPrediction = (LinearLayout)v.findViewById(R.id.layout_predictionEnabled);
+        buttonOk = (LinearLayout) v.findViewById(R.id.button_ok);
 
         dialogDateTimePicker = new DialogDateTimePicker();
+        dialogIconPicker = new DialogIconPicker();
 
         setTypeSpinnerAdapter();
-        View.OnClickListener onClickListener = new View.OnClickListener() {
+
+        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                if (v.getId()==editTextInitialValue.getId()) {showDateTimePicker(G.TAG_SET_DATETIME_TO_INIT_VALUE);}
-                if (v.getId()==editTextFinalValue.getId()) {showDateTimePicker(G.TAG_SET_DATETIME_TO_FINAL_VALUE);}
-                update();
+            public void onFocusChange(View v, boolean b) {
+                if (selectedCondition == Category.Condition.DATETIME) {
+                    if (v.getId() == editTextInitialValue.getId() && b) {
+                        showDateTimePicker(G.Tag.SET_DATETIME_TO_INIT_VALUE);
+                    }
+                    if (v.getId() == editTextFinalValue.getId() && b) {
+                        showDateTimePicker(G.Tag.SET_DATETIME_TO_FINAL_VALUE);
+                    }
+                }
+                if (selectedCondition == Category.Condition.DATE) {
+                    if (v.getId() == editTextInitialValue.getId() && b) {
+                        showDateTimePicker(G.Tag.SET_DATE_TO_INIT_VALUE);
+                    }
+                    if (v.getId() == editTextFinalValue.getId() && b) {
+                        showDateTimePicker(G.Tag.SET_DATE_TO_FINAL_VALUE);
+                    }
+                }
             }
         };
         checkBoxEverageCalculate.setOnClickListener(onClickListener);
         checkBoxPrediction.setOnClickListener(onClickListener);
         editTextInitialValue.setOnClickListener(onClickListener);
         editTextFinalValue.setOnClickListener(onClickListener);
+        editTextInitialValue.setOnFocusChangeListener(onFocusChangeListener);
+        editTextFinalValue.setOnFocusChangeListener(onFocusChangeListener);
+        imageViewCategoryIcon.setOnClickListener(onClickListener);
+        buttonOk.setOnClickListener(onClickListener);
         update();
     }
 
@@ -110,29 +167,52 @@ public class FragmentCreateCategory extends Fragment implements DialogDateTimePi
         dialogDateTimePicker.show(getFragmentManager(), tag);
     }
 
-
+    public void showIconPicker(String tag) {
+        dialogIconPicker.show(getFragmentManager(), tag);
+    }
 
     private void setTypeSpinnerAdapter() {
         String[] ITEMS = getResources().getStringArray(R.array.items_cat_condition);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(thisActivity, android.R.layout.simple_dropdown_item_1line, ITEMS);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(thisActivity, R.array.items_cat_condition);
-        spinnerType.setAdapter(adapter);
-        spinnerType.setEnabled(true);
-        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(thisActivity, android.R.layout.simple_dropdown_item_1line, ITEMS);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(thisActivity, R.array.items_cat_condition);
+//        spinnerType.setAdapter(adapter);
+//
+//        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                //G.Log("===pos: "+position+",  id:"+id);
+//                if (selectedCondition!=position) {
+//                    selectedCondition = position;
+//                    setDefaultInitialValue();
+//                }
+//                selectedCondition = position;
+//                update();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent){}
+//        });
+        spinnerType.setItemsArray(ITEMS);
+        spinnerType.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //G.Log("===pos: "+position+",  id:"+id);
+            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
+                if (selectedCondition!=position) {
+                    selectedCondition = position;
+                    setDefaultInitialValue();
+                }
                 selectedCondition = position;
                 update();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                G.Log("===nothing: ");
+            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
+
             }
         });
+        //spinnerType.setColor(R.color.wallet_holo_blue_light);
+        spinnerType.setDefaultErrorEnabled(true);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -190,7 +270,15 @@ public class FragmentCreateCategory extends Fragment implements DialogDateTimePi
 
     public void update() {
         G.Log("[FragmentCreateCategory.update]");
-        if (selectedCondition == 1) {  //Selexted Unit type
+        if (selectedCondition == Category.Condition.NOTSELECTED) {
+            editTextInitialValue.setVisibility(View.GONE);
+            editTextFinalValue.setVisibility(View.GONE);
+        } else {
+            editTextInitialValue.setVisibility(View.VISIBLE);
+            editTextFinalValue.setVisibility(View.VISIBLE);
+        }
+
+        if (selectedCondition == Category.Condition.UNIT) {
             editTextUnit.setVisibility(View.VISIBLE);
         }
         else {
@@ -214,39 +302,74 @@ public class FragmentCreateCategory extends Fragment implements DialogDateTimePi
         else {
             layoutPrediction.setVisibility(View.GONE);
         }
-        setDefaultInitialValue();
+        //TODO перенести - только при изменении типа категории
+        //setDefaultInitialValue();
     }
 
     void setDefaultInitialValue() {
+        G.Log("DEFAULT "+selectedCondition);
         if (selectedCondition == Category.Condition.UNIT) editTextInitialValue.setText("0");
-        if (selectedCondition == Category.Condition.TIME) {
+        if (selectedCondition == Category.Condition.DATE) {
             String currentDay = DateTime.now().getDayOfMonth() + "";
             currentDay = currentDay.length() == 1 ? "0" + currentDay : currentDay;
             String currentMonth = DateTime.now().getMonthOfYear() + "";
             currentMonth = currentMonth.length() == 1 ? "0" + currentMonth : currentMonth;
             editTextInitialValue.setText(currentDay + "." + currentMonth + "." + DateTime.now().getYear());
         }
+        if (selectedCondition == Category.Condition.DATETIME) {
+            G.Log("DATETIME!!");
+            String currentDay = DateTime.now().getDayOfMonth() + "";
+            currentDay = currentDay.length() == 1 ? "0" + currentDay : currentDay;
+            String currentMonth = DateTime.now().getMonthOfYear() + "";
+            currentMonth = currentMonth.length() == 1 ? "0" + currentMonth : currentMonth;
+            String currentHour = DateTime.now().getHourOfDay()+"";
+            currentHour = currentHour.length() == 1 ? "0" + currentHour : currentHour;
+            String currentMinute = DateTime.now().getMinuteOfHour()+"";
+            currentMinute = currentMinute.length() == 1 ? "0" + currentMinute : currentMinute;
+            editTextInitialValue.setText(currentDay +"."+ currentMonth +"."+ DateTime.now().getYear() +"  "+ currentHour +":"+ currentMinute);
+        }
     }
 
-    @Override
-    public void onCompleteDialog(Bundle bundle) {
+    void createCategory() {
+        if (checkData()) {
+            G.Log("[createCategory]");
+        }
+    }
 
-        int request = bundle.getInt(G.KEY_REQUEST);
-        String tag = bundle.getString(G.KEY_TAG);
-        if (request == G.Request.SET_DATETIME) {
-            int result = bundle.getInt(G.KEY_RESULT);
-            G.Log("From Dialog tag: '"+tag+"'. Result="+result);
-            if (result == G.Result.OK) {
-                if (tag==G.TAG_SET_DATETIME_TO_INIT_VALUE) {
-                    int day = bundle.getInt("keyDlgDay");
-                    G.Log("INITIAL VALUEEEE");
-                    G.Log(day+"");
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (selectedCondition == Category.Condition.DATETIME) {
+                if (v.getId() == editTextInitialValue.getId()) {
+                    showDateTimePicker(G.Tag.SET_DATETIME_TO_INIT_VALUE);
                 }
-                if (tag==G.TAG_SET_DATETIME_TO_FINAL_VALUE) {
-                    G.Log("FINAL VALUEEEE");
+                if (v.getId() == editTextFinalValue.getId()) {
+                    showDateTimePicker(G.Tag.SET_DATETIME_TO_FINAL_VALUE);
                 }
             }
-            if (result == G.Result.CANCEL) {}
+            if (selectedCondition == Category.Condition.DATE) {
+                if (v.getId() == editTextInitialValue.getId()) {
+                    showDateTimePicker(G.Tag.SET_DATE_TO_INIT_VALUE);
+                }
+                if (v.getId() == editTextFinalValue.getId()) {
+                    showDateTimePicker(G.Tag.SET_DATE_TO_FINAL_VALUE);
+                }
+            }
+            if (v.getId() == imageViewCategoryIcon.getId()) {
+                showIconPicker(G.Tag.SET_ICON);
+            }
+            if (v.getId() == buttonOk.getId()) {createCategory();}
+            update();
         }
+    };
+
+    boolean checkData() {
+        boolean error = false;
+        TextInputLayout tilName = (TextInputLayout)editTextName.getParentForAccessibility();
+        if (editTextName.getText().toString().equals("")) {(tilName).setError("WTF"); error=true;} else (tilName).setError("");
+
+        G.Log("Chk: "+!error);
+        return !error;
     }
 }

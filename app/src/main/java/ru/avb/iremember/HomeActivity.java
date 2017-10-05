@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
+import org.joda.time.DateTime;
 
 import io.fabric.sdk.android.Fabric;
 import ru.avb.iremember.asyncs.AsyncInfinity;
@@ -464,34 +467,63 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onCompleteDialog(Bundle bundle) {
-        G.Log("onComplete..");
+        G.Log("[HomeActivity.onCompleteDialog]");
         int request = bundle.getInt(G.KEY_REQUEST);
         String tag = bundle.getString(G.KEY_TAG);
-//        if (request == G.Request.NEED_RESTART) {
-//            int result = bundle.getInt(G.KEY_RESULT);
-//            G.Log("From Dialog tag: '"+tag+"'. Result="+result);
-//            if (result == G.Result.OK) {confirm();}
-//            if (result == G.Result.CANCEL) {cancel();}
-//        }
         if (request == G.Request.SET_DATETIME) {
+            G.Log("Request: SET_DATETIME");
             int result = bundle.getInt(G.KEY_RESULT);
-            G.Log("From Dialog tag: '"+tag+"'. Result="+result);
             if (result == G.Result.OK) {
-                if (tag==G.TAG_SET_DATETIME_TO_INIT_VALUE) {
+                G.Log("Result: OK");
+                if (tag==G.Tag.SET_DATETIME_TO_INIT_VALUE) {
+                    G.Log("Tag: SET_DATETIME_TO_INIT_VALUE");
                     int day = bundle.getInt(G.KEY_DLG_DAY);
                     int month = bundle.getInt(G.KEY_DLG_MONTH);
                     int year = bundle.getInt(G.KEY_DLG_YEAR);
-
-                    G.Log("INITIAL VALUEEEE");
-                    G.Log("day: "+day+"");
-                    G.Log("month: "+month);
-                    G.Log("year: "+year);
+                    int hour = bundle.getInt(G.KEY_DLG_HOUR);
+                    int minute = bundle.getInt(G.KEY_DLG_MINUTE);
+                    FragmentCreateCategory.initDatetime = new FragmentCreateCategory.date(day,month,year,hour,minute);
+                    G.Log("initDatetime: "+FragmentCreateCategory.initDatetime.toString());
+                    ((EditText)FragmentCreateCategory.root.findViewById(R.id.editText_initialValue)).setText(FragmentCreateCategory.initDatetime.toString());
                 }
-                if (tag==G.TAG_SET_DATETIME_TO_FINAL_VALUE) {
-                    G.Log("FINAL VALUEEEE");
+                if (tag==G.Tag.SET_DATETIME_TO_FINAL_VALUE) {
+                    G.Log("Tag: SET_DATETIME_TO_FINAL_VALUE");
+                    int day = bundle.getInt(G.KEY_DLG_DAY);
+                    int month = bundle.getInt(G.KEY_DLG_MONTH);
+                    int year = bundle.getInt(G.KEY_DLG_YEAR);
+                    int hour = bundle.getInt(G.KEY_DLG_HOUR);
+                    int minute = bundle.getInt(G.KEY_DLG_MINUTE);
+                    FragmentCreateCategory.finalDatetime = new FragmentCreateCategory.date(day,month,year,hour,minute);
+                    G.Log("finalDatetime: "+FragmentCreateCategory.finalDatetime.toString());
+                    ((EditText)FragmentCreateCategory.root.findViewById(R.id.editText_finalValue)).setText(FragmentCreateCategory.finalDatetime.toString());
+                }
+                if (tag==G.Tag.SET_DATE_TO_INIT_VALUE) {
+                    G.Log("Tag: SET_DATETIME_TO_INIT_VALUE");
+                    int day = bundle.getInt(G.KEY_DLG_DAY);
+                    int month = bundle.getInt(G.KEY_DLG_MONTH);
+                    int year = bundle.getInt(G.KEY_DLG_YEAR);
+                    FragmentCreateCategory.initDatetime = new FragmentCreateCategory.date(day,month,year);
+                    G.Log("initDate: "+FragmentCreateCategory.initDatetime.toString());
+                    ((EditText)FragmentCreateCategory.root.findViewById(R.id.editText_initialValue)).setText(FragmentCreateCategory.initDatetime.toString());
+                }
+                if (tag==G.Tag.SET_DATE_TO_FINAL_VALUE) {
+                    G.Log("Tag: SET_DATETIME_TO_FINAL_VALUE");
+                    int day = bundle.getInt(G.KEY_DLG_DAY);
+                    int month = bundle.getInt(G.KEY_DLG_MONTH);
+                    int year = bundle.getInt(G.KEY_DLG_YEAR);
+                    FragmentCreateCategory.finalDatetime = new FragmentCreateCategory.date(day,month,year);
+                    G.Log("finalDate: "+FragmentCreateCategory.finalDatetime.toString());
+                    ((EditText)FragmentCreateCategory.root.findViewById(R.id.editText_finalValue)).setText(FragmentCreateCategory.finalDatetime.toString());
                 }
             }
-            if (result == G.Result.CANCEL) {}
+            if (result == G.Result.CANCEL) {
+                G.Log("Result: CANCEL");
+                if (tag==G.Tag.SET_DATETIME_TO_FINAL_VALUE) {
+                    G.Log("Tag: TAG_SET_DATETIME_TO_FINAL_VALUE");
+                    G.Log("Clean EditTextFinalValue");
+                    ((EditText)findViewById(R.id.editText_finalValue)).setText("");
+                }
+            }
         }
     }
 }

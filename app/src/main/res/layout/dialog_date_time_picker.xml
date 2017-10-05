@@ -37,36 +37,6 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TimePicker
-                        android:id="@+id/timePicker"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="8dp"
-                        android:paddingEnd="8dp"
-                        android:paddingStart="8dp"
-                        android:paddingTop="16dp">
-
-                        <Button
-                            android:id="@+id/button_ok"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.92"
-                            android:text="@string/ok" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/tab1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -147,6 +117,36 @@
                             android:paddingStart="8dp"
                             android:paddingTop="16dp"
                             android:text="@string/next" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TimePicker
+                        android:id="@+id/timePicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="16dp">
+
+                        <Button
+                            android:id="@+id/button_ok"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.92"
+                            android:text="@string/ok" />
                     </LinearLayout>
 
                 </LinearLayout>

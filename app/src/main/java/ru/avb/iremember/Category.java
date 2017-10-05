@@ -6,9 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-/**
- * Created by sbm on 29.12.2015.
- */
 public class Category {
     String name;
     int iconId;
@@ -18,6 +15,6 @@ public class Category {
     }
 
     public final class Condition{
-        public static final int NOTSELECTED=0, UNIT=1, TIME=2;
+        public static final int NOTSELECTED=0, UNIT=1, DATE=2, DATETIME=3;
     }
 }

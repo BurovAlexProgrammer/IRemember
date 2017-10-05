@@ -205,7 +205,7 @@ public class LanguageActivity extends AppCompatActivity implements DialogOkCance
     }
 
     public void ask() {
-        dialogNeedRestart.show(getFragmentManager(), G.TAG_NEED_RESTART);
+        dialogNeedRestart.show(getFragmentManager(), G.Tag.NEED_RESTART);
     }
 
     @Override
