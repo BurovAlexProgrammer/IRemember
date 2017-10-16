@@ -15,18 +15,16 @@ import com.github.paolorotolo.appintro.AppIntroFragment;
 import ru.avb.iremember.fragments.First;
 import ru.avb.iremember.fragments.FragmentAccount;
 import ru.avb.iremember.fragments.Second;
+import ru.avb.iremember.fragments.Third;
 
 /**
  * Created by Alex on 01.12.2016.
  */
 
-public class IntroActivity extends AppIntro implements First.OnFragmentInteractionListener, Second.OnFragmentInteractionListener {
+public class IntroActivity extends AppIntro implements First.OnFragmentInteractionListener, Second.OnFragmentInteractionListener, Third.OnFragmentInteractionListener {
     First firstFragment = new First();
     Second secondFragment = new Second();
-    String title = "asdfadsg",
-    description = "sgdsfhshsfhgf sdfgs  sdsfgsdfg sdfg";
-    int image = R.mipmap.flag_usa;
-    int backgroundColor = Color.BLUE;
+    Third thirdFragment = new Third();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +35,7 @@ public class IntroActivity extends AppIntro implements First.OnFragmentInteracti
         // AppIntro will automatically generate the dots indicator and buttons.
         addSlide(firstFragment);
         addSlide(secondFragment);
-        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+        addSlide(thirdFragment);
 
         // OPTIONAL METHODS
         // Override bar/separator color.

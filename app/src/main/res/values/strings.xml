@@ -74,7 +74,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="intro1_headline">Free yourself from little things</string>
+    <string name="intro1_headline">Welcome to my first app</string>
+    <string name="intro2_headline">There will be tutorial</string>
+    <string name="intro3_headline">There will be authentication</string>
     <string name="title_new_category">New category</string>
 
     <string name="hint_cat_name">Category name</string>
