@@ -199,9 +199,11 @@ public class FragmentCreateCategory extends Fragment {
             @Override
             public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
                 if (selectedCondition!=position) {
+                    spinnerType.setLabelText(getString(R.string.condition));
                     selectedCondition = position;
                     setDefaultInitialValue();
                 }
+                else {spinnerType.setLabelText("");}
                 selectedCondition = position;
                 update();
             }
@@ -212,6 +214,8 @@ public class FragmentCreateCategory extends Fragment {
             }
         });
         //spinnerType.setColor(R.color.wallet_holo_blue_light);
+        spinnerType.setLabelText(getString(R.string.condition));
+        spinnerType.setDefaultErrorText(getString(R.string.error_need_select_condition));
         spinnerType.setDefaultErrorEnabled(true);
     }
 
@@ -304,6 +308,8 @@ public class FragmentCreateCategory extends Fragment {
         }
         //TODO перенести - только при изменении типа категории
         //setDefaultInitialValue();
+
+       // if (spinnerType.get)
     }
 
     void setDefaultInitialValue() {
@@ -367,7 +373,8 @@ public class FragmentCreateCategory extends Fragment {
     boolean checkData() {
         boolean error = false;
         TextInputLayout tilName = (TextInputLayout)editTextName.getParentForAccessibility();
-        if (editTextName.getText().toString().equals("")) {(tilName).setError("WTF"); error=true;} else (tilName).setError("");
+        if (editTextName.getText().toString().equals("")) {tilName.setError(getString(R.string.error_need_cat_name)); error=true;} else {tilName.setError("");}
+
 
         G.Log("Chk: "+!error);
         return !error;

@@ -79,7 +79,7 @@
 
     <string name="hint_cat_name">Category name</string>
     <string name="hint_cat_type">Category type</string>
-    <string name="hint_cat_condition">Condition </string>
+    <string name="condition">Condition </string>
 
     <string name="initialValue">Initial value</string>
     <string name="finalValue">Final value</string>
@@ -94,6 +94,9 @@
     <string name="prediction_label">Prediction</string>
     <string name="everageValue">Everage value</string>
 
+
+    <string name="error_need_select_condition">Need to select condition</string>
+    <string name="error_need_cat_name">Enter the category name</string>
 
     <string-array name="items_cat_condition">
         <item>Condition</item>
@@ -125,4 +128,6 @@
         <item>once every 21 days</item>
         <item>once every 30 days</item>
     </string-array>
+
+
 </resources>
