@@ -13,7 +13,7 @@ import com.crashlytics.android.Crashlytics;
 public class DB {
 
     public static final String LOCAL_NAME = "localUser.db";
-    public static final int dbVersion = 8;
+    public static final int dbVersion = 9;
 
     public static String
             dbName = LOCAL_NAME,
@@ -27,7 +27,7 @@ public class DB {
     final static String
             CNC_ID = "id",
             CNC_LABEL = "label",
-            CNC_TYPE = "type",
+            CNC_CONDITION = "condition",
             CNC_ICON_ID = "icon_id",
             CNC_PARENT_CATEGORY = "parent_category",
             CNC_ORDER_NUMBER = "order_number",
@@ -191,7 +191,7 @@ public class DB {
                     db.execSQL("create table " + TABLE_CATEGORIES + " (" +
                             CNC_ID +" "+ TYPE_ID +","+
                             CNC_LABEL +" "+ TYPE_TEXT +","+
-                            CNC_TYPE +" "+ TYPE_TEXT +","+
+                            CNC_CONDITION +" "+ TYPE_TEXT +","+
                             CNC_ICON_ID +" "+ TYPE_INTEGER +","+
                             CNC_PARENT_CATEGORY +" "+ TYPE_INTEGER +","+
                             CNC_ORDER_NUMBER +" "+ TYPE_INTEGER +","+
@@ -308,5 +308,9 @@ public class DB {
         else
             dbName = DB.LOCAL_NAME;
         G.LogDB("DB.dbName="+dbName);
+    }
+
+    public static void insertCategory(String name, String type, String unitLabel, int iconId, int initialValue) {
+
     }
 }

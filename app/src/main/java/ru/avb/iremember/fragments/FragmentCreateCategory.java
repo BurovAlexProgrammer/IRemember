@@ -339,6 +339,7 @@ public class FragmentCreateCategory extends Fragment {
     void createCategory() {
         if (checkData()) {
             G.Log("[createCategory]");
+            //TODO add createCategory to SQL
         }
     }
 
@@ -379,4 +380,6 @@ public class FragmentCreateCategory extends Fragment {
         G.Log("Chk: "+!error);
         return !error;
     }
+
+
 }
