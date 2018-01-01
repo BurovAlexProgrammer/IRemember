@@ -2,6 +2,7 @@ package ru.avb.iremember;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
@@ -12,7 +13,7 @@ import java.util.Locale;
  */
 
 
-public class MyApplication extends Application{
+public class MyApplication extends MultiDexApplication {
     private Locale locale;
     //private String lang;
 

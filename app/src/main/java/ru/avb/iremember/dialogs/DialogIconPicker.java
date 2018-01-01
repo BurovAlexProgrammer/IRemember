@@ -36,7 +36,7 @@ public class DialogIconPicker extends DialogFragment  {
     }
 
     void initViews(View v) {
-        tabHost = v.findViewById(android.R.id.tabhost);
+        tabHost = (TabHost) v.findViewById(android.R.id.tabhost);
         tabHost.setup();
 
         TabHost.TabSpec tabSpec;
@@ -49,7 +49,7 @@ public class DialogIconPicker extends DialogFragment  {
 
         String[] data = {"1","2","3","4"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.item_icon, R.id.imageView, data);
-        GridView gridView = v.findViewById(R.id.gridView);
+        GridView gridView = (GridView) v.findViewById(R.id.gridView);
         ImageView imageView = new ImageView(getActivity());
         imageView.setImageResource(R.drawable.cat_minivan);
         gridView.addView(imageView);

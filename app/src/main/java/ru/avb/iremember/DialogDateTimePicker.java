@@ -63,9 +63,9 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
     }
 
     private void initViews(View v) {
-        layoutDatePicker = v.findViewById(R.id.layout_datePicker);
-        layoutCalendar = v.findViewById(R.id.layout_calendar);
-        tabHost = v.findViewById(android.R.id.tabhost);
+        layoutDatePicker = (LinearLayout) v.findViewById(R.id.layout_datePicker);
+        layoutCalendar = (LinearLayout) v.findViewById(R.id.layout_calendar);
+        tabHost = (TabHost) v.findViewById(android.R.id.tabhost);
         tabHost.setup();
 
         TabHost.TabSpec tabSpec;
@@ -91,7 +91,7 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
 
         tabHost.setCurrentTabByTag("tag1");
 
-        pickerDay = v.findViewById(R.id.picker_day);
+        pickerDay = (NumberPicker) v.findViewById(R.id.picker_day);
         int[] days = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
         String[] daysStr = new String[31];
         for (int i=0; i<days.length; i++) {daysStr[i] = ""+days[i];}
@@ -101,7 +101,7 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
         pickerDay.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         pickerDay.setWrapSelectorWheel(true);
 
-        pickerMonth = v.findViewById(R.id.picker_month);
+        pickerMonth = (NumberPicker) v.findViewById(R.id.picker_month);
         int[] months = {1,2,3,4,5,6,7,8,9,10,11,12};
         String[] monthsStr = new String[months.length];
         for (int i=0; i<monthsStr.length; i++) {monthsStr[i] = ""+months[i];}
@@ -111,7 +111,7 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
 //        pickerMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         pickerMonth.setWrapSelectorWheel(true);
 
-        pickerYear = v.findViewById(R.id.picker_year);
+        pickerYear = (NumberPicker) v.findViewById(R.id.picker_year);
         minYear = 2000;
         final int[] years = new int[50];
         for (int i=0; i<years.length; i++) {years[i]=minYear+i;}
@@ -165,7 +165,7 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
 
         G.Log(G.LOGLINE);
         //TODO при повторном вызове не сбрасывает время
-        timePicker = v.findViewById(R.id.timePicker);
+        timePicker = (TimePicker) v.findViewById(R.id.timePicker);
         timePicker.setIs24HourView(true);
         timePicker.setCurrentHour(selectedHour);
         timePicker.setCurrentMinute(selectedMinute);
@@ -177,7 +177,7 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
             }
         });
 
-        Button buttonNext = v.findViewById(R.id.button_next);
+        Button buttonNext = (Button) v.findViewById(R.id.button_next);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,7 +185,7 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
                 if (mode==DATE) sendResult();
             }
         });
-        Button buttonOk = v.findViewById(R.id.button_ok);
+        Button buttonOk = (Button) v.findViewById(R.id.button_ok);
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,7 +193,7 @@ public class DialogDateTimePicker extends DialogFragment implements View.OnClick
             }
         });
 
-        ImageView iconCalendar = v.findViewById(R.id.icon_calendar);
+        ImageView iconCalendar = (ImageView) v.findViewById(R.id.icon_calendar);
         iconCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

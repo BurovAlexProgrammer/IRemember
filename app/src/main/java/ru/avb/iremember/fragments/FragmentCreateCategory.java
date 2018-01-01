@@ -338,8 +338,11 @@ public class FragmentCreateCategory extends Fragment {
 
     void createCategory() {
         if (checkData()) {
-            G.Log("[createCategory]");
+
+
+
             //TODO add createCategory to SQL
+
         }
     }
 
