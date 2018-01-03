@@ -36,4 +36,167 @@ public class Category {
         public static final int NOTSELECTED=0, UNIT=1, DATE=2, DATETIME=3;
         public static final String[] labels = {"Not selected", "unit", "date", "date time"};
     }
+
+
+
+    //GETTER SETTER
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public int getCondition() {
+        return condition;
+    }
+
+    public void setCondition(int condition) {
+        this.condition = condition;
+    }
+
+    public int getIconId() {
+        return iconId;
+    }
+
+    public void setIconId(int iconId) {
+        this.iconId = iconId;
+    }
+
+    public int getParentCategory() {
+        return parentCategory;
+    }
+
+    public void setParentCategory(int parentCategory) {
+        this.parentCategory = parentCategory;
+    }
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public DateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(DateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public DateTime getDateModified() {
+        return dateModified;
+    }
+
+    public void setDateModified(DateTime dateModified) {
+        this.dateModified = dateModified;
+    }
+
+    public int getInitialValue() {
+        return initialValue;
+    }
+
+    public void setInitialValue(int initialValue) {
+        this.initialValue = initialValue;
+    }
+
+    public int getFinalValue() {
+        return finalValue;
+    }
+
+    public void setFinalValue(int finalValue) {
+        this.finalValue = finalValue;
+    }
+
+    public boolean isFinalValueEnabled() {
+        return finalValueEnabled;
+    }
+
+    public void setFinalValueEnabled(boolean finalValueEnabled) {
+        this.finalValueEnabled = finalValueEnabled;
+    }
+
+    public boolean isNegativeValueEnabled() {
+        return negativeValueEnabled;
+    }
+
+    public void setNegativeValueEnabled(boolean negativeValueEnabled) {
+        this.negativeValueEnabled = negativeValueEnabled;
+    }
+
+    public boolean isPredictionEnabled() {
+        return predictionEnabled;
+    }
+
+    public void setPredictionEnabled(boolean predictionEnabled) {
+        this.predictionEnabled = predictionEnabled;
+    }
+
+    public int getPredictionPeriod() {
+        return predictionPeriod;
+    }
+
+    public void setPredictionPeriod(int predictionPeriod) {
+        this.predictionPeriod = predictionPeriod;
+    }
+
+    public int getEverageValue() {
+        return everageValue;
+    }
+
+    public void setEverageValue(int everageValue) {
+        this.everageValue = everageValue;
+    }
+
+    public boolean isEverageValueCalculateEnabled() {
+        return everageValueCalculateEnabled;
+    }
+
+    public void setEverageValueCalculateEnabled(boolean everageValueCalculateEnabled) {
+        this.everageValueCalculateEnabled = everageValueCalculateEnabled;
+    }
+
+    public int getEverageValueCalculateEventcount() {
+        return everageValueCalculateEventcount;
+    }
+
+    public void setEverageValueCalculateEventcount(int everageValueCalculateEventcount) {
+        this.everageValueCalculateEventcount = everageValueCalculateEventcount;
+    }
+
+    public boolean isFavoriteEnabled() {
+        return favoriteEnabled;
+    }
+
+    public void setFavoriteEnabled(boolean favoriteEnabled) {
+        this.favoriteEnabled = favoriteEnabled;
+    }
+
+    public int getFavoriteOrderNumber() {
+        return favoriteOrderNumber;
+    }
+
+    public void setFavoriteOrderNumber(int favoriteOrderNumber) {
+        this.favoriteOrderNumber = favoriteOrderNumber;
+    }
+
+    public String getUnitLabel() {
+        return unitLabel;
+    }
+
+    public void setUnitLabel(String unitLabel) {
+        this.unitLabel = unitLabel;
+    }
 }

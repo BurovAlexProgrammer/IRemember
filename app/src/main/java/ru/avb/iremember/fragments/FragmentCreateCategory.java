@@ -198,7 +198,7 @@ public class FragmentCreateCategory extends Fragment {
         spinnerType.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
             @Override
             public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
-                if (selectedCondition!=position) {
+                if (position!=Category.Condition.NOTSELECTED) {
                     spinnerType.setLabelText(getString(R.string.condition));
                     selectedCondition = position;
                     setDefaultInitialValue();
@@ -206,6 +206,7 @@ public class FragmentCreateCategory extends Fragment {
                 else {spinnerType.setLabelText("");}
                 selectedCondition = position;
                 update();
+                G.Log("Condition: "+selectedCondition);
             }
 
             @Override
@@ -214,9 +215,8 @@ public class FragmentCreateCategory extends Fragment {
             }
         });
         //spinnerType.setColor(R.color.wallet_holo_blue_light);
-        spinnerType.setLabelText(getString(R.string.condition));
-        spinnerType.setDefaultErrorText(getString(R.string.error_need_select_condition));
-        spinnerType.setDefaultErrorEnabled(true);
+        //spinnerType.setLabelText(getString(R.string.condition));
+        //spinnerType.setDefaultErrorText(getString(R.string.error_need_select_condition));
     }
 
     public void onButtonPressed(Uri uri) {
@@ -338,10 +338,10 @@ public class FragmentCreateCategory extends Fragment {
 
     void createCategory() {
         if (checkData()) {
-
-
-
-            //TODO add createCategory to SQL
+            Category newCategory = new Category();
+            newCategory.setLabel(editTextName.getText().toString());
+            //newCategory.setCondition(spinnerType.get);
+            //TODO add creatCategory to SQL
 
         }
     }
@@ -378,8 +378,19 @@ public class FragmentCreateCategory extends Fragment {
         boolean error = false;
         TextInputLayout tilName = (TextInputLayout)editTextName.getParentForAccessibility();
         if (editTextName.getText().toString().equals("")) {tilName.setError(getString(R.string.error_need_cat_name)); error=true;} else {tilName.setError("");}
+        if (selectedCondition==Category.Condition.NOTSELECTED) {
+//            spinnerType.setDefaultErrorEnabled(true);
 
-
+            spinnerType.setColor(R.color.colorAccent);
+            G.Log("condition error");
+            spinnerType.setLabelText("NEED select condition");
+//            spinnerType.setDefaultErrorEnabled(true);
+//            spinnerType.setDefaultErrorText("WTF");
+            error=true;
+        } else {
+            G.Log("condition norm");
+            spinnerType.setDefaultErrorEnabled(false);
+        }
         G.Log("Chk: "+!error);
         return !error;
     }
