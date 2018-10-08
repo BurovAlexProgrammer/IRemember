@@ -79,6 +79,7 @@
     <string name="intro3_headline">There will be authentication</string>
     <string name="title_new_category">New category</string>
 
+    <string name="hint_cat_enterName">Enter category name</string>
     <string name="hint_cat_name">Category name</string>
     <string name="hint_cat_type">Category type</string>
     <string name="condition">Condition </string>
@@ -102,7 +103,6 @@
     <string name="error_need_cat_unit">Enter the unit name</string>
 
     <string-array name="items_cat_condition">
-        <item>Condition</item>
         <item>Unit</item>
         <item>Date</item>
         <item>Date Time</item>

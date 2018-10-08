@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "ru.avb.iremember"
-        minSdkVersion 17
-        targetSdkVersion 26
+        minSdkVersion 19
+        targetSdkVersion 28
         versionCode 4
         versionName "0.27"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -29,28 +29,28 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.0.2'
-    compile 'com.google.android.gms:play-services:11.8.0'
-    compile 'com.android.support:cardview-v7:26.0.2'
-    compile 'com.android.support:recyclerview-v7:26.0.2'
-    compile 'com.android.support:design:26.0.2'
-    compile 'com.android.support:support-v4:26.0.2'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
-    compile 'com.makeramen:roundedimageview:2.2.1'
-    compile 'com.android.support:support-annotations:26.0.2'
-    compile 'joda-time:joda-time:2.9.4'
-    compile 'com.github.paolorotolo:appintro:4.1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    testCompile 'junit:junit:4.12'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'com.google.android.gms:play-services:11.8.0'
+    api 'com.android.support:cardview-v7:28.0.0'
+    api 'com.android.support:recyclerview-v7:28.0.0'
+    api 'com.android.support:design:28.0.0'
+    api 'com.android.support:support-v4:28.0.0'
+    api 'com.android.support:multidex:1.0.2'
+    api 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
+    api 'com.makeramen:roundedimageview:2.2.1'
+    api 'com.android.support:support-annotations:28.0.0'
+    api 'joda-time:joda-time:2.9.4'
+    api 'com.github.paolorotolo:appintro:4.1.0'
+    api 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    api('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
-    compile 'com.github.ganfra:material-spinner:1.1.1'
-    compile 'com.github.florent37:singledateandtimepicker:1.2.0'
-    compile 'com.satsuware.lib:usefulviews:+'
+    api 'com.github.ganfra:material-spinner:1.1.1'
+    api 'com.github.florent37:singledateandtimepicker:1.2.0'
+    api 'com.satsuware.lib:usefulviews:+'
 }
