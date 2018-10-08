@@ -9,6 +9,7 @@
         <attr name="textcolorButton" format="color" />
         <attr name="textcolorButtonPositive" format="color" />
         <attr name="textcolorButtonNegative" format="color" />
+        <attr name="textColor_onException" format="color" />
         <!--
         <attr name="textcolorPrimary" format="color" />
         <attr name="textcolorSecondary" format="color" />
@@ -55,6 +56,7 @@
         </item>
 
         <item name="android:dropDownHintAppearance">@style/SpinnerItemTextAppearance</item>
+        <item name="textColor_onException">@color/textColor_onException</item>
     </style>
 
     <!-- GRAY THEME -->

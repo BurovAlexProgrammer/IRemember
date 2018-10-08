@@ -99,6 +99,7 @@
 
     <string name="error_need_select_condition">Need to select condition</string>
     <string name="error_need_cat_name">Enter the category name</string>
+    <string name="error_need_cat_unit">Enter the unit name</string>
 
     <string-array name="items_cat_condition">
         <item>Condition</item>

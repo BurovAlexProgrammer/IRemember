@@ -58,4 +58,8 @@
         <item name="android:textSize">34sp</item>
         <item name="android:textColor">?android:textColorTertiary</item>
     </style>
+    <style name="Exception">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">?textColor_onException</item>
+    </style>
 </resources>

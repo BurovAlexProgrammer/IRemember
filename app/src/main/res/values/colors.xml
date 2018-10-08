@@ -20,6 +20,7 @@
     <color name="textcolorButtonPositive_default">@color/textColorPrimary_default</color>
     <color name="textcolorButtonNegative_default">@color/textColorPrimaryInverse_default</color>
 
+    <color name="textColor_onException">#faa90000</color>
     <color name="textColorPrimary_default">#fa000000</color>
     <color name="textColorSecondary_default">#dc000000</color>
     <color name="textColorTertiary_default">#b41b1b1b</color>

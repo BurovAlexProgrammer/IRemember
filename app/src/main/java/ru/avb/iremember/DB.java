@@ -24,9 +24,10 @@ public class DB {
     public static SQLiteDatabase db;
 
     //<editor-fold desc="Column name categories">
-    final static String
+    public final static String
             CNC_ID = "id",
             CNC_LABEL = "label",
+            CNC_UNIT_LABEL = "unit_label",
             CNC_CONDITION = "condition",
             CNC_ICON_ID = "icon_id",
             CNC_PARENT_CATEGORY = "parent_category",
@@ -47,7 +48,7 @@ public class DB {
     //</editor-fold>
 
     //<editor-fold desc="Column name events">
-    final static String
+    public final static String
             CNE_ID = "id",
             CNE_CATEGORY_ID = "category_id",
             CNE_VALUE = "value",
@@ -56,7 +57,7 @@ public class DB {
     //</editor-fold>
 
     //<editor-fold desc="Column name notifications">
-    final static String
+    public final static String
             CNN_ID = "id",
             CNN_CATEGORY_ID = "category_id",
             CNN_LABEL = "label",
@@ -69,7 +70,7 @@ public class DB {
     //</editor-fold>
 
     //Table type of variables
-    final static String
+    public final static String
             TYPE_ID = "integer primary key autoincrement",
             TYPE_INTEGER = "integer",
             TYPE_TEXT = "text",
@@ -191,6 +192,7 @@ public class DB {
                     db.execSQL("create table " + TABLE_CATEGORIES + " (" +
                             CNC_ID +" "+ TYPE_ID +","+
                             CNC_LABEL +" "+ TYPE_TEXT +","+
+                            CNC_UNIT_LABEL +" "+ TYPE_TEXT +","+
                             CNC_CONDITION +" "+ TYPE_TEXT +","+
                             CNC_ICON_ID +" "+ TYPE_INTEGER +","+
                             CNC_PARENT_CATEGORY +" "+ TYPE_INTEGER +","+

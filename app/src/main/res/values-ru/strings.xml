@@ -36,4 +36,74 @@
     <string name="years_ago">лет назад</string>
     <string name="today">сегодня</string>
     <string name="title_activity_home"></string>
+
+
+    <string-array name="items_cat_condition">
+        <item>Условие</item>
+        <item>Единица</item>
+        <item>Дата</item>
+        <item>Дата и время</item>
+    </string-array>
+
+    <string-array name="items_everageEventCount">
+        <item>для 2 последних событий</item>
+        <item>для 3 последних событий</item>
+        <item>для 5 последних событий</item>
+        <item>для 7 последних событий</item>
+        <item>для 10 последних событий</item>
+        <item>для 20 последних событий</item>
+        <item>для 30 последних событий</item>
+        <item>для 365 последних событий</item>
+    </string-array>
+
+    <string-array name="items_predictionPeriod">
+        <item>раз каждый день</item>
+        <item>раз каждые 2 дня</item>
+        <item>раз каждые 3 дня</item>
+        <item>раз каждые 4 дня</item>
+        <item>раз каждые 5 дня</item>
+        <item>раз каждые 6 дня</item>
+        <item>раз каждые 7 дня</item>
+        <item>раз каждые 14 дня</item>
+        <item>раз каждые 21 дня</item>
+        <item>раз каждые 30 дня</item>
+    </string-array>
+    <string name="next">Далее</string>
+    <string name="never">Никогда</string>
+    <string name="lastSync">последняя связь</string>
+    <string name="enabled">Включено</string>
+    <string name="onceEvery">раз каждые</string>
+    <string name="days">дней</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+    <string name="createCategory">Создать категорию</string>
+    <string name="sign_in">Войти</string>
+    <string name="title_create_category">Новая категория</string>
+    <string name="spaceholder_lastSync">Последняя связь</string>
+    <string name="seconds_ago">секунд назад</string>
+    <string name="minutes_ago">минут назад</string>
+    <string name="hours_ago">часов назад</string>
+    <string name="days_ago">дней назад</string>
+    <string name="months_ago">месяцев назад</string>
+    <string name="intro1_headline">Добро пожаловать в моё первое приложение</string>
+    <string name="hint_cat_name">Название категории</string>
+    <string name="intro2_headline">Здесь будет обучение</string>
+    <string name="intro3_headline">Здесь будет вход</string>
+    <string name="hint_cat_type">Тип категории</string>
+    <string name="condition">Условие</string>
+    <string name="initialValue">Начальное значение</string>
+    <string name="finalValue">Конечное значение</string>
+    <string name="everageValueCalculate">Вычислять автоматически</string>
+    <string name="everageValueCalculate_for">для</string>
+    <string name="everageValueCalculate_operations">операций</string>
+    <string name="hint_finalValueOptional">Если требуется</string>
+    <string name="hint_cat_mean_value_per_day">Имеется ввиду, количество в день</string>
+    <string name="unitLabel">Единица измерения</string>
+    <string name="unitLabel_hint">Единица измерения. Например км/ч</string>
+    <string name="everage_value">Среднее значение</string>
+    <string name="prediction_label">Прогнозирование</string>
+    <string name="everageValue">Среднее значение</string>
+    <string name="error_need_select_condition">Необходимо выбрать условие</string>
+    <string name="error_need_cat_name">Необходимо указать название категории</string>
+    <string name="error_need_cat_unit">Введите единицу измерения</string>
 </resources>

@@ -1,7 +1,13 @@
 package ru.avb.iremember.fragments;
 
+//TODO при выборе даты через календарь - хрень
+//TODO добавить очистку даты финал
+//TODO добавить режим ввода даты - Калькулятор (+30дней, -2 месяца)
+
 import android.app.DialogFragment;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +15,7 @@ import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,16 +30,23 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.satsuware.usefulviews.LabelledSpinner;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import ru.avb.iremember.Category;
+import ru.avb.iremember.DB;
 import ru.avb.iremember.DialogDateTimePicker;
 import ru.avb.iremember.G;
 import ru.avb.iremember.HomeActivity;
 import ru.avb.iremember.R;
 import ru.avb.iremember.dialogs.DialogIconPicker;
+
+import static ru.avb.iremember.DB.TABLE_CATEGORIES;
+import static ru.avb.iremember.DB.closeDB;
 
 public class FragmentCreateCategory extends Fragment {
     HomeActivity thisActivity;
@@ -338,12 +352,110 @@ public class FragmentCreateCategory extends Fragment {
 
     void createCategory() {
         if (checkData()) {
+            String initValue="", finalValue="";
+            DateTimeFormatter formatter;
+            DateTime initDate;
+            DateTime finalDate;
             Category newCategory = new Category();
-            newCategory.setLabel(editTextName.getText().toString());
-            //newCategory.setCondition(spinnerType.get);
-            //TODO add creatCategory to SQL
 
-        }
+            newCategory.setLabel(editTextName.getText().toString());
+            newCategory.setCondition(selectedCondition);
+            newCategory.setUnitLabel(editTextUnit.getText().toString());
+            switch (selectedCondition) {
+                //TODO get error on set initial value Date & DateTime
+                case (Category.Condition.UNIT) :
+                    int i = Integer.parseInt(editTextInitialValue.getText().toString());
+                    newCategory.setInitialValue(i);
+                    finalValue = editTextFinalValue.getText().toString();
+                    if (finalValue.equals("")) {
+                        newCategory.setFinalValueEnabled(false);
+                    } else {
+                        newCategory.setFinalValueEnabled(true);
+                        newCategory.setFinalValue(Integer.parseInt(editTextFinalValue.getText().toString()));
+                    }
+                    break;
+                case ((Category.Condition.DATE)) :
+                    finalValue = editTextFinalValue.getText().toString();
+                    formatter = DateTimeFormat.forPattern(Category.dateTimeFormat.date);
+                    initDate = formatter.parseDateTime(editTextInitialValue.getText().toString());
+                    newCategory.setInitialValue(initDate.getMillis());
+                    if (finalValue.equals("")) {
+                        newCategory.setFinalValueEnabled(false);
+                    } else {
+                        newCategory.setFinalValueEnabled(true);
+                        finalDate = formatter.parseDateTime(editTextFinalValue.getText().toString());
+                        newCategory.setFinalValue(finalDate.getMillis());
+                    }
+                    break;
+                case ((Category.Condition.DATETIME)) :
+                    finalValue = editTextFinalValue.getText().toString();
+                    formatter = DateTimeFormat.forPattern(Category.dateTimeFormat.dateTime);
+                    initDate = formatter.parseDateTime(editTextInitialValue.getText().toString());
+                    newCategory.setInitialValue(initDate.getMillis());
+                    if (finalValue.equals("")) {
+                        newCategory.setFinalValueEnabled(false);}
+                    else {
+                        newCategory.setFinalValueEnabled(true);
+                        finalDate = formatter.parseDateTime(editTextFinalValue.getText().toString());
+                        newCategory.setFinalValue(finalDate.getMillis());
+                    }
+                    break;
+            }
+
+            newCategory.setEverageValueCalculateEnabled(checkBoxEverageCalculate.isEnabled());
+            if (newCategory.isEverageValueCalculateEnabled()) {
+                newCategory.setEverageValue(Integer.parseInt(editTextEverageValue.getText().toString()));}
+            else {
+                newCategory.setEverageValue(Category.NO_SPECIFIED);
+            }
+            newCategory.setEverageValueCalculateEventcount(spinnerEverageValueEventcount.getSelectedItemPosition());
+
+            newCategory.setPredictionEnabled(checkBoxPrediction.isEnabled());
+            if (newCategory.isPredictionEnabled()) {
+                newCategory.setPredictionPeriod(spinnerPredictionPeriod.getSelectedItemPosition());}
+            else {
+                newCategory.setPredictionPeriod(Category.NO_SPECIFIED);
+            }
+
+            G.Log(G.LOGLINE);
+            G.Log("Label: "+String.valueOf(newCategory.getLabel()));
+            G.Log("Unit label: "+String.valueOf(newCategory.getUnitLabel()));
+            G.Log("Condition: "+String.valueOf(newCategory.getCondition()));
+            G.Log("Condition label: "+String.valueOf(getResources().getStringArray(R.array.items_cat_condition)[newCategory.getCondition()]));
+            G.Log("Init value: "+String.valueOf(newCategory.getInitialValue()));
+            G.Log("Final value: "+String.valueOf(newCategory.getFinalValue()));
+            G.Log("Final val. enabled: "+String.valueOf(newCategory.isFinalValueEnabled()));
+            G.Log("Everage value: "+String.valueOf(newCategory.getEverageValue()));
+            G.Log("Everage calc eventcount: "+String.valueOf(newCategory.getEverageValueCalculateEventcount()));
+            G.Log("Everage val calculate enabled: "+String.valueOf(newCategory.isEverageValueCalculateEnabled()));
+            G.Log("Prediction enabled: "+String.valueOf(newCategory.isPredictionEnabled()));
+            G.Log("Prediction period: "+String.valueOf(newCategory.getPredictionPeriod()));
+            G.Log("Prediction period converted: "+String.valueOf(Category.Prediction.period[newCategory.getPredictionPeriod()]));
+            G.Log(G.LOGLINE);
+
+            //TODO add creatCategory to SQL
+            G.Log("[FragmentCreateCategory.insertRow]");
+            //G.Log("Insert new record in table Categories");
+            try {
+                DB.openWritableDB(thisActivity);
+                ContentValues values = new ContentValues();
+                values.put(DB.CNC_LABEL, newCategory.getLabel());
+                values.put(DB.CNC_UNIT_LABEL, newCategory.getUnitLabel());
+                values.put(DB.CNC_CONDITION, newCategory.getCondition());
+                values.put(DB.CNC_INITIAL_VALUE, newCategory.getInitialValue());
+                values.put(DB.CNC_FINAL_VALUE, newCategory.getFinalValue());
+                values.put(DB.CNC_FINAL_VALUE_ENABLED, newCategory.isFinalValueEnabled());
+                values.put(DB.CNC_EVERAGE_VALUE_CALCULATE_ENABLED, newCategory.isEverageValueCalculateEnabled());
+                //values.put(DB.CNC_, newCategory.);
+                //values.put(DB.CNC_, newCategory.);
+                //values.put(DB.CNC_, newCategory.);
+                DB.db.insert(TABLE_CATEGORIES, null, values);
+                closeDB();
+                G.Log("Successfully"); }
+            catch (SQLException e) {
+                Crashlytics.logException(e);
+            }
+}
     }
 
 
@@ -376,20 +488,33 @@ public class FragmentCreateCategory extends Fragment {
 
     boolean checkData() {
         boolean error = false;
-        TextInputLayout tilName = (TextInputLayout)editTextName.getParentForAccessibility();
-        if (editTextName.getText().toString().equals("")) {tilName.setError(getString(R.string.error_need_cat_name)); error=true;} else {tilName.setError("");}
+        if (editTextName.getText().toString().equals("")) {
+            TextInputLayout tilName = (TextInputLayout)editTextName.getParentForAccessibility();
+            tilName.setError(getString(R.string.error_need_cat_name));
+            error=true;}
+        else {
+            TextInputLayout tilName = (TextInputLayout)editTextName.getParentForAccessibility();
+            tilName.setError("");
+        }
         if (selectedCondition==Category.Condition.NOTSELECTED) {
-//            spinnerType.setDefaultErrorEnabled(true);
-
-            spinnerType.setColor(R.color.colorAccent);
-            G.Log("condition error");
-            spinnerType.setLabelText("NEED select condition");
-//            spinnerType.setDefaultErrorEnabled(true);
-//            spinnerType.setDefaultErrorText("WTF");
+            //spinnerType.setColor();
+            //TODO change color on update()
+            spinnerType.setColor(R.color.textColor_onException);    //TODO get theme's color
+            spinnerType.setLabelText("Select condition");
             error=true;
         } else {
-            G.Log("condition norm");
-            spinnerType.setDefaultErrorEnabled(false);
+            spinnerType.setColor(R.color.textColorPrimary_default); //TODO get theme's color
+            spinnerType.setLabelText(R.string.condition);
+        }
+        if (selectedCondition==Category.Condition.UNIT) {
+            if (editTextUnit.getText().toString().equals("")) {
+                TextInputLayout tilUnit = (TextInputLayout) editTextUnit.getParentForAccessibility();
+                tilUnit.setError(getString(R.string.error_need_cat_unit));
+                error = true;
+            } else {
+                TextInputLayout tilUnit = (TextInputLayout) editTextUnit.getParentForAccessibility();
+                tilUnit.setError("");
+            }
         }
         G.Log("Chk: "+!error);
         return !error;

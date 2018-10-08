@@ -1,5 +1,6 @@
 package ru.avb.iremember;
 
+
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +18,8 @@ public class Category {
     int orderNumber = NO_SPECIFIED;
     DateTime dateCreated;
     DateTime dateModified;
-    int initialValue = NO_SPECIFIED;
-    int finalValue = NO_SPECIFIED;
+    long initialValue = NO_SPECIFIED;
+    long finalValue = NO_SPECIFIED;
     boolean finalValueEnabled;
     boolean negativeValueEnabled;
     boolean predictionEnabled;
@@ -30,14 +31,20 @@ public class Category {
     int favoriteOrderNumber =NO_SPECIFIED;
     String unitLabel = "";
 
-    public static final int NO_CATEGORY = -999999999, NO_SPECIFIED = -999999998;
+    public static final class dateTimeFormat{
+        public static final String date = "dd.MM.yyyy";
+        public static final String dateTime = "dd.MM.yyyy  HH:mm";
+    }
+    public static final int NO_CATEGORY = -1999999999, NO_SPECIFIED = -1999999998;
 
     public static final class Condition{
         public static final int NOTSELECTED=0, UNIT=1, DATE=2, DATETIME=3;
         public static final String[] labels = {"Not selected", "unit", "date", "date time"};
     }
 
-
+    public static final class Prediction{
+        public static final int[] period = {1,2,3,4,5,6,7,14,21,30};
+    }
 
     //GETTER SETTER
     public int getId() {
@@ -104,19 +111,19 @@ public class Category {
         this.dateModified = dateModified;
     }
 
-    public int getInitialValue() {
+    public long getInitialValue() {
         return initialValue;
     }
 
-    public void setInitialValue(int initialValue) {
+    public void setInitialValue(long initialValue) {
         this.initialValue = initialValue;
     }
 
-    public int getFinalValue() {
+    public long getFinalValue() {
         return finalValue;
     }
 
-    public void setFinalValue(int finalValue) {
+    public void setFinalValue(long finalValue) {
         this.finalValue = finalValue;
     }
 
