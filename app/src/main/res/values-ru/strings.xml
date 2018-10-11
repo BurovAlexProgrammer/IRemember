@@ -106,4 +106,7 @@
     <string name="error_need_select_condition">Необходимо выбрать условие</string>
     <string name="error_need_cat_name">Необходимо указать название категории</string>
     <string name="error_need_cat_unit">Введите единицу измерения</string>
+    <string name="hint_cat_enterName">Введите название категории</string>
+    <string name="iconPicker_tabIcon">Иконка</string>
+    <string name="iconPicker_tabColor">Цвет</string>
 </resources>

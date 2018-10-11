@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
-                    android:hint="Enter name"
+                    android:hint="@string/hint_cat_enterName"
                     android:paddingTop="16dp"
                     android:maxLines="1"/>
             </android.support.design.widget.TextInputLayout>

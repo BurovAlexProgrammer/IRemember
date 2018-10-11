@@ -47,10 +47,13 @@ public class DialogIconPicker extends DialogFragment  {
 
         TabHost.TabSpec tabSpec;
         tabSpec = tabHost.newTabSpec("tag1");
-        tabSpec.setIndicator("Icon");
+        tabSpec.setIndicator(getString(R.string.iconPicker_tabIcon));
         tabSpec.setContent(R.id.tab1);
         tabHost.addTab(tabSpec);
-
+        tabSpec = tabHost.newTabSpec("tag2");
+        tabSpec.setIndicator(getString(R.string.iconPicker_tabColor));
+        tabSpec.setContent(R.id.tab2);
+        tabHost.addTab(tabSpec);
         tabHost.setCurrentTabByTag("tag1");
 
         ((TextView)v.findViewById(android.R.id.title)).setText("CHOOSE YOUR ICON!!");
@@ -84,32 +87,27 @@ public class DialogIconPicker extends DialogFragment  {
             return G.categoryIconIds.length;
         }
 
-        public Drawable getItem(int position) {
-            return Resources.getSystem().getDrawable(G.categoryIconIds[position]);
+        public Object getItem(int position) {
+            //return Resources.getSystem().getDrawable(G.categoryIconIds[position]);
+            return G.categoryIconIds[position];
         }
 
         public long getItemId(int position) {
-            return G.categoryIconIds[position];
+            return 0;
         }
 
         // create a new ImageView for each item referenced by the Adapter
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView imageView;
-            if (convertView == null) {
-                // if it's not recycled, initialize some attributes
+            //if (convertView == null) {
                 imageView = new ImageView(mContext);
-                //imageView.setLayoutParams(new ViewGroup.LayoutParams(40, 40));
-                ViewGroup.LayoutParams lp = imageView.getLayoutParams();
-                lp.width = 40;
-                lp.height = 40;
-                imageView.requestLayout();
+                imageView.setImageResource(G.categoryIconIds[position]);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
                 imageView.setPadding(4, 4, 4, 4);
-            } else {
-                imageView = (ImageView) convertView;
-            }
 
-            imageView.setImageResource(G.categoryIconIds[position]);
+
+            //imageView.setImageResource(G.categoryIconIds[position]);
             return imageView;
         }
     }

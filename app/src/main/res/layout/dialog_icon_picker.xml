@@ -53,21 +53,18 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="48dp">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical" >
-
                                 <GridView
                                     android:id="@+id/icon_gridView"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:columnWidth="40dp"
-                                    android:numColumns="auto_fit"
-                                    android:verticalSpacing="4dp"
+                                    android:layout_height="250dp"
+                                    android:columnWidth="50dp"
+                                    android:gravity="center"
                                     android:horizontalSpacing="4dp"
-                                    android:stretchMode="columnWidth"/>
-                            </LinearLayout>
+                                    android:minHeight="250dp"
+                                    android:numColumns="auto_fit"
+                                    android:stretchMode="columnWidth"
+                                    android:verticalSpacing="4dp" />
+
                         </ScrollView>
 
                         <LinearLayout

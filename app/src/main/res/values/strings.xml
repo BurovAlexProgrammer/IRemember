@@ -79,6 +79,9 @@
     <string name="intro3_headline">There will be authentication</string>
     <string name="title_new_category">New category</string>
 
+    <string name="iconPicker_tabIcon">Icon</string>
+    <string name="iconPicker_tabColor">Color</string>
+
     <string name="hint_cat_enterName">Enter category name</string>
     <string name="hint_cat_name">Category name</string>
     <string name="hint_cat_type">Category type</string>
