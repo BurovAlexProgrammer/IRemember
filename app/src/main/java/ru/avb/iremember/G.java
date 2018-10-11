@@ -39,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -117,8 +118,25 @@ public class G {
             KEY_DLG_MONTH = "kDlgMonth",
             KEY_DLG_YEAR = "kDlgYear",
             KEY_DLG_HOUR = "kDlgHour",
-            KEY_DLG_MINUTE = "kDlgMinute";
+            KEY_DLG_MINUTE = "kDlgMinute",
+            KEY_DLG_CAT_ICON = "kDlgCatIcon";
 
+
+    public static final int[] categoryIconIds = {
+            R.drawable.cat_bus,
+            R.drawable.cat_drop,
+            R.drawable.cat_health,
+            R.drawable.cat_home,
+            R.drawable.cat_jeep,
+            R.drawable.cat_mechanic,
+            R.drawable.cat_minivan,
+            R.drawable.cat_pass_car,
+            R.drawable.cat_shopping,
+            R.drawable.cat_tablets,
+            R.drawable.cat_test_tube,
+            R.drawable.cat_timer,
+            R.drawable.cat_truck
+    };
 
     public final static class SyncType {
         public final static String FROM_SERVER = "from server",
@@ -132,6 +150,7 @@ public class G {
     public static final DateTimeFormatter datetimeFormatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
 
     public static final String LOGTAG = "logApp", LOGDB = "logDB", LOGINTERES = "logInteres", LOGLINE = "---------------------------------------------";
+
 
     public static void LogDB(String s) {
         Log.i(LOGDB, s);

@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/title"
+        android:id="@android:id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="DIALOG!!!!"
@@ -59,9 +59,14 @@
                                 android:orientation="vertical" >
 
                                 <GridView
-                                    android:id="@+id/gridView"
+                                    android:id="@+id/icon_gridView"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:columnWidth="40dp"
+                                    android:numColumns="auto_fit"
+                                    android:verticalSpacing="4dp"
+                                    android:horizontalSpacing="4dp"
+                                    android:stretchMode="columnWidth"/>
                             </LinearLayout>
                         </ScrollView>
 

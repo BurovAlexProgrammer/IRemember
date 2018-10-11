@@ -1,7 +1,10 @@
 package ru.avb.iremember.dialogs;
 
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,10 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 
+import ru.avb.iremember.G;
 import ru.avb.iremember.R;
 
 /**
@@ -47,12 +53,66 @@ public class DialogIconPicker extends DialogFragment  {
 
         tabHost.setCurrentTabByTag("tag1");
 
-        String[] data = {"1","2","3","4"};
+        ((TextView)v.findViewById(android.R.id.title)).setText("CHOOSE YOUR ICON!!");
+
+/*
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.item_icon, R.id.imageView, data);
-        GridView gridView = (GridView) v.findViewById(R.id.gridView);
+
+
+        GridView gridView = (GridView) v.findViewById(R.id.icon_gridView);
+
         ImageView imageView = new ImageView(getActivity());
+
         imageView.setImageResource(R.drawable.cat_minivan);
-        gridView.addView(imageView);
-//        gridView.setAdapter(adapter);
+        //gridView.addView(imageView);
+
+        gridView.setAdapter(adapter);
+  */
+        GridView gridView = (GridView) v.findViewById(R.id.icon_gridView);
+        gridView.setAdapter(new ImageAdapter(v.getContext()));
     }
+
+
+    public class ImageAdapter extends BaseAdapter {
+        private Context mContext;
+
+        public ImageAdapter(Context c) {
+            mContext = c;
+        }
+
+        public int getCount() {
+            return G.categoryIconIds.length;
+        }
+
+        public Drawable getItem(int position) {
+            return Resources.getSystem().getDrawable(G.categoryIconIds[position]);
+        }
+
+        public long getItemId(int position) {
+            return G.categoryIconIds[position];
+        }
+
+        // create a new ImageView for each item referenced by the Adapter
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageView;
+            if (convertView == null) {
+                // if it's not recycled, initialize some attributes
+                imageView = new ImageView(mContext);
+                //imageView.setLayoutParams(new ViewGroup.LayoutParams(40, 40));
+                ViewGroup.LayoutParams lp = imageView.getLayoutParams();
+                lp.width = 40;
+                lp.height = 40;
+                imageView.requestLayout();
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setPadding(4, 4, 4, 4);
+            } else {
+                imageView = (ImageView) convertView;
+            }
+
+            imageView.setImageResource(G.categoryIconIds[position]);
+            return imageView;
+        }
+    }
+
+
 }
