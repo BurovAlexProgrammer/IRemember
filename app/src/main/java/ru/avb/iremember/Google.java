@@ -141,7 +141,7 @@ public class Google {
                                     return;
                                 }
                                 InputStream inputStream = result.getDriveContents().getInputStream();
-                                G.InputStreamToString(inputStream); //temp
+                                G.Convert.InputStreamToString(inputStream); //temp
                                 //Must be open file code
                             }
                         });
@@ -290,7 +290,7 @@ public class Google {
                                     return;
                                 }
                                 try {
-                                    byte[] bytes = G.fileToBytes(file);
+                                    byte[] bytes = G.Convert.fileToBytes(file);
                                     DriveContents driveContents = result.getDriveContents();
                                     driveContents.getOutputStream().write(bytes);
                                     MetadataChangeSet changeSet = new MetadataChangeSet.Builder()

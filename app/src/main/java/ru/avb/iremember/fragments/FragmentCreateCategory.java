@@ -4,6 +4,7 @@ package ru.avb.iremember.fragments;
 //TODO добавить очистку даты финал
 //TODO добавить режим ввода даты - Калькулятор (+30дней, -2 месяца)
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -143,6 +145,7 @@ public class FragmentCreateCategory extends Fragment {
         dialogDateTimePicker = new DialogDateTimePicker();
         dialogIconPicker = new DialogIconPicker();
 
+
         setTypeSpinnerAdapter();
 
         View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
@@ -182,6 +185,15 @@ public class FragmentCreateCategory extends Fragment {
     }
 
     public void showIconPicker(String tag) {
+        /*
+        Dialog dialog = dialogIconPicker.getDialog();
+        dialog.show();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes(lp);
+        */
         dialogIconPicker.show(getFragmentManager(), tag);
     }
 

@@ -99,7 +99,7 @@
     <string name="everage_value">Everage value</string>
     <string name="prediction_label">Prediction</string>
     <string name="everageValue">Everage value</string>
-
+    <string name="dialogTitle_chooseIcon">Chooise icon</string>
 
     <string name="error_need_select_condition">Need to select condition</string>
     <string name="error_need_cat_name">Enter the category name</string>

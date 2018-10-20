@@ -10,11 +10,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ import ru.avb.iremember.R;
  */
 
 public class DialogIconPicker extends DialogFragment  {
+    Context thisContext;
     TabHost tabHost;
 
     @Override
@@ -38,8 +41,20 @@ public class DialogIconPicker extends DialogFragment  {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_icon_picker, null);
         initViews(v);
+        thisContext = v.getContext();
         return v;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        params.height = LinearLayout.LayoutParams.MATCH_PARENT;
+       // ((WindowManager.LayoutParams) params).horizontalMargin = G.Convert.dipToPixels(thisContext, 300f);
+       // ((WindowManager.LayoutParams) params).verticalMargin = G.Convert.dipToPixels(thisContext, 300f);
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+    }
+
 
     void initViews(View v) {
         tabHost = (TabHost) v.findViewById(android.R.id.tabhost);
@@ -56,12 +71,10 @@ public class DialogIconPicker extends DialogFragment  {
         tabHost.addTab(tabSpec);
         tabHost.setCurrentTabByTag("tag1");
 
-        ((TextView)v.findViewById(android.R.id.title)).setText("CHOOSE YOUR ICON!!");
+        ((TextView)v.findViewById(android.R.id.title)).setText(R.string.dialogTitle_chooseIcon);
 
 /*
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.item_icon, R.id.imageView, data);
-
-
         GridView gridView = (GridView) v.findViewById(R.id.icon_gridView);
 
         ImageView imageView = new ImageView(getActivity());
@@ -99,14 +112,15 @@ public class DialogIconPicker extends DialogFragment  {
         // create a new ImageView for each item referenced by the Adapter
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView imageView;
-            //if (convertView == null) {
+            if (convertView == null) {
                 imageView = new ImageView(mContext);
-                imageView.setImageResource(G.categoryIconIds[position]);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
                 imageView.setPadding(4, 4, 4, 4);
-
-
+            } else {
+                imageView = (ImageView) convertView;
+            }
+            imageView.setImageResource(G.categoryIconIds[position]);
             //imageView.setImageResource(G.categoryIconIds[position]);
             return imageView;
         }

@@ -5,8 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical|center_horizontal"
+    android:background="@android:color/transparent"
     android:gravity="center_vertical|center_horizontal"
-    android:orientation="vertical">
+    android:layoutMode="clipBounds"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingTop="50dp">
 
 
     <TextView
@@ -53,17 +57,17 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="48dp">
 
-                                <GridView
-                                    android:id="@+id/icon_gridView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="250dp"
-                                    android:columnWidth="50dp"
-                                    android:gravity="center"
-                                    android:horizontalSpacing="4dp"
-                                    android:minHeight="250dp"
-                                    android:numColumns="auto_fit"
-                                    android:stretchMode="columnWidth"
-                                    android:verticalSpacing="4dp" />
+                            <GridView
+                                android:id="@+id/icon_gridView"
+                                android:layout_width="match_parent"
+                                android:layout_height="250dp"
+                                android:columnWidth="50dp"
+                                android:gravity="center"
+                                android:horizontalSpacing="4dp"
+                                android:minHeight="250dp"
+                                android:numColumns="auto_fit"
+                                android:stretchMode="columnWidth"
+                                android:verticalSpacing="4dp" />
 
                         </ScrollView>
 
@@ -72,10 +76,10 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="-72dp"
                             android:orientation="horizontal"
-                            android:paddingBottom="8dp"
-                            android:paddingEnd="8dp"
                             android:paddingStart="8dp"
-                            android:paddingTop="16dp">
+                            android:paddingTop="16dp"
+                            android:paddingEnd="8dp"
+                            android:paddingBottom="8dp">
 
                             <Button
                                 android:id="@+id/button_next"
@@ -98,10 +102,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingBottom="8dp"
-                        android:paddingEnd="8dp"
                         android:paddingStart="8dp"
-                        android:paddingTop="16dp">
+                        android:paddingTop="16dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp">
 
                     </LinearLayout>
 

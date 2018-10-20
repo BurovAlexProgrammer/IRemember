@@ -12,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -325,34 +326,65 @@ public class G {
         return bitmap;
     }
 
-    public static String InputStreamToString(InputStream inputStream) {
-        try {
-            ByteArrayOutputStream inputStreamResult = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int lenght;
-            while ((lenght = inputStream.read(buffer)) != -1) {
-                inputStreamResult.write(buffer, 0, lenght);
+    public static class Convert {
+        public static float dipToPixels(Context context, float dip) {
+            float result = 0f;
+            result = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    dip,
+                    context.getResources().getDisplayMetrics());
+            return result;
+        }
+
+        public static String InputStreamToString(InputStream inputStream) {
+            try {
+                ByteArrayOutputStream inputStreamResult = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int lenght;
+                while ((lenght = inputStream.read(buffer)) != -1) {
+                    inputStreamResult.write(buffer, 0, lenght);
+                }
+                G.Log(G.LOGLINE);
+                G.LogInteres("Convert InputStream to String..");
+                G.Log("Result: " + inputStreamResult.toString("UTF-8"));
+                G.Log(G.LOGLINE);
+                return inputStreamResult.toString("UTF-8");
+            } catch (IOException ioException) {G.Log("EXCEPTION(get input stream): "+ioException.getMessage()); return G.NONE_STRING;}
+        }
+
+        public static byte[] fileToBytes(File f) {
+            G.Log("file to bytes..");
+            byte[] bytes = new byte[(int)f.length()];
+            try {
+                DataInputStream dataInputStream = new DataInputStream(new FileInputStream(f));
+                dataInputStream.readFully(bytes);
+                dataInputStream.close();
+                G.Log("bytes: " + bytes.toString());
             }
-            G.Log(G.LOGLINE);
-            G.LogInteres("Convert InputStream to String..");
-            G.Log("Result: " + inputStreamResult.toString("UTF-8"));
-            G.Log(G.LOGLINE);
-            return inputStreamResult.toString("UTF-8");
-        } catch (IOException ioException) {G.Log("EXCEPTION(get input stream): "+ioException.getMessage()); return G.NONE_STRING;}
+            catch (IOException e) {G.Log("EXCEPTION: "+e.getMessage());}
+            return bytes;
+        }
+
+        public static String dateToString(Date date) {
+            DateTime dateTime = new DateTime(date);
+            DateTimeFormatter formatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
+            String dateStr = formatter.print(dateTime);
+            return dateStr;
+        }
+
+        public static Date stringToDate(String str) {
+
+            DateTimeFormatter formatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
+            DateTime dateTime = formatter.parseDateTime(str);
+            Date date = dateTime.toDate();
+            return date;
+        }
+
+        public static DateTime dateToDatetime(Date date) {
+            return new DateTime(date);
+        }
     }
 
-    public static byte[] fileToBytes(File f) {
-        G.Log("file to bytes..");
-        byte[] bytes = new byte[(int)f.length()];
-        try {
-            DataInputStream dataInputStream = new DataInputStream(new FileInputStream(f));
-            dataInputStream.readFully(bytes);
-            dataInputStream.close();
-            G.Log("bytes: " + bytes.toString());
-        }
-        catch (IOException e) {G.Log("EXCEPTION: "+e.getMessage());}
-        return bytes;
-    }
 
     public static String timeAgo(Context context, DateTime datePrev, DateTime dateNow) {
         Period period = new Period(datePrev,dateNow);
@@ -369,30 +401,6 @@ public class G {
                 .toFormatter();
 
         return formatter.print(period);
-    }
-
-
-
-    public static class Convert {
-        public static String dateToString(Date date) {
-            DateTime dateTime = new DateTime(date);
-            DateTimeFormatter formatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
-            String dateStr = formatter.print(dateTime);
-            return dateStr;
-        }
-
-
-        public static Date stringToDate(String str) {
-
-            DateTimeFormatter formatter = DateTimeFormat.forPattern(DATETIME_FORMATTER);
-            DateTime dateTime = formatter.parseDateTime(str);
-            Date date = dateTime.toDate();
-            return date;
-        }
-
-        public static DateTime dateToDatetime(Date date) {
-            return new DateTime(date);
-        }
     }
 }
 
